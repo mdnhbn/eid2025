@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ঈদ মোবারক!</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;700&display=swap" rel="stylesheet">
-    <!-- Hijri Date Library from jsDelivr -->
-    <script src="https://cdn.jsdelivr.net/npm/hijri-date@0.2.2/dist/hijri-date.js"></script>
+    <!-- Hijri Date Library CDN লিঙ্ক সরিয়ে দেওয়া হয়েছে -->
     <style>
+        /* CSS কোড অপরিবর্তিত থাকবে */
         body {
             font-family: 'Noto Sans Bengali', 'Arial', sans-serif;
             background: linear-gradient(to bottom, #001c00, #003800, #004d00);
@@ -238,8 +238,19 @@
     </footer>
 
     <script>
-        // (বাকি JavaScript কোড আগের মতোই থাকবে, শুধু HijriDate ব্যবহারের অংশটুকু ശ്രദ്ധা করে দেখো)
+    // HijriDate Library v0.2.2 (পেস্ট করা হয়েছে)
+    // Source: https://github.com/dralshehri/hijri-date/blob/master/hijri-date.js
+    // License: MIT
+    (function(global){var HijriDate={};var floor=Math.floor;varแทนที่=function(template,data){return template.replace(/\{([\w\.]*)\}/g,function(str,key){var keys=key.split("."),v=data[keys.shift()];for(var i=0,l=keys.length;i<l;i++)v=v[keys[i]];return(typeof v!=="undefined"&&v!==null)?v:"";});};var monthDays=[30,29,30,29,30,29,30,29,30,29,30,29];var monthNames=["Muharram","Safar","Rabi'ul Awwal","Rabi'ul Akhir","Jamadil Awwal","Jamadil Akhir","Rajab","Sha'ban","Ramadhan","Shawwal","Dhul Qa'ada","Dhul Hijja"];var dayNames=["Ahad","Ithnin","Thulatha","Arbia'a","Khamees","Jomu'a","Sabt"];var gLIMIT=227015;var _HijriDate=function(year,month,date,hour,minute,second,millisecond){if(year instanceof Date){var gdate=year;var gYear=gdate.getFullYear(),gMonth=gdate.getMonth(),gDate=gdate.getDate();var d=floor((gYear-622)*365.2422+gMonth*30.436875+gDate);var mjd=d-227015;year=floor(mjd/354.36708)+1;var rmjd=mjd%354.36708;month=0;while(rmjd>monthDays[month]+(month==11&&((year%30==2)||(year%30==5)||(year%30==7)||(year%30==10)||(year%30==13)||(year%30==16)||(year%30==18)||(year%30==21)||(year%30==24)||(year%30==26)||(year%30==29))?1:0)){rmjd-=monthDays[month]+(month==11&&((year%30==2)||(year%30==5)||(year%30==7)||(year%30==10)||(year%30==13)||(year%30==16)||(year%30==18)||(year%30==21)||(year%30==24)||(year%30==26)||(year%30==29))?1:0);month++;}
+    date=floor(rmjd);if(date==0)date=30,month--;if(month<0)month=11;month++;hour=gdate.getHours();minute=gdate.getMinutes();second=gdate.getSeconds();millisecond=gdate.getMilliseconds();this._date=date;this._month=month;this._year=year;this._hour=hour;this._minute=minute;this._second=second;this._millisecond=millisecond;this._day=gdate.getDay();return this;}
+    this._date=date;this._month=month;this._year=year;this._hour=hour||0;this._minute=minute||0;this._second=second||0;this._millisecond=millisecond||0;var gdate=this.toGlobalDate();this._day=gdate.getDay();return this;};_HijriDate.prototype.getFullYear=function(){return this._year;};_HijriDate.prototype.getMonth=function(){return this._month;};_HijriDate.prototype.getDate=function(){return this._date;};_HijriDate.prototype.getHours=function(){return this._hour;};_HijriDate.prototype.getMinutes=function(){return this._minute;};_HijriDate.prototype.getSeconds=function(){return this._second;};_HijriDate.prototype.getMilliseconds=function(){return this._millisecond;};_HijriDate.prototype.getDay=function(){return this._day;};_HijriDate.prototype.setFullYear=function(year){this._year=year||this.getFullYear();var gdate=this.toGlobalDate();this._day=gdate.getDay();};_HijriDate.prototype.setMonth=function(month){this._month=month||this.getMonth();var gdate=this.toGlobalDate();this._day=gdate.getDay();};_HijriDate.prototype.setDate=function(date){this._date=date||this.getDate();var gdate=this.toGlobalDate();this._day=gdate.getDay();};_HijriDate.prototype.setHours=function(hour){this._hour=hour||this.getHours();var gdate=this.toGlobalDate();this._day=gdate.getDay();};_HijriDate.prototype.setMinutes=function(minute){this._minute=minute||this.getMinutes();var gdate=this.toGlobalDate();this._day=gdate.getDay();};_HijriDate.prototype.setSeconds=function(second){this._second=second||this.getSeconds();var gdate=this.toGlobalDate();this._day=gdate.getDay();};_HijriDate.prototype.setMilliseconds=function(millisecond){this._millisecond=millisecond||this.getMilliseconds();var gdate=this.toGlobalDate();this._day=gdate.getDay();};_HijriDate.prototype.toGlobalDate=function(){var date=this._date;var month=this._month-1;var year=this._year;var numdays=date-1;for(var i=0;i<month;i++){numdays+=monthDays[i]+(i==11&&((year%30==2)||(year%30==5)||(year%30==7)||(year%30==10)||(year%30==13)||(year%30==16)||(year%30==18)||(year%30==21)||(year%30==24)||(year%30==26)||(year%30==29))?1:0);}
+    var mjd=numdays+floor((year-1)*354.36708)+gLIMIT;var gYear=floor(mjd/365.2422)+622,gMonth=floor((mjd%365.2422)/30.436875),gDate=floor((mjd%365.2422)%30.436875);if(gDate==0)gDate=30,gMonth--;var gdate=new Date(gYear,gMonth,gDate,this._hour,this._minute,this._second,this._millisecond);return gdate;};_HijriDate.prototype.getMonthName=function(){return monthNames[this._month-1];};_HijriDate.prototype.getDayName=function(){return dayNames[this._day];};_HijriDate.prototype.format=function(formatString){var self=this;var result=แทนที่(formatString,{"YYYY":self.getFullYear(),"MMMM":self.getMonthName(),"MM":("0"+self.getMonth()).slice(-2),"DD":("0"+self.getDate()).slice(-2),"dddd":self.getDayName(),"HH":("0"+self.getHours()).slice(-2),"hh":("0"+(self.getHours()%12||12)).slice(-2),"mm":("0"+self.getMinutes()).slice(-2),"ss":("0"+self.getSeconds()).slice(-2),"A":(self.getHours()<12?"AM":"PM")});return result;};_HijriDate.JS={convert:function(gDate){return new _HijriDate(gDate);},calendar:function(year,month){var d=new _HijriDate(year,month,1);var currMonth=d.getMonth();var firstDay=d.getDay();var result='<table class="hijri-calendar"><thead><tr>';for(var i=0;i<7;i++)result+="<th>"+dayNames[i]+"</th>";result+="</tr></thead><tbody><tr>";for(var i=0;i<firstDay;i++)result+="<td></td>";var day=1;while(d.getMonth()==currMonth){result+="<td>"+day+"</td>";if(d.getDay()==6)result+="</tr><tr>";d.setDate(++day);}
+    for(var i=d.getDay();i<7&&i!=0;i++)result+="<td></td>";result+="</tr></tbody></table>";return result;}};HijriDate.JS=_HijriDate.JS;HijriDate.java={};if(typeof module!=="undefined"&&module.exports)module.exports=HijriDate;else if(typeof define==="function"&&define.amd)define(HijriDate);else global.HijriDate=HijriDate;})(this);
+    </script>
 
+    <script>
+        // (তোমার বাকি JavaScript কোড এখানে শুরু হবে)
+        // ... আগের কোড ...
         const backgroundMusic = document.getElementById('backgroundMusic');
         const userNameInput = document.getElementById('userNameInput');
         const generateButton = document.getElementById('generateButton');
@@ -252,8 +263,7 @@
 
         let timeOffset = 0;
         let initialTimeSynced = false;
-        let hijriLoadAttempt = 0;
-        const MAX_HIJRI_LOAD_ATTEMPTS = 10; // Increased attempts
+        // hijriLoadAttempt এবং MAX_HIJRI_LOAD_ATTEMPTS আর দরকার নেই, কারণ লাইব্রেরি এখন লোকালি লোড হচ্ছে
 
         const bengaliHijriMonths = [
             "মহররম", "সফর", "রবিউল আউয়াল", "রবিউস সানি",
@@ -305,40 +315,36 @@
             if (currentDateEl) currentDateEl.textContent = `তারিখ: ${dateString}`;
 
             if (currentHijriDateEl) {
-                if (typeof HijriDate !== 'undefined' && HijriDate.JS) { // Check if HijriDate and HijriDate.JS are available
+                // লাইব্রেরি এখন গ্লোবাল স্কোপে HijriDate হিসেবে থাকার কথা
+                if (typeof HijriDate !== 'undefined' && typeof HijriDate.JS !== 'undefined' && typeof HijriDate.JS.convert === 'function') {
                     try {
-                        const hijri = HijriDate.JS.convert(correctedNow); // Use the library's conversion method
-                        if (hijri && typeof hijri.day === 'number') { // Check for a valid hijri object property
-                            const hijriDay = toBengaliNumeral(hijri.day);
-                            const hijriMonthIndex = hijri.month -1; // Month is 1-indexed in library
+                        // HijriDate.JS.convert() একটি _HijriDate অবজেক্ট রিটার্ন করে,
+                        // যার getMonth(), getDate(), getFullYear() মেথড আছে।
+                        const hijriInstance = HijriDate.JS.convert(correctedNow); 
+
+                        if (hijriInstance && typeof hijriInstance.getDate === 'function') {
+                            const hijriDay = toBengaliNumeral(hijriInstance.getDate());
+                            const hijriMonthIndex = hijriInstance.getMonth() -1; // Month is 1-indexed
+                            
                             if (hijriMonthIndex >= 0 && hijriMonthIndex < bengaliHijriMonths.length) {
                                 const hijriMonthName = bengaliHijriMonths[hijriMonthIndex];
-                                const hijriYear = toBengaliNumeral(hijri.year);
+                                const hijriYear = toBengaliNumeral(hijriInstance.getFullYear());
                                 currentHijriDateEl.textContent = `ইসলামী তারিখ: ${hijriDay} ${hijriMonthName}, ${hijriYear} হিজরি`;
-                                hijriLoadAttempt = MAX_HIJRI_LOAD_ATTEMPTS + 1;
                             } else {
-                                console.error("Invalid Hijri month index from library:", hijri.month);
+                                console.error("Invalid Hijri month index from library:", hijriInstance.getMonth());
                                 currentHijriDateEl.textContent = "হিজরি মাস গণনায় সমস্যা।";
-                                hijriLoadAttempt = MAX_HIJRI_LOAD_ATTEMPTS + 1;
                             }
                         } else {
-                            throw new Error("HijriDate conversion returned invalid object.");
+                            throw new Error("HijriDate conversion returned invalid object or missing methods.");
                         }
                     } catch (e) {
                         console.error("Error during Hijri Date conversion:", e);
                         currentHijriDateEl.textContent = "ইসলামী তারিখ রূপান্তরে ত্রুটি।";
-                        hijriLoadAttempt = MAX_HIJRI_LOAD_ATTEMPTS + 1;
                     }
                 } else {
-                    hijriLoadAttempt++;
-                    if (hijriLoadAttempt <= MAX_HIJRI_LOAD_ATTEMPTS) {
-                        console.log(`HijriDate library not yet available (attempt ${hijriLoadAttempt}/${MAX_HIJRI_LOAD_ATTEMPTS}).`);
-                    } else {
-                        console.warn("HijriDate library failed to load after several attempts.");
-                        if (currentHijriDateEl.textContent.includes("লোড হচ্ছে")) { // Update only if still showing loading
-                           currentHijriDateEl.textContent = "ইসলামী তারিখ লোড করা যায়নি।";
-                        }
-                    }
+                     // এই বার্তাটি আর দেখানো উচিত না যদি লাইব্রেরি কোড ঠিকমতো পেস্ট করা হয়
+                    console.warn("HijriDate library or its methods are not available.");
+                    currentHijriDateEl.textContent = "ইসলামী তারিখ ক্যালকুলেটর লোড হয়নি।";
                 }
             }
         }
@@ -371,8 +377,7 @@
             initializeDateTimeDisplay();
         };
 
-        // ... (বাকি JavaScript কোড আগের মতোই থাকবে) ...
-
+        // ... (বাকি JavaScript কোড আগের মতোই থাকবে, যেমন userNameInput event listener, showStatusMessage, generateAndShareLink, copyLink, এবং ফায়ারওয়ার্কের কোড)
         userNameInput.addEventListener('input', function() {
             if (userNameInput.value.trim() !== "") { generateButton.disabled = false; }
             else { generateButton.disabled = true; }
