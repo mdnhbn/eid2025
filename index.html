@@ -201,12 +201,19 @@
             z-index: 1;
             padding-bottom: 20px;
         }
+        #dateTimeDisplay { /* নতুন সময় ও তারিখের জন্য স্টাইল */
+            margin-top: 10px;
+            font-size: 0.95em;
+            color: #f0e68c; /* Ensure text color matches footer */
+        }
+        #dateTimeDisplay span {
+            margin: 0 5px; /* Add some spacing around the separator */
+        }
     </style>
 </head>
 <body>
     <canvas id="fireworksCanvas"></canvas>
     <audio id="backgroundMusic" src="eidmubarak.mp3" loop preload="auto"></audio>
-    <!-- মিউজিক টগল বাটন সরিয়ে দেওয়া হয়েছে -->
 
     <div class="container">
         <div id="greetingMessage" class="greeting-message">
@@ -227,7 +234,6 @@
             <div id="statusMessage"></div>
         </div>
 
-
         <div id="generatedLinkContainer">
             <p>এই লিঙ্কটি বন্ধুদের সাথে শেয়ার করুন (যদি অটো-শেয়ার কাজ না করে):</p>
             <input type="text" id="sharableLink" readonly>
@@ -237,6 +243,9 @@
 
     <footer>
         <p>সবাইকে ঈদের আন্তরিক শুভেচ্ছা!</p>
+        <div id="dateTimeDisplay"> <!-- নতুন সময় ও তারিখ দেখানোর স্থান -->
+            <span id="currentTime"></span> | <span id="currentDate"></span>
+        </div>
     </footer>
 
     <script>
@@ -245,6 +254,42 @@
         const generateButton = document.getElementById('generateButton');
         const statusMessageDiv = document.getElementById('statusMessage');
         let statusTimeout;
+
+        // নতুন: সময় ও তারিখের এলিমেন্ট
+        const currentTimeEl = document.getElementById('currentTime');
+        const currentDateEl = document.getElementById('currentDate');
+
+        function initializeDateTimeDisplay() {
+            if (!currentTimeEl || !currentDateEl) {
+                // console.error("Date/Time display elements not found!");
+                return;
+            }
+
+            function updateTimeDate() {
+                const now = new Date();
+                
+                const timeOptions = {
+                    hour: 'numeric',
+                    minute: '2-digit',
+                    second: '2-digit',
+                    hour12: true,
+                };
+                let timeString = now.toLocaleTimeString('bn-BD', timeOptions);
+
+                const dateOptions = {
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric'
+                };
+                let dateString = now.toLocaleDateString('bn-BD', dateOptions);
+
+                currentTimeEl.textContent = `সময়: ${timeString}`;
+                currentDateEl.textContent = `তারিখ: ${dateString}`;
+            }
+
+            updateTimeDate(); 
+            setInterval(updateTimeDate, 1000); 
+        }
 
 
         window.onload = function() {
@@ -261,16 +306,16 @@
             greetingElement.offsetHeight;
             greetingElement.style.animation = null;
 
-            // Attempt to autoplay music
             if (backgroundMusic) {
                 backgroundMusic.play().catch(error => {
-                    console.warn("Autoplay was prevented by the browser. Music might start after user interaction.", error);
+                    console.warn("Autoplay was prevented by the browser.", error);
                 });
             }
 
             generateButton.disabled = true;
             startFireworks();
             animateFireworks();
+            initializeDateTimeDisplay(); // নতুন: সময় ও তারিখ চালু করা
         };
 
         userNameInput.addEventListener('input', function() {
@@ -307,7 +352,6 @@
                 return;
             }
 
-            // Attempt to play music on user interaction if it's paused
             if (backgroundMusic && backgroundMusic.paused) {
                 backgroundMusic.play().catch(error => {
                     console.warn("Music play on interaction failed: ", error);
@@ -329,7 +373,7 @@
                     showStatusMessage('শুভেচ্ছা শেয়ার করার জন্য অপশন দেখানো হয়েছে!', 'success', 4000);
                     document.getElementById('generatedLinkContainer').style.display = 'none';
                 } catch (error) {
-                    console.error('Error sharing:', error);
+                    // console.error('Error sharing:', error);
                     showManualLink(newLink);
                     showStatusMessage('শেয়ার অপশন কাজ করেনি/বাতিল হয়েছে। লিঙ্ক কপি করুন।', 'info', 4000);
                 }
@@ -358,7 +402,7 @@
                         showStatusMessage("লিঙ্ক সফলভাবে কপি করা হয়েছে!", "success");
                     })
                     .catch(err => {
-                        console.error('Failed to copy with navigator.clipboard: ', err);
+                        // console.error('Failed to copy with navigator.clipboard: ', err);
                         if(document.execCommand('copy')) {
                             showStatusMessage("লিঙ্ক কপি করা হয়েছে (ফলব্যাক)!", "success");
                         } else {
@@ -366,7 +410,7 @@
                         }
                     });
             } catch (err) {
-                console.error('Clipboard API not available: ', err);
+                // console.error('Clipboard API not available: ', err);
                 if(document.execCommand('copy')) {
                     showStatusMessage("লিঙ্ক কপি করা হয়েছে (ফলব্যাক)!", "success");
                 } else {
