@@ -35,7 +35,7 @@
             margin-bottom: 25px; 
             border: 4px solid #ffd700; 
             box-shadow: 0 0 15px rgba(255, 215, 0, 0.5); 
-            background-color: #001000; /* Fallback background if video is transparent or fails to load */
+            background-color: #001000;
         }
 
         .greeting-message { font-size: 2.2em; font-weight: 700; color: #fff; margin-bottom: 25px; text-shadow: 2px 2px 5px rgba(0,0,0,0.7); animation: fadeInGrow 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
@@ -102,7 +102,7 @@
     </footer>
 
     <script>
-    // HijriDate Library v0.2.2 (Ensure this code is not commented out)
+    // HijriDate Library (নিশ্চিত করুন এটি আনকমেন্টেড এবং সঠিকভাবে লোড হচ্ছে)
     (function(global) { 
         var HijriDate = {};var floor = Math.floor;var replace = function(template, data) {return template.replace(/\{([\w\.]*)\}/g, function(str, key) {var keys = key.split("."),v = data[keys.shift()];for (var i = 0, l = keys.length; i < l; i++) v = v[keys[i]];return (typeof v !== "undefined" && v !== null) ? v : "";});};var monthDays = [30, 29, 30, 29, 30, 29, 30, 29, 30, 29, 30, 29];var monthNames = ["Muharram", "Safar", "Rabi'ul Awwal", "Rabi'ul Akhir", "Jamadil Awwal", "Jamadil Akhir", "Rajab", "Sha'ban", "Ramadhan", "Shawwal", "Dhul Qa'ada", "Dhul Hijja"];var dayNames = ["Ahad", "Ithnin", "Thulatha", "Arbia'a", "Khamees", "Jomu'a", "Sabt"]; var gLIMIT = 227015;
         var _HijriDate = function(year, month, date, hour, minute, second, millisecond) {if (year instanceof Date) {var gdate = year;var gYear = gdate.getFullYear(),gMonth = gdate.getMonth(),gDate = gdate.getDate();var julianDayNumber = floor((1461 * (gYear + 4800 + floor((gMonth - 14) / 12))) / 4) + floor((367 * (gMonth - 2 - 12 * (floor((gMonth - 14) / 12)))) / 12) - floor((3 * floor((gYear + 4900 + floor((gMonth - 14) / 12)) / 100)) / 4) + gDate - 32075;var l = julianDayNumber - 1948440 + 10632;var n = floor((l - 1) / 10631);l = l - 10631 * n + 354;var j = (floor((10985 - l) / 5316)) * (floor((50 * l) / 17719)) + (floor(l / 5670)) * (floor((43 * l) / 15238));l = l - (floor((30 - j) / 15)) * (floor((17719 * j) / 50)) - (floor(j / 16)) * (floor((15238 * j) / 43)) + 29;month = floor((24 * l) / 709); date = l - floor((709 * month) / 24); year = 30 * n + j - 30;
@@ -118,8 +118,8 @@
 
     <script>
         const translations = {
-            'bn': { 'pageTitle':'ঈদ মোবারক!', 'greetingMessage':'ঈদ মোবারক!', 'greetingMessageFrom':'{name} এর পক্ষ থেকে, ঈদ মোবারক!', 'yourNameLabel':'আপনার নাম লিখুন:', 'namePlaceholder':'এখানে আপনার নাম দিন', 'shareButtonText':'WhatsApp এ শেয়ার করুন', 'shareLinkManualText':'এই লিঙ্কটি বন্ধুদের সাথে শেয়ার করুন (যদি অটো-শেয়ার কাজ না করে):', 'copyButtonText':'কপি করুন', 'eidWishesFooter':'সবাইকে ঈদের আন্তরিক শুভেচ্ছা!', 'timeLabel':'সময়', 'dateLabel':'তারিখ', 'hijriDateLabel':'ইসলামী তারিখ', 'hijriYearSuffix':'হিজরি', 'statusEnterName':'অনুগ্রহ করে আপনার নাম লিখুন।', 'statusShareOptions':'শুভেচ্ছা শেয়ার করার জন্য অপশন দেখানো হয়েছে!', 'statusShareError':'শেয়ার অপশন কাজ করেনি/বাতিল হয়েছে। লিঙ্ক কপি করুন।', 'statusNoAutoShare':'আপনার ব্রাউজার অটো-শেয়ার সাপোর্ট করে না। লিঙ্ক কপি করুন।', 'statusLinkCopied':'লিঙ্ক সফলভাবে কপি করা হয়েছে!', 'statusLinkCopiedFallback':'লিঙ্ক কপি করা হয়েছে (ফলব্যাক)!', 'statusCopyError':'দুঃখিত, লিঙ্ক কপি করা যায়নি। নিজে কপি করে নিন।', 'hijriDateLoading':'ইসলামী তারিখ পরীক্ষা করা হচ্ছে...', 'hijriDateError':'ইসলামী তারিখ রূপান্তরে ত্রুটি।', 'hijriCalcError':'হিজরি মাস গণনায় ত্রুটি।', 'hijriNotLoaded':'ইসলামী ক্যালকুলেটর লোড হয়নি।' },
-            'en': { 'pageTitle':'Eid Mubarak!', 'greetingMessage':'Eid Mubarak!', 'greetingMessageFrom':'Eid Mubarak from {name}!', 'yourNameLabel':'Enter your name:', 'namePlaceholder':'Enter your name here', 'shareButtonText':'Share on WhatsApp', 'shareLinkManualText':'Share this link with friends (if auto-share doesn\'t work):', 'copyButtonText':'Copy', 'eidWishesFooter':'Eid greetings to everyone!', 'timeLabel':'Time', 'dateLabel':'Date', 'hijriDateLabel':'Islamic Date', 'hijriYearSuffix':'AH', 'statusEnterName':'Please enter your name.', 'statusShareOptions':'Share options are shown!', 'statusShareError':'Share option failed/cancelled. Please copy the link.', 'statusNoAutoShare':'Your browser does not support auto-share. Please copy the link.', 'statusLinkCopied':'Link copied successfully!', 'statusLinkCopiedFallback':'Link copied (fallback)!', 'statusCopyError':'Sorry, could not copy the link. Please copy it manually.', 'hijriDateLoading':'Checking Islamic date...', 'hijriDateError':'Error in Islamic date conversion.', 'hijriCalcError':'Error in Hijri month calculation.', 'hijriNotLoaded':'Islamic calendar not loaded.' }
+            'bn': { 'pageTitle':'ঈদ মোবারক!', 'greetingMessage':'ঈদ মোবারক!', 'greetingMessageFrom':'{name} এর পক্ষ থেকে, ঈদ মোবারক!', 'yourNameLabel':'আপনার নাম লিখুন:', 'namePlaceholder':'এখানে আপনার নাম দিন', 'shareButtonText':'WhatsApp এ শেয়ার করুন', 'shareLinkManualText':'এই লিঙ্কটি বন্ধুদের সাথে শেয়ার করুন (যদি অটো-শেয়ার কাজ না করে):', 'copyButtonText':'কপি করুন', 'eidWishesFooter':'সবাইকে ঈদের আন্তরিক শুভেচ্ছা!', 'timeLabel':'সময়', 'dateLabel':'তারিখ', 'hijriDateLabel':'ইসলামী তারিখ', 'hijriYearSuffix':'হিজরি', 'statusEnterName':'অনুগ্রহ করে আপনার নাম লিখুন।', 'statusShareOptions':'শুভেচ্ছা শেয়ার করার জন্য অপশন দেখানো হয়েছে!', 'statusShareError':'শেয়ার অপশন কাজ করেনি/বাতিল হয়েছে। লিঙ্ক কপি করুন।', 'statusNoAutoShare':'আপনার ব্রাউজার অটো-শেয়ার সাপোর্ট করে না। লিঙ্ক কপি করুন।', 'statusLinkCopied':'লিঙ্ক সফলভাবে কপি করা হয়েছে!', 'statusLinkCopiedFallback':'লিঙ্ক কপি করা হয়েছে (ফলব্যাক)!', 'statusCopyError':'দুঃখিত, লিঙ্ক কপি করা যায়নি। নিজে কপি করে নিন।', 'hijriDateLoading':'ইসলামী তারিখ পরীক্ষা করা হচ্ছে...', 'hijriDateError':'ইসলামী তারিখ রূপান্তরে ত্রুটি।', 'hijriCalcError':'হিজরি মাস গণনায় ত্রুটি।', 'hijriNotLoaded':'ইসলামী ক্যালকুলেটর লোড হয়নি.', 'musicPlayError':'মিউজিক প্লে করা যায়নি। আপনার ডিভাইসের সাউন্ড চেক করুন।' },
+            'en': { 'pageTitle':'Eid Mubarak!', 'greetingMessage':'Eid Mubarak!', 'greetingMessageFrom':'Eid Mubarak from {name}!', 'yourNameLabel':'Enter your name:', 'namePlaceholder':'Enter your name here', 'shareButtonText':'Share on WhatsApp', 'shareLinkManualText':'Share this link with friends (if auto-share doesn\'t work):', 'copyButtonText':'Copy', 'eidWishesFooter':'Eid greetings to everyone!', 'timeLabel':'Time', 'dateLabel':'Date', 'hijriDateLabel':'Islamic Date', 'hijriYearSuffix':'AH', 'statusEnterName':'Please enter your name.', 'statusShareOptions':'Share options are shown!', 'statusShareError':'Share option failed/cancelled. Please copy the link.', 'statusNoAutoShare':'Your browser does not support auto-share. Please copy the link.', 'statusLinkCopied':'Link copied successfully!', 'statusLinkCopiedFallback':'Link copied (fallback)!', 'statusCopyError':'Sorry, could not copy the link. Please copy it manually.', 'hijriDateLoading':'Checking Islamic date...', 'hijriDateError':'Error in Islamic date conversion.', 'hijriCalcError':'Error in Hijri month calculation.', 'hijriNotLoaded':'Islamic calendar not loaded.', 'musicPlayError':'Could not play music. Please check your device sound.' }
         };
         let currentLang = 'bn';
         let userTimeZone = 'Etc/UTC';
@@ -162,18 +162,23 @@
                 greetingMessageEl.textContent = getTranslation('greetingMessage');
             }
             greetingMessageEl.style.animation = 'none';
-            greetingMessageEl.offsetHeight; // Trigger reflow
+            greetingMessageEl.offsetHeight; 
             greetingMessageEl.style.animation = null;
 
-            // Attempt to autoplay background music (may be blocked by browser)
             if (backgroundMusic) {
-                backgroundMusic.play().catch(error => { 
-                    console.warn("Background music autoplay was prevented on page load:", error);
-                    // Music will attempt to play again on first user interaction in generateAndShareLink
-                });
+                console.log("Page loaded. Attempting initial background music play...");
+                backgroundMusic.play()
+                    .then(() => {
+                        console.log("Background music autoplay initiated successfully.");
+                    })
+                    .catch(error => {
+                        console.warn("Background music autoplay was prevented on page load:", error.name, error.message);
+                        // Music will attempt to play again on first user interaction.
+                    });
+            } else {
+                console.error("backgroundMusic element not found!");
             }
             
-            // Attempt to autoplay video
             if (eidVideoEl) {
                 eidVideoEl.play().catch(error => {
                     console.warn("Video autoplay was prevented:", error);
@@ -183,7 +188,7 @@
                 };
             }
 
-            generateButton.disabled = true; // Disable button initially
+            generateButton.disabled = true;
             startFireworks();
             animateFireworks();
             initializeDateTimeDisplay(); 
@@ -196,13 +201,13 @@
         function showStatusMessage(messageKey, type = 'info', duration = 3000, params = {}) { 
             clearTimeout(statusTimeout); 
             statusMessageDiv.textContent = getTranslation(messageKey, params); 
-            statusMessageDiv.className = ''; // Reset classes
+            statusMessageDiv.className = ''; 
             statusMessageDiv.classList.add(type); 
             statusMessageDiv.style.display = 'block'; 
-            setTimeout(() => { statusMessageDiv.style.opacity = '1'; }, 10); // Fade in
+            setTimeout(() => { statusMessageDiv.style.opacity = '1'; }, 10); 
             statusTimeout = setTimeout(() => { 
                 statusMessageDiv.style.opacity = '0'; 
-                setTimeout(() => { statusMessageDiv.style.display = 'none'; }, 500); // Fade out then hide
+                setTimeout(() => { statusMessageDiv.style.display = 'none'; }, 500); 
             }, duration); 
         }
 
@@ -213,10 +218,21 @@
                 return; 
             } 
             
-            // Attempt to play music on user interaction if it's not already playing
             if (backgroundMusic && backgroundMusic.paused) {
-                 backgroundMusic.play().catch(error => console.warn("Music play on interaction failed:", error));
+                console.log("User interaction (button click). Attempting to play background music...");
+                backgroundMusic.play()
+                    .then(() => {
+                        console.log("Background music started successfully after user interaction.");
+                    })
+                    .catch(error => {
+                        console.error("Failed to play background music after user interaction:", error.name, error.message);
+                        // Optionally, inform the user if music still doesn't play.
+                        // showStatusMessage('musicPlayError', 'error', 5000); 
+                    });
+            } else if (backgroundMusic && !backgroundMusic.paused) {
+                console.log("Background music is already playing.");
             }
+
 
             const currentUrl = new URL(window.location.href); 
             currentUrl.searchParams.set('name', userName); 
@@ -227,8 +243,7 @@
             if (navigator.share) { 
                 try { 
                     await navigator.share({ title: getTranslation('pageTitle'), text: shareText, url: newLink }); 
-                    // Changed duration to 1000ms (1 second)
-                    showStatusMessage('statusShareOptions', 'success', 1000); 
+                    showStatusMessage('statusShareOptions', 'success', 1000); // ডিউরেশন 1 সেকেন্ড 
                     document.getElementById('generatedLinkContainer').style.display = 'none'; 
                 } catch (error) { 
                     console.error("Error during navigator.share:", error);
@@ -252,7 +267,7 @@
         function copyLink() { 
             const sharableLinkInput = document.getElementById('sharableLink'); 
             sharableLinkInput.select(); 
-            sharableLinkInput.setSelectionRange(0, 99999); // For mobile devices
+            sharableLinkInput.setSelectionRange(0, 99999);
             try { 
                 navigator.clipboard.writeText(sharableLinkInput.value)
                 .then(() => { showStatusMessage("statusLinkCopied", "success"); })
