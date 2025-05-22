@@ -7,15 +7,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* আপনার আগের CSS কোড এখানে অপরিবর্তিত থাকবে */
+        /* আপনার সম্পূর্ণ CSS কোড এখানে থাকবে */
         body[lang="bn"] { font-family: 'Noto Sans Bengali', 'Arial', sans-serif; }
         body[lang="en"] { font-family: 'Roboto', 'Arial', sans-serif; }
         body {
             background: linear-gradient(to bottom, #001c00, #003800, #004d00);
             color: #f0e68c;
             text-align: center;
-            padding: 0;
-            margin: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -26,8 +24,8 @@
             line-height: 1.6;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        #fireworksCanvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; }
-        .container { background-color: rgba(1, 32, 1, 0.88); padding: 25px 20px; border-radius: 20px; box-shadow: 0 8px 25px rgba(255, 215, 0, 0.25); max-width: 500px; width: 90%; border: 2px solid #ffd700; position: relative; z-index: 1; margin-top: 3vh; margin-bottom: 3vh; }
+        #fireworksCanvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+        .container { background-color: rgba(1, 32, 1, 0.88); padding: 25px 20px; border-radius: 20px; box-shadow: 0 8px 25px rgba(255, 215, 0, 0.25); max-width: 500px; width: 90%; border: 2px solid #ffd700; position: relative; z-index: 1; margin: 3vh auto; }
         #eidVideo { width: 100%; max-height: 260px; object-fit: contain; border-radius: 15px; margin-bottom: 20px; border: 3px solid #ffd700; box-shadow: 0 0 12px rgba(255, 215, 0, 0.4); background-color: #001000; }
         .greeting-message { font-size: 2em; font-weight: 700; color: #fff; margin-bottom: 20px; text-shadow: 1px 1px 4px rgba(0,0,0,0.6); animation: fadeInGrow 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
         @keyframes fadeInGrow { 0% { opacity: 0; transform: scale(0.7) translateY(25px); } 100% { opacity: 1; transform: scale(1) translateY(0); } }
@@ -53,6 +51,14 @@
         @media (max-width: 480px) { .container { padding: 20px 15px; margin-top: 2vh; margin-bottom: 2vh; } #eidVideo { max-height: 220px; margin-bottom: 15px; } .greeting-message { font-size: 1.7em; margin-bottom: 15px; } label { font-size: 1em; } input[type="text"] { padding: 10px; font-size: 0.95em; } button#generateButton { padding: 10px 15px; font-size: 0.95em; max-width: 250px; } button#generateButton svg { width: 18px; height: 18px; } #statusMessage { font-size: 0.85em; } #sharableLink, button#copyButton { font-size: 0.9em; } footer { font-size: 0.8em; } .dateTimeEntry { font-size: 0.85em; } }
         @media (max-width: 360px) { .greeting-message { font-size: 1.5em; } #eidVideo { max-height: 180px; } }
     </style>
+
+    <!-- Adsterra বা Advertica থেকে head-এ বসানোর জন্য কোনো কোড থাকলে এখানে বসান -->
+    <!-- যেমন: <meta name="ad.size" content="width=300,height=250"> (কিছু অ্যাড নেটওয়ার্ক ব্যবহার করে) -->
+    <!-- Adsterra Head Script Placeholder -->
+    <!-- <script type='text/javascript'> // Adsterra Head Script Here </script> -->
+    <!-- Advertica Head Script Placeholder -->
+    <!-- <script type='text/javascript'> // Advertica Head Script Here </script> -->
+
 </head>
 <body lang="bn">
     <canvas id="fireworksCanvas"></canvas>
@@ -63,6 +69,12 @@
         <video id="eidVideo" src="eidmubarak.mp4" autoplay loop muted playsinline preload="metadata">
             Your browser does not support the video tag.
         </video>
+
+        <!-- Adsterra Banner Placeholder 1 (উদাহরণ - যেখানে ব্যানার দেখাতে চান) -->
+        <!-- <div id="adsterra-banner-top-XXXXXXXX" style="margin: 15px auto; text-align: center;"></div> -->
+        <!-- Advertica Banner/Ad Unit Placeholder 1 (উদাহরণ - যেখানে ব্যানার দেখাতে চান) -->
+        <!-- <div id="advertica-unit-YYYYYYYY" style="margin: 15px auto; text-align: center;"></div> -->
+
         <div class="input-group">
             <label for="userNameInput" data-lang-key="yourNameLabel">আপনার নাম লিখুন:</label>
             <input type="text" id="userNameInput" data-lang-key="namePlaceholder" placeholder="এখানে আপনার নাম দিন">
@@ -72,242 +84,58 @@
             </button>
             <div id="statusMessage"></div>
         </div>
+
         <div id="generatedLinkContainer">
-            <p data-lang-key="shareLinkManualText">এই লিঙ্কটি বন্ধুদের সাথে শেয়ার করুন (যদি অটো-শেয়ার কাজ না করে):</p>
-            <input type="text" id="sharableLink" readonly>
-            <button id="copyButton" onclick="copyLink()" data-lang-key="copyButtonText">কপি করুন</button>
+             <!-- ... লিঙ্ক কন্টেইনার ... -->
         </div>
     </div>
     <footer>
-        <p data-lang-key="eidWishesFooter">সবাইকে ঈদের আন্তরিক শুভেচ্ছা!</p>
-        <div id="dateTimeDisplay">
-            <div class="dateTimeEntry">
-                <span id="currentTime"></span> | <span id="currentDate"></span>
-            </div>
-            <div class="dateTimeEntry">
-                <span id="currentHijriDate" data-lang-key="hijriDateLoading">ইসলামী তারিখ পরীক্ষা করা হচ্ছে...</span>
-            </div>
-        </div>
+        <!-- ... ফুটার ... -->
     </footer>
 
+    <!-- HijriDate Library -->
+    <script> (function(global) { /* ... HijriDate Code ... */ })(this); </script>
+
+    <!-- আপনার প্রধান JavaScript কোড -->
     <script>
-    // HijriDate Library (Unchanged)
-    (function(global) { /* ... Your HijriDate Library Code ... */ var HijriDate = {};var floor = Math.floor;var replace = function(template, data) {return template.replace(/\{([\w\.]*)\}/g, function(str, key) {var keys = key.split("."),v = data[keys.shift()];for (var i = 0, l = keys.length; i < l; i++) v = v[keys[i]];return (typeof v !== "undefined" && v !== null) ? v : "";});};var monthDays = [30, 29, 30, 29, 30, 29, 30, 29, 30, 29, 30, 29];var monthNames = ["Muharram", "Safar", "Rabi'ul Awwal", "Rabi'ul Akhir", "Jamadil Awwal", "Jamadil Akhir", "Rajab", "Sha'ban", "Ramadhan", "Shawwal", "Dhul Qa'ada", "Dhul Hijja"];var dayNames = ["Ahad", "Ithnin", "Thulatha", "Arbia'a", "Khamees", "Jomu'a", "Sabt"]; var gLIMIT = 227015;var _HijriDate = function(year, month, date, hour, minute, second, millisecond) {if (year instanceof Date) {var gdate = year;var gYear = gdate.getFullYear(),gMonth = gdate.getMonth(),gDate = gdate.getDate();var julianDayNumber = floor((1461 * (gYear + 4800 + floor((gMonth - 14) / 12))) / 4) + floor((367 * (gMonth - 2 - 12 * (floor((gMonth - 14) / 12)))) / 12) - floor((3 * floor((gYear + 4900 + floor((gMonth - 14) / 12)) / 100)) / 4) + gDate - 32075;var l = julianDayNumber - 1948440 + 10632;var n = floor((l - 1) / 10631);l = l - 10631 * n + 354;var j = (floor((10985 - l) / 5316)) * (floor((50 * l) / 17719)) + (floor(l / 5670)) * (floor((43 * l) / 15238));l = l - (floor((30 - j) / 15)) * (floor((17719 * j) / 50)) - (floor(j / 16)) * (floor((15238 * j) / 43)) + 29;month = floor((24 * l) / 709); date = l - floor((709 * month) / 24); year = 30 * n + j - 30;this._date = date;this._month = month;this._year = year;this._hour = gdate.getHours();this._minute = gdate.getMinutes();this._second = gdate.getSeconds();this._millisecond = gdate.getMilliseconds();var tempGDate = this.toGlobalDate();this._day = tempGDate.getDay();return this;}this._date = date;this._month = month;this._year = year;this._hour = hour || 0;this._minute = minute || 0;this._second = second || 0;this._millisecond = millisecond || 0;var gdateInstance = this.toGlobalDate();this._day = gdateInstance.getDay();return this;};_HijriDate.prototype.getFullYear = function() { return this._year; };_HijriDate.prototype.getMonth = function() { return this._month; };_HijriDate.prototype.getDate = function() { return this._date; };_HijriDate.prototype.getHours = function() { return this._hour; };_HijriDate.prototype.getMinutes = function() { return this._minute; };_HijriDate.prototype.getSeconds = function() { return this._second; };_HijriDate.prototype.getMilliseconds = function() { return this._millisecond; };_HijriDate.prototype.getDay = function() { return this._day; };_HijriDate.prototype.toGlobalDate = function() {var y = this._year;var m = this._month;var d = this._date;var jd = floor((11 * y + 3) / 30) + 354 * y + 30 * m - floor((m - 1) / 2) + d + 1948440 - 386; var gYear, gMonth, gDate;var l,n,i,j;if (jd > 2299160) {l = jd + 68569;n = floor((4 * l) / 146097);l = l - floor((146097 * n + 3) / 4);i = floor((4000 * (l + 1)) / 1461001);l = l - floor((1461 * i) / 4) + 31;j = floor((80 * l) / 2447);gDate = l - floor((2447 * j) / 80);l = floor(j / 11);gMonth = j + 2 - 12 * l;gYear = 100 * (n - 49) + i + l;} else {j = jd + 1402;var k = floor((j - 1) / 1461);l = j - 1461 * k;n = floor((l - 1) / 365) - floor(l / 1461);i = l - 365 * n + 30;gDate = floor((80 * i) / 2447);gMonth = floor(gDate / 11) + i - floor((2447 * floor(gDate / 11)) / 80);gYear = 4 * k + n + floor(gMonth / 3) - 4716;gMonth = (gMonth + 1) % 13;if (gMonth === 0) gMonth = 1;} return new Date(gYear, gMonth - 1, gDate, this._hour, this._minute, this._second, this._millisecond);};_HijriDate.prototype.getMonthName = function() { return monthNames[this._month - 1]; };_HijriDate.prototype.getDayName = function() { return dayNames[this._day]; };HijriDate.JS = { convert: function(gDate) { return new _HijriDate(gDate); }};if (typeof module !== "undefined" && module.exports) { module.exports = HijriDate; } else if (typeof define === "function" && define.amd) { define(HijriDate); } else { global.HijriDate = HijriDate; } }(this));
+        // আপনার সম্পূর্ণ JavaScript কোড এখানে থাকবে
+        const translations = { /* ... */ };
+        // ... (আগের সব JavaScript কোড) ...
     </script>
 
-    <script>
-        const translations = { /* ... Your translations ... */ 'bn': { 'pageTitle':'ঈদ মোবারক!', 'greetingMessage':'ঈদ মোবারক!', 'greetingMessageFrom':'{name} এর পক্ষ থেকে, ঈদ মোবারক!', 'yourNameLabel':'আপনার নাম লিখুন:', 'namePlaceholder':'এখানে আপনার নাম দিন', 'shareButtonText':'WhatsApp এ শেয়ার করুন', 'shareLinkManualText':'এই লিঙ্কটি বন্ধুদের সাথে শেয়ার করুন (যদি অটো-শেয়ার কাজ না করে):', 'copyButtonText':'কপি করুন', 'eidWishesFooter':'সবাইকে ঈদের আন্তরিক শুভেচ্ছা!', 'timeLabel':'সময়', 'dateLabel':'তারিখ', 'hijriDateLabel':'ইসলামী তারিখ', 'hijriYearSuffix':'হিজরি', 'statusEnterName':'অনুগ্রহ করে আপনার নাম লিখুন।', 'statusShareOptions':'শুভেচ্ছা শেয়ার করার জন্য অপশন দেখানো হয়েছে!', 'statusShareError':'শেয়ার অপশন কাজ করেনি/বাতিল হয়েছে। লিঙ্ক কপি করুন।', 'statusNoAutoShare':'আপনার ব্রাউজার অটো-শেয়ার সাপোর্ট করে না। লিঙ্ক কপি করুন।', 'statusLinkCopied':'লিঙ্ক সফলভাবে কপি করা হয়েছে!', 'statusLinkCopiedFallback':'লিঙ্ক কপি করা হয়েছে (ফলব্যাক)!', 'statusCopyError':'দুঃখিত, লিঙ্ক কপি করা যায়নি। নিজে কপি করে নিন।', 'hijriDateLoading':'ইসলামী তারিখ পরীক্ষা করা হচ্ছে...', 'hijriDateError':'ইসলামী তারিখ রূপান্তরে ত্রুটি।', 'hijriCalcError':'হিজরি মাস গণনায় ত্রুটি।', 'hijriNotLoaded':'ইসলামী ক্যালকুলেটর লোড হয়নি.', 'musicPlayError':'মিউজিক প্লে করা যায়নি। ডিভাইস সাউন্ড চেক করুন।' },'en': { 'pageTitle':'Eid Mubarak!', 'greetingMessage':'Eid Mubarak!', 'greetingMessageFrom':'Eid Mubarak from {name}!', 'yourNameLabel':'Enter your name:', 'namePlaceholder':'Enter your name here', 'shareButtonText':'Share on WhatsApp', 'shareLinkManualText':'Share this link with friends (if auto-share doesn\'t work):', 'copyButtonText':'Copy', 'eidWishesFooter':'Eid greetings to everyone!', 'timeLabel':'Time', 'dateLabel':'Date', 'hijriDateLabel':'Islamic Date', 'hijriYearSuffix':'AH', 'statusEnterName':'Please enter your name.', 'statusShareOptions':'Share options are shown!', 'statusShareError':'Share option failed/cancelled. Please copy the link.', 'statusNoAutoShare':'Your browser does not support auto-share. Please copy the link.', 'statusLinkCopied':'Link copied successfully!', 'statusLinkCopiedFallback':'Link copied (fallback)!', 'statusCopyError':'Sorry, could not copy the link. Please copy it manually.', 'hijriDateLoading':'Checking Islamic date...', 'hijriDateError':'Error in Islamic date conversion.', 'hijriCalcError':'Error in Hijri month calculation.', 'hijriNotLoaded':'Islamic calendar not loaded.', 'musicPlayError':'Could not play music. Check device sound.' }};
-        let currentLang = 'bn';
-        let userTimeZone = 'Etc/UTC'; 
-        let userLocale = 'bn-BD'; 
-        
-        const backgroundMusic = document.getElementById('backgroundMusic');
-        const userNameInput = document.getElementById('userNameInput');
-        const generateButton = document.getElementById('generateButton');
-        const statusMessageDiv = document.getElementById('statusMessage');
-        let statusTimeout;
-        
-        const currentTimeEl = document.getElementById('currentTime');
-        const currentDateEl = document.getElementById('currentDate');
-        const currentHijriDateEl = document.getElementById('currentHijriDate');
-        const greetingMessageEl = document.getElementById('greetingMessage');
-        const eidVideoEl = document.getElementById('eidVideo'); 
+    <!-- 
+        ==================================================
+        ADVERTISEMENT SCRIPTS - REPLACE WITH YOUR ACTUAL CODES
+        ==================================================
+    -->
 
-        let timeOffset = 0;
-        let initialTimeSynced = false;
-        let musicPlayAttemptedOnInteraction = false; // Tracks if music play was tried on general interaction
+    <!-- Advertica.com Ad Script (উদাহরণ - আপনার আসল কোড ব্যবহার করুন) -->
+    <!-- Example: Popunder or General Purpose Script -->
+    <!-- <script type="text/javascript" src="//data258.click/YOUR_ADVERTICA_CODE_HERE"></script> -->
+    
+    <!-- Example: Banner Script with Container (যদি Advertica এভাবে কোড দেয়) -->
+    <!-- 
+        <script type="text/javascript">
+            // Advertica banner config here
+        </script>
+        <script type="text/javascript" src="//ADVERTICA_BANNER_JS_URL"></script> 
+    -->
 
-        const bengaliHijriMonths = ["মহররম","সফর","রবিউল আউয়াল","রবিউস সানি","জমাদিউল আউয়াল","জমাদিউস সানি","রজব","শাবান","রমজান","শাওয়াল","জ্বিলকদ","জ্বিলহজ্জ"];
-        const englishHijriMonths = ["Muharram","Safar","Rabi' al-awwal","Rabi' al-thani","Jumada al-awwal","Jumada al-thani","Rajab","Sha'ban","Ramadan","Shawwal","Dhu al-Qi'dah","Dhu al-Hijjah"];
 
-        function getTranslation(key, params = {}) { let text=translations[currentLang]?.[key]||translations['en']?.[key]||key;for(const param in params){text=text.replace(`{${param}}`,params[param]);}return text; }
-        function applyTranslations() { document.querySelectorAll('[data-lang-key]').forEach(element=>{const key=element.getAttribute('data-lang-key');if(element.tagName==='INPUT'&&element.hasAttribute('placeholder')){element.placeholder=getTranslation(key);}else{element.textContent=getTranslation(key);}});document.title=getTranslation('pageTitle');}
-        function toNativeNumeral(numStr, lang) { if(lang.startsWith('bn')){const bengaliDigits=['০','১','২','৩','৪','৫','৬','৭','৮','৯'];return String(numStr).split('').map(digit=>/\d/.test(digit)?bengaliDigits[parseInt(digit)]:digit).join('');}return String(numStr); }
-        
-        async function fetchWithTimeout(resource, options = {}, timeout = 8000) { // 8 second timeout
-            const controller = new AbortController();
-            const id = setTimeout(() => controller.abort(), timeout);
-            try {
-                const response = await fetch(resource, {
-                    ...options,
-                    signal: controller.signal  
-                });
-                clearTimeout(id);
-                return response;
-            } catch (error) {
-                clearTimeout(id);
-                throw error; // Re-throw to be caught by calling function
-            }
-        }
+    <!-- Adsterra.com Ad Scripts (উদাহরণ - আপনার আসল কোড ব্যবহার করুন) -->
+    <!-- Example: Popunder Script -->
+    <!-- <script type='text/javascript' src='//ADSTERRA_OFFICIAL_DOMAIN.com/YOUR_POPONDER_CODE.js'></script> -->
 
-        async function fetchUserLocationAndSetLanguage() { 
-            let browserLang=(navigator.languages&&navigator.languages[0])||navigator.language||'bn-BD';
-            if(browserLang.toLowerCase().startsWith('en')){currentLang='en';userLocale='en-US';}
-            else if(browserLang.toLowerCase().startsWith('bn')){currentLang='bn';userLocale='bn-BD';}
-            else{currentLang='en';userLocale='en-US';} 
-            document.body.lang=currentLang;
-            console.log(`App language: ${currentLang}, Locale: ${userLocale}`);
-            applyTranslations();
+    <!-- Example: Social Bar Script -->
+    <!-- <script type='text/javascript' src='//ADSTERRA_OFFICIAL_DOMAIN.com/YOUR_SOCIALBAR_CODE.js'></script> -->
+    
+    <!-- Example: Banner Script (যদি ব্যানার div এর পরে লোড করতে হয়) -->
+    <!-- 
+        <script type="text/javascript">
+            // Adsterra banner config here (e.g., atOptions = { 'key' : 'YOUR_KEY', ... })
+        </script>
+        <script type="text/javascript" src="//ADSTERRA_BANNER_JS_DOMAIN.com/YOUR_SCRIPT.js"></script> 
+    -->
 
-            try{
-                console.log("Attempting to fetch timezone from ip-api.com...");
-                const response = await fetchWithTimeout('https://ip-api.com/json/?fields=status,message,timezone,countryCode', { cache: 'no-store' });
-                if(!response.ok) throw new Error(`IP API HTTP error! status: ${response.status}`);
-                const data=await response.json();
-                if(data.status==='success'&&data.timezone){
-                    userTimeZone=data.timezone;
-                    console.log('User timezone from IP API:',userTimeZone);
-                } else {
-                    console.warn('Failed to get timezone from IP API, using default UTC. Message:',data.message);
-                    userTimeZone='Etc/UTC';
-                }
-            } catch(error){
-                console.error("Error fetching user timezone from IP API:", error.name, error.message);
-                userTimeZone='Etc/UTC'; 
-            }
-        }
-
-        async function fetchCorrectTime() {
-            let finalTimeZone = userTimeZone; // Use the timezone determined by ip-api or default
-            let success = false;
-            try {
-                console.log(`Attempting to fetch time for timezone: ${finalTimeZone}`);
-                const response = await fetchWithTimeout(`https://worldtimeapi.org/api/timezone/${finalTimeZone}`, { cache: 'no-store' });
-                
-                if (response.ok) {
-                    const data = await response.json();
-                    const serverTime = new Date(data.utc_datetime); // Use utc_datetime for consistency
-                    const clientTimeAtFetch = new Date();
-                    timeOffset = serverTime.getTime() - clientTimeAtFetch.getTime();
-                    initialTimeSynced = true;
-                    // Update userTimeZone if API returns a canonical one (e.g. from 'Etc/UTC' if that was used)
-                    userTimeZone = data.timezone; 
-                    console.log(`Time synced with ${data.timezone}. Offset: ${timeOffset} ms. Current userTimeZone: ${userTimeZone}`);
-                    success = true;
-                } else {
-                    let errorText = "";
-                    try { errorText = await response.text(); } catch (e) { /* ignore */ }
-                    console.error(`WorldTimeAPI HTTP error! Status: ${response.status} for timezone: ${finalTimeZone}. Response: ${errorText}`);
-                    if (finalTimeZone !== 'Etc/UTC') { // If specific timezone failed, try UTC as fallback
-                        console.warn(`Falling back to Etc/UTC due to error with timezone: ${finalTimeZone}`);
-                        userTimeZone = 'Etc/UTC'; // Set global for next attempt
-                        return await fetchCorrectTime(); // Recursive call to try with Etc/UTC
-                    }
-                    // If 'Etc/UTC' also fails, it will fall through to the catch block
-                    throw new Error(`WorldTimeAPI HTTP error! Status: ${response.status} even for Etc/UTC. Response: ${errorText}`);
-                }
-            } catch (error) {
-                console.error("Finally failed to fetch correct time from WorldTimeAPI:", error.name, error.message);
-                if (error.name === 'AbortError') {
-                    console.error("Fetch timed out for WorldTimeAPI.");
-                }
-                console.warn("Using local device time as fallback. Ensure device clock is accurate.");
-                timeOffset = 0; 
-                initialTimeSynced = false;
-                // userTimeZone remains as the last attempted (e.g. Etc/UTC if fallback was tried) or initial default
-            }
-            updateTimeDate(); 
-            return success; // Return status of time sync
-        }
-        
-        function initializeDateTimeDisplay() { if(!currentTimeEl||!currentDateEl||!currentHijriDateEl){console.error("Date/Time elements not found"); return;}updateTimeDate();setInterval(updateTimeDate,1000); }
-        function updateTimeDate() { const clientNow=new Date();const correctedNow=new Date(clientNow.getTime()+timeOffset);const timeOptions={hour:'numeric',minute:'2-digit',second:'2-digit',hour12:true,timeZone:userTimeZone};let timeString;try{timeString=correctedNow.toLocaleTimeString(userLocale,timeOptions);}catch(e){const fallbackTimeOptions = {hour:'numeric',minute:'2-digit',second:'2-digit',hour12:true}; timeString=correctedNow.toLocaleTimeString(userLocale, fallbackTimeOptions); console.warn(`Error formatting time with TZ ${userTimeZone}, using system TZ. Error: ${e.message}`);}if(currentTimeEl)currentTimeEl.textContent=`${getTranslation('timeLabel')}: ${timeString}`;const dateOptions={day:'numeric',month:'long',year:'numeric',timeZone:userTimeZone};let dateString;try{dateString=correctedNow.toLocaleDateString(userLocale,dateOptions);}catch(e){const fallbackDateOptions = {day:'numeric',month:'long',year:'numeric'}; dateString=correctedNow.toLocaleDateString(userLocale,fallbackDateOptions); console.warn(`Error formatting date with TZ ${userTimeZone}, using system TZ. Error: ${e.message}`);}if(currentDateEl)currentDateEl.textContent=`${getTranslation('dateLabel')}: ${dateString}`;if(currentHijriDateEl){if(typeof HijriDate!=='undefined'&&HijriDate.JS&&typeof HijriDate.JS.convert==='function'){try{const hijriInstance=HijriDate.JS.convert(correctedNow);if(hijriInstance&&typeof hijriInstance.getDate==='function'){const hijriDay=toNativeNumeral(hijriInstance.getDate(),currentLang);const hijriMonthIndex=hijriInstance.getMonth()-1;const hijriMonths=currentLang==='bn'?bengaliHijriMonths:englishHijriMonths;if(hijriMonthIndex>=0&&hijriMonthIndex<hijriMonths.length){const hijriMonthName=hijriMonths[hijriMonthIndex];const hijriYear=toNativeNumeral(hijriInstance.getFullYear(),currentLang);currentHijriDateEl.textContent=`${getTranslation('hijriDateLabel')}: ${hijriDay} ${hijriMonthName}, ${hijriYear} ${getTranslation('hijriYearSuffix')}`;}}else{throw new Error("HijriDate conversion returned invalid object.");}}catch(e){currentHijriDateEl.textContent=getTranslation('hijriDateError');console.error("Error updating Hijri date:", e);}}else{currentHijriDateEl.textContent=getTranslation('hijriNotLoaded');}}}
-        
-        function attemptMusicPlay(interactionType = "unknown") {
-            if (backgroundMusic && backgroundMusic.paused) {
-                console.log(`Attempting music play due to ${interactionType} interaction...`);
-                const playPromise = backgroundMusic.play();
-                if (playPromise !== undefined) {
-                    playPromise.then(() => {
-                        console.log(`Music started successfully via ${interactionType} interaction.`);
-                        document.body.removeEventListener('click', handleFirstUserInteraction);
-                        document.body.removeEventListener('touchstart', handleFirstUserInteraction);
-                    }).catch(error => {
-                        console.warn(`Music play failed via ${interactionType} interaction:`, error.name, error.message);
-                    });
-                }
-            } else if (backgroundMusic && !backgroundMusic.paused) {
-                console.log(`Music already playing (interaction: ${interactionType}).`);
-            } else if (!backgroundMusic) {
-                console.error("backgroundMusic element not found during attemptMusicPlay.");
-            }
-        }
-
-        function handleFirstUserInteraction(event) {
-            console.log(`First user interaction (type: ${event.type}) on body detected.`);
-            if (!musicPlayAttemptedOnInteraction) { 
-                attemptMusicPlay(`general body ${event.type}`);
-                musicPlayAttemptedOnInteraction = true;
-            }
-        }
-
-        window.onload = async function() {
-            console.log("Window onload sequence started.");
-            await fetchUserLocationAndSetLanguage(); 
-            await fetchCorrectTime(); 
-            
-            const urlParams = new URLSearchParams(window.location.search);
-            const sharerNameParam = urlParams.get('name');
-            
-            if (sharerNameParam) {
-                greetingMessageEl.textContent = getTranslation('greetingMessageFrom', {name: decodeURIComponent(sharerNameParam)});
-            } else {
-                greetingMessageEl.textContent = getTranslation('greetingMessage');
-            }
-            greetingMessageEl.style.animation = 'none';
-            greetingMessageEl.offsetHeight; 
-            greetingMessageEl.style.animation = null;
-
-            if (backgroundMusic) {
-                console.log("Attempting initial background music play (unmuted)...");
-                const playPromise = backgroundMusic.play();
-                if (playPromise !== undefined) {
-                    playPromise.then(() => {
-                        console.log("Background music autoplay (unmuted) successful on load.");
-                    }).catch(error => { 
-                        console.warn("Background music autoplay (unmuted) prevented on load:", error.name, error.message);
-                        if (error.name === 'NotAllowedError') { 
-                            console.log("Adding general click/touch listeners to body for music play.");
-                            document.body.addEventListener('click', handleFirstUserInteraction, { once: true });
-                            document.body.addEventListener('touchstart', handleFirstUserInteraction, { once: true });
-                        }
-                    });
-                }
-            } else {
-                console.error("backgroundMusic element not found!");
-            }
-            
-            if (eidVideoEl) {
-                const videoPlayPromise = eidVideoEl.play();
-                 if (videoPlayPromise !== undefined) {
-                    videoPlayPromise.catch(error => {
-                        console.warn("Video autoplay was prevented:", error.name, error.message);
-                    });
-                }
-                eidVideoEl.onerror = function() {
-                    console.error("Error loading video. Check video path and format.");
-                };
-            }
-
-            generateButton.disabled = true;
-            startFireworks();
-            animateFireworks();
-            initializeDateTimeDisplay(); 
-            console.log("Window onload sequence finished.");
-        };
-
-        userNameInput.addEventListener('input', function() { generateButton.disabled = userNameInput.value.trim() === ""; });
-        function showStatusMessage(messageKey, type = 'info', duration = 3000, params = {}) { clearTimeout(statusTimeout); statusMessageDiv.textContent = getTranslation(messageKey, params); statusMessageDiv.className = ''; statusMessageDiv.classList.add(type); statusMessageDiv.style.display = 'block'; setTimeout(() => { statusMessageDiv.style.opacity = '1'; }, 10); statusTimeout = setTimeout(() => { statusMessageDiv.style.opacity = '0'; setTimeout(() => { statusMessageDiv.style.display = 'none'; }, 500); }, duration); }
-        async function generateAndShareLink() { const userName = userNameInput.value.trim(); if (userName === "") { showStatusMessage("statusEnterName", "error"); return; } attemptMusicPlay("share button click"); const currentUrl = new URL(window.location.href); currentUrl.searchParams.set('name', userName); const newLink = currentUrl.toString(); const sharerNameForMessage = decodeURIComponent(userName); const shareText = getTranslation('greetingMessageFrom', {name: sharerNameForMessage}) + ` ${getTranslation('pageTitle')}! ${newLink}`; if (navigator.share) { try { await navigator.share({ title: getTranslation('pageTitle'), text: shareText, url: newLink }); showStatusMessage('statusShareOptions', 'success', 1000); document.getElementById('generatedLinkContainer').style.display = 'none'; } catch (error) { console.error("Error during navigator.share:", error); showManualLink(newLink); showStatusMessage('statusShareError', 'info', 4000); } } else { showManualLink(newLink); showStatusMessage('statusNoAutoShare', 'info', 4000); } userNameInput.value = ''; generateButton.disabled = true; }
-        function showManualLink(link) { const sharableLinkInput = document.getElementById('sharableLink'); sharableLinkInput.value = link; document.getElementById('generatedLinkContainer').style.display = 'block'; }
-        function copyLink() { const sharableLinkInput = document.getElementById('sharableLink'); sharableLinkInput.select(); sharableLinkInput.setSelectionRange(0, 99999); try { navigator.clipboard.writeText(sharableLinkInput.value) .then(() => { showStatusMessage("statusLinkCopied", "success"); }) .catch(err => { console.error("Clipboard API copy failed:", err); if(document.execCommand('copy')) { showStatusMessage("statusLinkCopiedFallback", "success"); } else { showStatusMessage("statusCopyError", "error", 4000); } }); } catch (err) { console.error("Clipboard API not available or other error:", err); if(document.execCommand('copy')) { showStatusMessage("statusLinkCopiedFallback", "success"); } else { showStatusMessage("statusCopyError", "error", 4000); } } }
-        
-        const canvas = document.getElementById('fireworksCanvas'); const ctx = canvas.getContext('2d'); canvas.width = window.innerWidth; canvas.height = window.innerHeight; let fireworks = []; let particles = []; const fireworkLaunchProbability = 0.025; const maxFireworksAtOnce = 8;
-        function Firework(startX, startY, targetX, targetY) { this.x = startX; this.y = startY; this.startX = startX; this.startY = startY; this.targetX = targetX; this.targetY = targetY; this.distanceToTarget = Math.sqrt(Math.pow(targetX - startX, 2) + Math.pow(targetY - startY, 2)); this.distanceTraveled = 0; this.trail = []; this.angle = Math.atan2(targetY - startY, targetX - startX); this.speed = 4; this.acceleration = 1.05 + Math.random() * 0.03; this.brightness = Math.random() * 70 + 50; this.color = `hsl(${Math.random()*360}, 100%, ${this.brightness}%)`; this.lineWidth = Math.random()*2.5+1.5; } Firework.prototype.update = function(index) { this.trail.push({x:this.x, y:this.y}); if (this.trail.length > 8) this.trail.shift(); this.speed *= this.acceleration; let vx = Math.cos(this.angle) * this.speed; let vy = Math.sin(this.angle) * this.speed; this.distanceTraveled = Math.sqrt(Math.pow(this.x - this.startX, 2) + Math.pow(this.y - this.startY, 2)); if (this.distanceTraveled >= this.distanceToTarget || this.y < this.targetY) { createParticles(this.targetX, this.targetY, this.color); fireworks.splice(index, 1); } else { this.x += vx; this.y += vy; } }; Firework.prototype.draw = function() { ctx.beginPath(); if(this.trail.length > 0) { ctx.moveTo(this.trail[this.trail.length-1].x, this.trail[this.trail.length-1].y); } else { ctx.moveTo(this.x - Math.cos(this.angle)*10, this.y - Math.sin(this.angle)*10); } ctx.lineTo(this.x, this.y); ctx.strokeStyle = this.color; ctx.lineWidth = this.lineWidth; ctx.stroke(); ctx.beginPath(); ctx.arc(this.x, this.y, this.lineWidth+2, 0, Math.PI*2); ctx.fillStyle = this.color.replace(')', ', 0.4)').replace('hsl', 'hsla'); ctx.fill(); };
-        function Particle(x,y,color) { this.x=x; this.y=y; this.angle=Math.random()*Math.PI*2; this.speed=Math.random()*18+5; this.friction=0.96+Math.random()*0.01; this.gravity=0.9+Math.random()*0.6; this.alpha=1; this.decay=Math.random()*0.025+0.020; this.color=color; this.size=Math.random()*3.5+1.5; } Particle.prototype.update = function(index) { this.speed *= this.friction; this.x += Math.cos(this.angle)*this.speed; this.y += Math.sin(this.angle)*this.speed + this.gravity; this.alpha -= this.decay; if (this.alpha <= this.decay) { particles.splice(index,1); } }; Particle.prototype.draw = function() { ctx.save(); ctx.globalAlpha = this.alpha; ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI*2, false); ctx.fillStyle = this.color; ctx.fill(); ctx.restore(); };
-        function createParticles(x,y,color) { let particleCount = 120 + Math.floor(Math.random()*60); while(particleCount--) { particles.push(new Particle(x,y,color)); } } function launchFirework() { if (fireworks.length < maxFireworksAtOnce && Math.random() < fireworkLaunchProbability) { const startX = Math.random()*canvas.width/2 + canvas.width/4; const startY = canvas.height; const targetX = Math.random()*canvas.width; const targetY = Math.random()*(canvas.height/1.8); fireworks.push(new Firework(startX,startY,targetX,targetY)); } }
-        function startFireworks() { for(let i=0; i<4+Math.floor(Math.random()*4); i++) { setTimeout(() => { const startX = Math.random()*canvas.width/2 + canvas.width/4; const startY = canvas.height; const targetX = Math.random()*canvas.width; const targetY = Math.random()*(canvas.height/1.8); fireworks.push(new Firework(startX,startY,targetX,targetY)); }, i*(150+Math.random()*200)); } }
-        function animateFireworks() { requestAnimationFrame(animateFireworks); ctx.fillStyle = 'rgba(0,0,0,0.12)'; ctx.fillRect(0,0,canvas.width,canvas.height); launchFirework(); fireworks.forEach((firework,index) => {firework.update(index); firework.draw();}); particles.forEach((particle,index) => {particle.update(index); particle.draw();}); } window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
-    </script>
 </body>
 </html>
