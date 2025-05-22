@@ -7,10 +7,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"> <!-- For English -->
     <style>
-        /* CSS কোড অপরিবর্তিত থাকবে */
         body[lang="bn"] { font-family: 'Noto Sans Bengali', 'Arial', sans-serif; }
         body[lang="en"] { font-family: 'Roboto', 'Arial', sans-serif; }
-        /* ... (বাকি CSS আগের মতো) ... */
         body {
             background: linear-gradient(to bottom, #001c00, #003800, #004d00);
             color: #f0e68c;
@@ -25,183 +23,30 @@
             overflow-x: hidden;
             position: relative;
         }
-
-        #fireworksCanvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-        }
-
-        .container {
-            background-color: rgba(1, 32, 1, 0.88);
-            padding: 30px 35px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
-            max-width: 500px;
-            width: 90%;
-            border: 2px solid #ffd700;
-            position: relative;
-            z-index: 1;
-            margin-top: 5vh;
-            margin-bottom: 2vh;
-        }
-
-        #eidImage { /* GIF এর জন্য স্টাইল */
-            max-width: 100%;
-            height: auto; /* অথবা নির্দিষ্ট উচ্চতা দিতে পারো, যেমন 250px */
-            max-height: 280px; /* একটি সর্বোচ্চ উচ্চতা সেট করা যেতে পারে */
-            object-fit: contain; /* ছবিটি যেন কেটে না যায় */
-            border-radius: 15px;
-            margin-bottom: 25px;
-            border: 4px solid #ffd700;
-            box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
-            background-color: #001000; /* যদি GIF এর ব্যাকগ্রাউন্ড ট্রান্সপারেন্ট হয় */
-        }
-
-        .greeting-message {
-            font-size: 2.2em;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 25px;
-            text-shadow: 2px 2px 5px rgba(0,0,0,0.7);
-            animation: fadeInGrow 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-
-        @keyframes fadeInGrow {
-            0% { opacity: 0; transform: scale(0.7) translateY(30px); }
-            100% { opacity: 1; transform: scale(1) translateY(0); }
-        }
-
-        .input-group {
-            margin-top: 30px;
-            margin-bottom: 15px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 10px;
-            color: #f0e68c;
-            font-weight: bold;
-            font-size: 1.1em;
-        }
-
-        input[type="text"] {
-            width: calc(100% - 26px);
-            padding: 13px;
-            margin-bottom: 18px;
-            border: 2px solid #ffd700;
-            border-radius: 10px;
-            box-sizing: border-box;
-            font-size: 1em;
-            background-color: #002a00;
-            color: #fff;
-        }
+        #fireworksCanvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; }
+        .container { background-color: rgba(1, 32, 1, 0.88); padding: 30px 35px; border-radius: 20px; box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3); max-width: 500px; width: 90%; border: 2px solid #ffd700; position: relative; z-index: 1; margin-top: 5vh; margin-bottom: 2vh; }
+        #eidImage { max-width: 100%; height: auto; max-height: 280px; object-fit: contain; border-radius: 15px; margin-bottom: 25px; border: 4px solid #ffd700; box-shadow: 0 0 15px rgba(255, 215, 0, 0.5); background-color: #001000; }
+        .greeting-message { font-size: 2.2em; font-weight: 700; color: #fff; margin-bottom: 25px; text-shadow: 2px 2px 5px rgba(0,0,0,0.7); animation: fadeInGrow 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+        @keyframes fadeInGrow { 0% { opacity: 0; transform: scale(0.7) translateY(30px); } 100% { opacity: 1; transform: scale(1) translateY(0); } }
+        .input-group { margin-top: 30px; margin-bottom: 15px; }
+        label { display: block; margin-bottom: 10px; color: #f0e68c; font-weight: bold; font-size: 1.1em; }
+        input[type="text"] { width: calc(100% - 26px); padding: 13px; margin-bottom: 18px; border: 2px solid #ffd700; border-radius: 10px; box-sizing: border-box; font-size: 1em; background-color: #002a00; color: #fff; }
         input[type="text"]::placeholder { color: #b0a060; }
-
-        button#generateButton {
-            background-color: #25D366;
-            color: #fff;
-            padding: 10px 18px;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 1.0em;
-            font-weight: bold;
-            transition: background-color 0.3s ease, transform 0.2s ease, opacity 0.3s ease;
-            letter-spacing: 0.5px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            max-width: 300px;
-            margin: 0 auto;
-        }
-        button#generateButton svg {
-            width: 22px;
-            height: 22px;
-            margin-right: 8px;
-            fill: #fff;
-        }
-        button#generateButton:disabled {
-            background-color: #cccccc;
-            color: #666666;
-            cursor: not-allowed;
-            opacity: 0.7;
-        }
-        button#generateButton:disabled svg {
-            fill: #666666;
-        }
-        button#generateButton:not(:disabled):hover {
-            background-color: #1DAE54;
-            transform: translateY(-2px) scale(1.03);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.4);
-        }
+        button#generateButton { background-color: #25D366; color: #fff; padding: 10px 18px; border: none; border-radius: 10px; cursor: pointer; font-size: 1.0em; font-weight: bold; transition: background-color 0.3s ease, transform 0.2s ease, opacity 0.3s ease; letter-spacing: 0.5px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; width: 100%; max-width: 300px; margin: 0 auto; }
+        button#generateButton svg { width: 22px; height: 22px; margin-right: 8px; fill: #fff; }
+        button#generateButton:disabled { background-color: #cccccc; color: #666666; cursor: not-allowed; opacity: 0.7; }
+        button#generateButton:disabled svg { fill: #666666; }
+        button#generateButton:not(:disabled):hover { background-color: #1DAE54; transform: translateY(-2px) scale(1.03); box-shadow: 0 6px 12px rgba(0,0,0,0.4); }
         button#generateButton:not(:disabled):active { transform: translateY(0px) scale(1); }
-
-        #statusMessage {
-            padding: 10px;
-            margin-top: 10px;
-            margin-bottom: 10px;
-            border-radius: 8px;
-            font-size: 0.95em;
-            display: none;
-            opacity: 0;
-            transition: opacity 0.5s ease-in-out;
-        }
-        #statusMessage.success { background-color: #1DAE54; color: white; }
-        #statusMessage.error { background-color: #d9534f; color: white; }
-        #statusMessage.info { background-color: #5bc0de; color: white; }
-
-        #generatedLinkContainer {
-            margin-top: 20px;
-            padding: 18px;
-            background-color: rgba(0, 0, 0, 0.4);
-            border-radius: 10px;
-            border: 1px solid #DAA520;
-            display: none;
-        }
+        #statusMessage { padding: 10px; margin-top: 10px; margin-bottom: 10px; border-radius: 8px; font-size: 0.95em; display: none; opacity: 0; transition: opacity 0.5s ease-in-out; }
+        #statusMessage.success { background-color: #1DAE54; color: white; } #statusMessage.error { background-color: #d9534f; color: white; } #statusMessage.info { background-color: #5bc0de; color: white; }
+        #generatedLinkContainer { margin-top: 20px; padding: 18px; background-color: rgba(0, 0, 0, 0.4); border-radius: 10px; border: 1px solid #DAA520; display: none; }
         #generatedLinkContainer p { color: #f0e68c; margin-bottom: 10px; }
-
-        #sharableLink {
-            width: calc(100% - 125px);
-            padding: 12px;
-            border: 1px solid #DAA520;
-            border-radius: 8px;
-            margin-right: 10px;
-            box-sizing: border-box;
-            background-color: #002a00;
-            color: #fff;
-        }
-
-        button#copyButton {
-            padding: 12px 18px;
-            background-color: #B8860B;
-            color: #fff;
-            font-size: 1em;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
+        #sharableLink { width: calc(100% - 125px); padding: 12px; border: 1px solid #DAA520; border-radius: 8px; margin-right: 10px; box-sizing: border-box; background-color: #002a00; color: #fff; }
+        button#copyButton { padding: 12px 18px; background-color: #B8860B; color: #fff; font-size: 1em; border: none; border-radius: 8px; cursor: pointer; transition: background-color 0.3s ease; }
         button#copyButton:hover { background-color: #DAA520; }
-
-        footer {
-            margin-top: 20px;
-            font-size: 0.9em;
-            color: #f0e68c;
-            position: relative;
-            z-index: 1;
-            padding-bottom: 20px;
-        }
-        .dateTimeEntry {
-            margin-top: 5px;
-            font-size: 0.95em;
-        }
-        .dateTimeEntry span { margin: 0 3px; }
+        footer { margin-top: 20px; font-size: 0.9em; color: #f0e68c; position: relative; z-index: 1; padding-bottom: 20px; }
+        .dateTimeEntry { margin-top: 5px; font-size: 0.95em; } .dateTimeEntry span { margin: 0 3px; }
     </style>
 </head>
 <body lang="bn">
@@ -210,8 +55,7 @@
 
     <div class="container">
         <div id="greetingMessage" class="greeting-message"></div>
-        <!-- img ট্যাগের src প্রথমে খালি রাখা যেতে পারে অথবা প্রথম GIF টি দেওয়া যেতে পারে -->
-        <img id="eidImage" src="" alt="Eid Mubarak Animation">
+        <img id="eidImage" src="" alt="Eid Mubarak Animation"> <!-- Initial src is empty -->
         <div class="input-group">
             <label for="userNameInput" data-lang-key="yourNameLabel">আপনার নাম লিখুন:</label>
             <input type="text" id="userNameInput" data-lang-key="namePlaceholder" placeholder="এখানে আপনার নাম দিন">
@@ -257,7 +101,6 @@
     </script>
 
     <script>
-        // ... (translations এবং অন্যান্য ভ্যারিয়েবল আগের মতোই থাকবে) ...
         const translations={'bn':{'pageTitle':'ঈদ মোবারক!','greetingMessage':'ঈদ মোবারক!','greetingMessageFrom':'{name} এর পক্ষ থেকে, ঈদ মোবারক!','yourNameLabel':'আপনার নাম লিখুন:','namePlaceholder':'এখানে আপনার নাম দিন','shareButtonText':'WhatsApp এ শেয়ার করুন','shareLinkManualText':'এই লিঙ্কটি বন্ধুদের সাথে শেয়ার করুন (যদি অটো-শেয়ার কাজ না করে):','copyButtonText':'কপি করুন','eidWishesFooter':'সবাইকে ঈদের আন্তরিক শুভেচ্ছা!','timeLabel':'সময়','dateLabel':'তারিখ','hijriDateLabel':'ইসলামী তারিখ','hijriYearSuffix':'হিজরি','statusEnterName':'অনুগ্রহ করে আপনার নাম লিখুন।','statusShareOptions':'শুভেচ্ছা শেয়ার করার জন্য অপশন দেখানো হয়েছে!','statusShareError':'শেয়ার অপশন কাজ করেনি/বাতিল হয়েছে। লিঙ্ক কপি করুন।','statusNoAutoShare':'আপনার ব্রাউজার অটো-শেয়ার সাপোর্ট করে না। লিঙ্ক কপি করুন।','statusLinkCopied':'লিঙ্ক সফলভাবে কপি করা হয়েছে!','statusLinkCopiedFallback':'লিঙ্ক কপি করা হয়েছে (ফলব্যাক)!','statusCopyError':'দুঃখিত, লিঙ্ক কপি করা যায়নি। নিজে কপি করে নিন।','hijriDateLoading':'ইসলামী তারিখ পরীক্ষা করা হচ্ছে...','hijriDateError':'ইসলামী তারিখ রূপান্তরে ত্রুটি।','hijriCalcError':'হিজরি মাস গণনায় ত্রুটি।','hijriNotLoaded':'ইসলামী ক্যালকুলেটর লোড হয়নি।'},'en':{'pageTitle':'Eid Mubarak!','greetingMessage':'Eid Mubarak!','greetingMessageFrom':'Eid Mubarak from {name}!','yourNameLabel':'Enter your name:','namePlaceholder':'Enter your name here','shareButtonText':'Share on WhatsApp','shareLinkManualText':'Share this link with friends (if auto-share doesn\'t work):','copyButtonText':'Copy','eidWishesFooter':'Eid greetings to everyone!','timeLabel':'Time','dateLabel':'Date','hijriDateLabel':'Islamic Date','hijriYearSuffix':'AH','statusEnterName':'Please enter your name.','statusShareOptions':'Share options are shown!','statusShareError':'Share option failed/cancelled. Please copy the link.','statusNoAutoShare':'Your browser does not support auto-share. Please copy the link.','statusLinkCopied':'Link copied successfully!','statusLinkCopiedFallback':'Link copied (fallback)!','statusCopyError':'Sorry, could not copy the link. Please copy it manually.','hijriDateLoading':'Checking Islamic date...','hijriDateError':'Error in Islamic date conversion.','hijriCalcError':'Error in Hijri month calculation.','hijriNotLoaded':'Islamic calendar not loaded.'}};
         let currentLang='bn';let userTimeZone='Etc/UTC';let userLocale='bn-BD';
         const backgroundMusic=document.getElementById('backgroundMusic');const userNameInput=document.getElementById('userNameInput');const generateButton=document.getElementById('generateButton');const statusMessageDiv=document.getElementById('statusMessage');let statusTimeout;
@@ -265,26 +108,28 @@
         let timeOffset=0;let initialTimeSynced=false;
         const bengaliHijriMonths=["মহররম","সফর","রবিউল আউয়াল","রবিউস সানি","জমাদিউল আউয়াল","জমাদিউস সানি","রজব","শাবান","রমজান","শাওয়াল","জ্বিলকদ","জ্বিলহজ্জ"];const englishHijriMonths=["Muharram","Safar","Rabi' al-awwal","Rabi' al-thani","Jumada al-awwal","Jumada al-thani","Rajab","Sha'ban","Ramadan","Shawwal","Dhu al-Qi'dah","Dhu al-Hijjah"];
         
-        // নতুন: GIF ফাইলের তালিকা (তোমার রিপোজিটরির নাম অনুযায়ী)
-        const eidGifList = [
-            "eidmubarak.gif",   "eidmubarak1.gif",  "eidmubarak2.gif",  "eidmubarak3.gif",
-            "eidmubarak4.gif",  "eidmubarak5.gif",  "eidmubarak6.gif",  "eidmubarak7.gif",
-            "eidmubarak8.gif",  "eidmubarak9.gif",  "eidmubarak10.gif", "eidmubarak11.gif",
+        const eidGifList = [ /* তোমার রিপোজিটরি অনুযায়ী সঠিক ফাইলের নাম দাও */
+            "eidmubarak.gif", "eidmubarak1.gif", "eidmubarak2.gif", "eidmubarak3.gif",
+            "eidmubarak4.gif", "eidmubarak5.gif", "eidmubarak6.gif", "eidmubarak7.gif",
+            "eidmubarak8.gif", "eidmubarak9.gif", "eidmubarak10.gif", "eidmubarak11.gif",
             "eidmubarak12.gif", "eidmubarak13.gif", "eidmubarak14.gif", "eidmubarak15.gif",
             "eidmubarak16.gif", "eidmubarak17.gif", "eidmubarak18.gif", "eidmubarak19.gif",
-            "eidmubarak20.gif"
-            // যদি তোমার eidmubarak21.gif থাকে, তাহলে সেটিও যোগ করো: "eidmubarak21.gif"
+            "eidmubarak20.gif", "eidmubarak21.gif" // নিশ্চিত করো এই ফাইলটি আছে
         ];
-        let currentGifIndex = 0;
-        const eidImageEl = document.getElementById('eidImage');
-        const gifChangeInterval = 5000; // প্রতি ৫ সেকেন্ডে GIF পরিবর্তন হবে (তোমার পছন্দ অনুযায়ী সময় দাও)
+        let currentGifIndex = 0; // প্রথম GIF এর জন্য ০ দিয়ে শুরু
+        const gifChangeInterval = 5000; // প্রতি ৫ সেকেন্ড (5000ms)
 
         function changeEidGif() {
-            if (eidGifList.length === 0 || !eidImageEl) return;
-            currentGifIndex = (currentGifIndex + 1) % eidGifList.length; // পরের GIF এ যাও, লিস্ট শেষ হলে প্রথমে ফিরে আসো
-            eidImageEl.src = eidGifList[currentGifIndex];
+            const eidImageEl = document.getElementById('eidImage'); // ফাংশনের ভিতরে কল করা ভালো
+            if (!eidImageEl || eidGifList.length === 0) {
+                console.warn("Cannot change GIF: Image element not found or GIF list is empty.");
+                return;
+            }
+            currentGifIndex = (currentGifIndex + 1) % eidGifList.length;
+            const nextGifSrc = eidGifList[currentGifIndex];
+            eidImageEl.src = nextGifSrc + '?t=' + new Date().getTime(); // ক্যাশ বাস্টিং
+            console.log("Attempting to change GIF to:", eidImageEl.src);
         }
-
 
         function getTranslation(key,params={}){let text=translations[currentLang]?.[key]||translations['en']?.[key]||key;for(const param in params){text=text.replace(`{${param}}`,params[param]);}return text;}
         function applyTranslations(){document.querySelectorAll('[data-lang-key]').forEach(element=>{const key=element.getAttribute('data-lang-key');if(element.tagName==='INPUT'&&element.hasAttribute('placeholder')){element.placeholder=getTranslation(key);}else{element.textContent=getTranslation(key);}});document.title=getTranslation('pageTitle');}
@@ -296,6 +141,7 @@
 
         window.onload = async function() {
             await fetchUserLocationAndSetLanguage(); 
+            const eidImageEl = document.getElementById('eidImage'); // Declare here after DOM is ready
 
             const urlParams = new URLSearchParams(window.location.search);
             const sharerNameParam = urlParams.get('name');
@@ -319,189 +165,33 @@
             initializeDateTimeDisplay(); 
 
             // GIF পরিবর্তনের জন্য সেটআপ
-            if (eidGifList.length > 0 && eidImageEl) {
-                eidImageEl.src = eidGifList[0]; // প্রথম GIF টি লোড করো
-                setInterval(changeEidGif, gifChangeInterval); // নির্দিষ্ট সময় পর পর GIF পরিবর্তন করো
-            } else if (eidImageEl) {
-                eidImageEl.src = "eidmubarak.gif"; // ফলব্যাক হিসেবে একটি ডিফল্ট GIF
+            if (eidImageEl && eidGifList.length > 0) {
+                // প্রথম GIF টি সেট করার জন্য currentGifIndex = -1 এবং changeEidGif() কল করা
+                currentGifIndex = -1; // যাতে প্রথম কলে 0 হয়
+                changeEidGif(); // প্রথম GIF লোড করার জন্য
+                setInterval(changeEidGif, gifChangeInterval); 
+                console.log("GIF slideshow initialized.");
+            } else {
+                console.warn("Eid image element not found or GIF list is empty. GIF slideshow not started.");
+                if(eidImageEl) eidImageEl.src = "eidmubarak.gif"; // একটি ডিফল্ট ফলব্যাক যদি তালিকা খালি থাকে
             }
         };
 
-        // ... (বাকি JavaScript ফাংশনগুলো আগের মতোই থাকবে) ...
+        // ... (বাকি JavaScript ফাংশনগুলো অপরিবর্তিত থাকবে) ...
         userNameInput.addEventListener('input', function() {
             if (userNameInput.value.trim() !== "") { generateButton.disabled = false; }
             else { generateButton.disabled = true; }
         });
-
-        function showStatusMessage(messageKey, type = 'info', duration = 3000, params = {}) {
-            clearTimeout(statusTimeout);
-            statusMessageDiv.textContent = getTranslation(messageKey, params); 
-            statusMessageDiv.className = '';
-            statusMessageDiv.classList.add(type);
-            statusMessageDiv.style.display = 'block';
-            setTimeout(() => { statusMessageDiv.style.opacity = '1'; }, 10);
-            statusTimeout = setTimeout(() => {
-                statusMessageDiv.style.opacity = '0';
-                setTimeout(() => { statusMessageDiv.style.display = 'none'; }, 500);
-            }, duration);
-        }
-
-        async function generateAndShareLink() {
-            const userName = userNameInput.value.trim();
-            if (userName === "") {
-                showStatusMessage("statusEnterName", "error"); 
-                return;
-            }
-            if (backgroundMusic && backgroundMusic.paused) {
-                backgroundMusic.play().catch(error => { console.warn("Music play on interaction failed: ", error); });
-            }
-            const currentUrl = new URL(window.location.href);
-            currentUrl.searchParams.set('name', userName);
-            const newLink = currentUrl.toString();
-            
-            const sharerNameForMessage = decodeURIComponent(userName); 
-            const shareText = getTranslation('greetingMessageFrom', {name: sharerNameForMessage}) + ` ${getTranslation('pageTitle')}! ${newLink}`; 
-
-            if (navigator.share) {
-                try {
-                    await navigator.share({
-                        title: getTranslation('pageTitle'),
-                        text: shareText,
-                        url: newLink
-                    });
-                    showStatusMessage('statusShareOptions', 'success', 4000);
-                    document.getElementById('generatedLinkContainer').style.display = 'none';
-                } catch (error) {
-                    showManualLink(newLink);
-                    showStatusMessage('statusShareError', 'info', 4000);
-                }
-            } else {
-                showManualLink(newLink);
-                showStatusMessage('statusNoAutoShare', 'info', 4000);
-            }
-            userNameInput.value = '';
-            generateButton.disabled = true;
-        }
-
-        function showManualLink(link) {
-            const sharableLinkInput = document.getElementById('sharableLink');
-            sharableLinkInput.value = link;
-            document.getElementById('generatedLinkContainer').style.display = 'block';
-        }
-
-        function copyLink() {
-            const sharableLinkInput = document.getElementById('sharableLink');
-            sharableLinkInput.select();
-            sharableLinkInput.setSelectionRange(0, 99999);
-            try {
-                navigator.clipboard.writeText(sharableLinkInput.value)
-                    .then(() => { showStatusMessage("statusLinkCopied", "success"); })
-                    .catch(err => {
-                        if(document.execCommand('copy')) { showStatusMessage("statusLinkCopiedFallback", "success"); }
-                        else { showStatusMessage("statusCopyError", "error", 4000); }
-                    });
-            } catch (err) {
-                if(document.execCommand('copy')) { showStatusMessage("statusLinkCopiedFallback", "success"); }
-                else { showStatusMessage("statusCopyError", "error", 4000); }
-            }
-        }
-        // --- Fireworks Animation Code (Unchanged) ---
-        const canvas = document.getElementById('fireworksCanvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        let fireworks = [];
-        let particles = [];
-        const fireworkLaunchProbability = 0.025;
-        const maxFireworksAtOnce = 8;
-
-        function Firework(startX, startY, targetX, targetY) {
-            this.x = startX; this.y = startY; this.startX = startX; this.startY = startY;
-            this.targetX = targetX; this.targetY = targetY;
-            this.distanceToTarget = Math.sqrt(Math.pow(targetX - startX, 2) + Math.pow(targetY - startY, 2));
-            this.distanceTraveled = 0; this.trail = [];
-            this.angle = Math.atan2(targetY - startY, targetX - startX);
-            this.speed = 4; this.acceleration = 1.05 + Math.random() * 0.03;
-            this.brightness = Math.random() * 70 + 50;
-            this.color = `hsl(${Math.random() * 360}, 100%, ${this.brightness}%)`;
-            this.lineWidth = Math.random() * 2.5 + 1.5;
-        }
-        Firework.prototype.update = function(index) {
-            this.trail.push({ x: this.x, y: this.y });
-            if (this.trail.length > 8) this.trail.shift();
-            this.speed *= this.acceleration;
-            let vx = Math.cos(this.angle) * this.speed;
-            let vy = Math.sin(this.angle) * this.speed;
-            this.distanceTraveled = Math.sqrt(Math.pow(this.x - this.startX, 2) + Math.pow(this.y - this.startY, 2));
-            if (this.distanceTraveled >= this.distanceToTarget || this.y < this.targetY) {
-                createParticles(this.targetX, this.targetY, this.color);
-                fireworks.splice(index, 1);
-            } else { this.x += vx; this.y += vy; }
-        };
-        Firework.prototype.draw = function() {
-            ctx.beginPath();
-            if(this.trail.length > 0) { ctx.moveTo(this.trail[this.trail.length - 1].x, this.trail[this.trail.length - 1].y); }
-            else { ctx.moveTo(this.x - Math.cos(this.angle) * 10, this.y - Math.sin(this.angle) * 10); }
-            ctx.lineTo(this.x, this.y); ctx.strokeStyle = this.color; ctx.lineWidth = this.lineWidth; ctx.stroke();
-            ctx.beginPath(); ctx.arc(this.x, this.y, this.lineWidth + 2, 0, Math.PI * 2);
-            ctx.fillStyle = this.color.replace(')', ', 0.4)').replace('hsl', 'hsla'); ctx.fill();
-        };
-        function Particle(x, y, color) {
-            this.x = x; this.y = y; this.angle = Math.random() * Math.PI * 2;
-            this.speed = Math.random() * 18 + 5; this.friction = 0.96 + Math.random() * 0.01;
-            this.gravity = 0.9 + Math.random() * 0.6; this.alpha = 1;
-            this.decay = Math.random() * 0.025 + 0.020; this.color = color;
-            this.size = Math.random() * 3.5 + 1.5;
-        }
-        Particle.prototype.update = function(index) {
-            this.speed *= this.friction;
-            this.x += Math.cos(this.angle) * this.speed;
-            this.y += Math.sin(this.angle) * this.speed + this.gravity;
-            this.alpha -= this.decay;
-            if (this.alpha <= this.decay) { particles.splice(index, 1); }
-        };
-        Particle.prototype.draw = function() {
-            ctx.save(); ctx.globalAlpha = this.alpha; ctx.beginPath();
-            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
-            ctx.fillStyle = this.color; ctx.fill(); ctx.restore();
-        };
-        function createParticles(x, y, color) {
-            let particleCount = 120 + Math.floor(Math.random() * 60);
-            while (particleCount--) { particles.push(new Particle(x, y, color)); }
-        }
-        function launchFirework() {
-            if (fireworks.length < maxFireworksAtOnce && Math.random() < fireworkLaunchProbability) {
-                const startX = Math.random() * canvas.width / 2 + canvas.width / 4;
-                const startY = canvas.height;
-                const targetX = Math.random() * canvas.width;
-                const targetY = Math.random() * (canvas.height / 1.8);
-                fireworks.push(new Firework(startX, startY, targetX, targetY));
-            }
-        }
-        function startFireworks() {
-            for(let i=0; i<4 + Math.floor(Math.random()*4); i++) {
-                setTimeout(() => {
-                    const startX = Math.random() * canvas.width / 2 + canvas.width / 4;
-                    const startY = canvas.height;
-                    const targetX = Math.random() * canvas.width;
-                    const targetY = Math.random() * (canvas.height / 1.8);
-                    fireworks.push(new Firework(startX, startY, targetX, targetY));
-                }, i * (150 + Math.random()*200));
-            }
-        }
-        function animateFireworks() {
-            requestAnimationFrame(animateFireworks);
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.12)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            launchFirework();
-            fireworks.forEach((firework, index) => { firework.update(index); firework.draw(); });
-            particles.forEach((particle, index) => { particle.update(index); particle.draw(); });
-        }
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        });
-        // --- End of Fireworks Animation Code ---
+        function showStatusMessage(messageKey, type = 'info', duration = 3000, params = {}) { clearTimeout(statusTimeout); statusMessageDiv.textContent = getTranslation(messageKey, params); statusMessageDiv.className = ''; statusMessageDiv.classList.add(type); statusMessageDiv.style.display = 'block'; setTimeout(() => { statusMessageDiv.style.opacity = '1'; }, 10); statusTimeout = setTimeout(() => { statusMessageDiv.style.opacity = '0'; setTimeout(() => { statusMessageDiv.style.display = 'none'; }, 500); }, duration); }
+        async function generateAndShareLink() { const userName = userNameInput.value.trim(); if (userName === "") { showStatusMessage("statusEnterName", "error"); return; } if (backgroundMusic && backgroundMusic.paused) { backgroundMusic.play().catch(error => { console.warn("Music play on interaction failed: ", error); }); } const currentUrl = new URL(window.location.href); currentUrl.searchParams.set('name', userName); const newLink = currentUrl.toString(); const sharerNameForMessage = decodeURIComponent(userName); const shareText = getTranslation('greetingMessageFrom', {name: sharerNameForMessage}) + ` ${getTranslation('pageTitle')}! ${newLink}`; if (navigator.share) { try { await navigator.share({ title: getTranslation('pageTitle'), text: shareText, url: newLink }); showStatusMessage('statusShareOptions', 'success', 4000); document.getElementById('generatedLinkContainer').style.display = 'none'; } catch (error) { showManualLink(newLink); showStatusMessage('statusShareError', 'info', 4000); } } else { showManualLink(newLink); showStatusMessage('statusNoAutoShare', 'info', 4000); } userNameInput.value = ''; generateButton.disabled = true; }
+        function showManualLink(link) { const sharableLinkInput = document.getElementById('sharableLink'); sharableLinkInput.value = link; document.getElementById('generatedLinkContainer').style.display = 'block'; }
+        function copyLink() { const sharableLinkInput = document.getElementById('sharableLink'); sharableLinkInput.select(); sharableLinkInput.setSelectionRange(0, 99999); try { navigator.clipboard.writeText(sharableLinkInput.value) .then(() => { showStatusMessage("statusLinkCopied", "success"); }) .catch(err => { if(document.execCommand('copy')) { showStatusMessage("statusLinkCopiedFallback", "success"); } else { showStatusMessage("statusCopyError", "error", 4000); } }); } catch (err) { if(document.execCommand('copy')) { showStatusMessage("statusLinkCopiedFallback", "success"); } else { showStatusMessage("statusCopyError", "error", 4000); } } }
+        const canvas = document.getElementById('fireworksCanvas'); const ctx = canvas.getContext('2d'); canvas.width = window.innerWidth; canvas.height = window.innerHeight; let fireworks = []; let particles = []; const fireworkLaunchProbability = 0.025; const maxFireworksAtOnce = 8;
+        function Firework(startX, startY, targetX, targetY) { this.x = startX; this.y = startY; this.startX = startX; this.startY = startY; this.targetX = targetX; this.targetY = targetY; this.distanceToTarget = Math.sqrt(Math.pow(targetX - startX, 2) + Math.pow(targetY - startY, 2)); this.distanceTraveled = 0; this.trail = []; this.angle = Math.atan2(targetY - startY, targetX - startX); this.speed = 4; this.acceleration = 1.05 + Math.random() * 0.03; this.brightness = Math.random() * 70 + 50; this.color = `hsl(${Math.random()*360}, 100%, ${this.brightness}%)`; this.lineWidth = Math.random()*2.5+1.5; } Firework.prototype.update = function(index) { this.trail.push({x:this.x, y:this.y}); if (this.trail.length > 8) this.trail.shift(); this.speed *= this.acceleration; let vx = Math.cos(this.angle) * this.speed; let vy = Math.sin(this.angle) * this.speed; this.distanceTraveled = Math.sqrt(Math.pow(this.x - this.startX, 2) + Math.pow(this.y - this.startY, 2)); if (this.distanceTraveled >= this.distanceToTarget || this.y < this.targetY) { createParticles(this.targetX, this.targetY, this.color); fireworks.splice(index, 1); } else { this.x += vx; this.y += vy; } }; Firework.prototype.draw = function() { ctx.beginPath(); if(this.trail.length > 0) { ctx.moveTo(this.trail[this.trail.length-1].x, this.trail[this.trail.length-1].y); } else { ctx.moveTo(this.x - Math.cos(this.angle)*10, this.y - Math.sin(this.angle)*10); } ctx.lineTo(this.x, this.y); ctx.strokeStyle = this.color; ctx.lineWidth = this.lineWidth; ctx.stroke(); ctx.beginPath(); ctx.arc(this.x, this.y, this.lineWidth+2, 0, Math.PI*2); ctx.fillStyle = this.color.replace(')', ', 0.4)').replace('hsl', 'hsla'); ctx.fill(); };
+        function Particle(x,y,color) { this.x=x; this.y=y; this.angle=Math.random()*Math.PI*2; this.speed=Math.random()*18+5; this.friction=0.96+Math.random()*0.01; this.gravity=0.9+Math.random()*0.6; this.alpha=1; this.decay=Math.random()*0.025+0.020; this.color=color; this.size=Math.random()*3.5+1.5; } Particle.prototype.update = function(index) { this.speed *= this.friction; this.x += Math.cos(this.angle)*this.speed; this.y += Math.sin(this.angle)*this.speed + this.gravity; this.alpha -= this.decay; if (this.alpha <= this.decay) { particles.splice(index,1); } }; Particle.prototype.draw = function() { ctx.save(); ctx.globalAlpha = this.alpha; ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI*2, false); ctx.fillStyle = this.color; ctx.fill(); ctx.restore(); };
+        function createParticles(x,y,color) { let particleCount = 120 + Math.floor(Math.random()*60); while(particleCount--) { particles.push(new Particle(x,y,color)); } } function launchFirework() { if (fireworks.length < maxFireworksAtOnce && Math.random() < fireworkLaunchProbability) { const startX = Math.random()*canvas.width/2 + canvas.width/4; const startY = canvas.height; const targetX = Math.random()*canvas.width; const targetY = Math.random()*(canvas.height/1.8); fireworks.push(new Firework(startX,startY,targetX,targetY)); } }
+        function startFireworks() { for(let i=0; i<4+Math.floor(Math.random()*4); i++) { setTimeout(() => { const startX = Math.random()*canvas.width/2 + canvas.width/4; const startY = canvas.height; const targetX = Math.random()*canvas.width; const targetY = Math.random()*(canvas.height/1.8); fireworks.push(new Firework(startX,startY,targetX,targetY)); }, i*(150+Math.random()*200)); } }
+        function animateFireworks() { requestAnimationFrame(animateFireworks); ctx.fillStyle = 'rgba(0,0,0,0.12)'; ctx.fillRect(0,0,canvas.width,canvas.height); launchFirework(); fireworks.forEach((firework,index) => {firework.update(index); firework.draw();}); particles.forEach((particle,index) => {particle.update(index); particle.draw();}); } window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
     </script>
 </body>
 </html>
