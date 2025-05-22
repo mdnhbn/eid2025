@@ -7,12 +7,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"> <!-- For English -->
     <style>
-        /* CSS কোড আগের মতোই থাকবে, শুধু lang অ্যাট্রিবিউট অনুযায়ী ফন্ট পরিবর্তনের জন্য কিছু যোগ করা যেতে পারে */
+        /* CSS কোড অপরিবর্তিত থাকবে */
         body[lang="bn"] { font-family: 'Noto Sans Bengali', 'Arial', sans-serif; }
         body[lang="en"] { font-family: 'Roboto', 'Arial', sans-serif; }
         /* ... (বাকি CSS আগের মতো) ... */
         body {
-            /* font-family: 'Noto Sans Bengali', 'Arial', sans-serif; */ /* Removed default, will be set by JS */
             background: linear-gradient(to bottom, #001c00, #003800, #004d00);
             color: #f0e68c;
             text-align: center;
@@ -50,13 +49,16 @@
             margin-bottom: 2vh;
         }
 
-        #eidImage {
+        #eidImage { /* GIF এর জন্য স্টাইল */
             max-width: 100%;
-            height: auto;
+            height: auto; /* অথবা নির্দিষ্ট উচ্চতা দিতে পারো, যেমন 250px */
+            max-height: 280px; /* একটি সর্বোচ্চ উচ্চতা সেট করা যেতে পারে */
+            object-fit: contain; /* ছবিটি যেন কেটে না যায় */
             border-radius: 15px;
             margin-bottom: 25px;
             border: 4px solid #ffd700;
             box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+            background-color: #001000; /* যদি GIF এর ব্যাকগ্রাউন্ড ট্রান্সপারেন্ট হয় */
         }
 
         .greeting-message {
@@ -96,7 +98,6 @@
             font-size: 1em;
             background-color: #002a00;
             color: #fff;
-            /* font-family will be inherited or can be set specifically */
         }
         input[type="text"]::placeholder { color: #b0a060; }
 
@@ -203,13 +204,14 @@
         .dateTimeEntry span { margin: 0 3px; }
     </style>
 </head>
-<body lang="bn"> <!-- Default lang, will be updated by JS if possible -->
+<body lang="bn">
     <canvas id="fireworksCanvas"></canvas>
     <audio id="backgroundMusic" src="eidmubarak.mp3" loop preload="auto"></audio>
 
     <div class="container">
         <div id="greetingMessage" class="greeting-message"></div>
-        <img id="eidImage" src="eidmubarak.gif" alt="Eid Mubarak Animation">
+        <!-- img ট্যাগের src প্রথমে খালি রাখা যেতে পারে অথবা প্রথম GIF টি দেওয়া যেতে পারে -->
+        <img id="eidImage" src="" alt="Eid Mubarak Animation">
         <div class="input-group">
             <label for="userNameInput" data-lang-key="yourNameLabel">আপনার নাম লিখুন:</label>
             <input type="text" id="userNameInput" data-lang-key="namePlaceholder" placeholder="এখানে আপনার নাম দিন">
@@ -255,225 +257,45 @@
     </script>
 
     <script>
-        const translations = {
-            'bn': {
-                'pageTitle': 'ঈদ মোবারক!',
-                'greetingMessage': 'ঈদ মোবারক!',
-                'greetingMessageFrom': '{name} এর পক্ষ থেকে, ঈদ মোবারক!',
-                'yourNameLabel': 'আপনার নাম লিখুন:',
-                'namePlaceholder': 'এখানে আপনার নাম দিন',
-                'shareButtonText': 'WhatsApp এ শেয়ার করুন',
-                'shareLinkManualText': 'এই লিঙ্কটি বন্ধুদের সাথে শেয়ার করুন (যদি অটো-শেয়ার কাজ না করে):',
-                'copyButtonText': 'কপি করুন',
-                'eidWishesFooter': 'সবাইকে ঈদের আন্তরিক শুভেচ্ছা!',
-                'timeLabel': 'সময়',
-                'dateLabel': 'তারিখ',
-                'hijriDateLabel': 'ইসলামী তারিখ',
-                'hijriYearSuffix': 'হিজরি',
-                'statusEnterName': 'অনুগ্রহ করে আপনার নাম লিখুন।',
-                'statusShareOptions': 'শুভেচ্ছা শেয়ার করার জন্য অপশন দেখানো হয়েছে!',
-                'statusShareError': 'শেয়ার অপশন কাজ করেনি/বাতিল হয়েছে। লিঙ্ক কপি করুন।',
-                'statusNoAutoShare': 'আপনার ব্রাউজার অটো-শেয়ার সাপোর্ট করে না। লিঙ্ক কপি করুন।',
-                'statusLinkCopied': 'লিঙ্ক সফলভাবে কপি করা হয়েছে!',
-                'statusLinkCopiedFallback': 'লিঙ্ক কপি করা হয়েছে (ফলব্যাক)!',
-                'statusCopyError': 'দুঃখিত, লিঙ্ক কপি করা যায়নি। নিজে কপি করে নিন।',
-                'hijriDateLoading': 'ইসলামী তারিখ পরীক্ষা করা হচ্ছে...',
-                'hijriDateError': 'ইসলামী তারিখ রূপান্তরে ত্রুটি।',
-                'hijriCalcError': 'হিজরি মাস গণনায় ত্রুটি।',
-                'hijriNotLoaded': 'ইসলামী ক্যালকুলেটর লোড হয়নি।'
-            },
-            'en': {
-                'pageTitle': 'Eid Mubarak!',
-                'greetingMessage': 'Eid Mubarak!',
-                'greetingMessageFrom': 'Eid Mubarak from {name}!',
-                'yourNameLabel': 'Enter your name:',
-                'namePlaceholder': 'Enter your name here',
-                'shareButtonText': 'Share on WhatsApp',
-                'shareLinkManualText': 'Share this link with friends (if auto-share doesn\'t work):',
-                'copyButtonText': 'Copy',
-                'eidWishesFooter': 'Eid greetings to everyone!',
-                'timeLabel': 'Time',
-                'dateLabel': 'Date',
-                'hijriDateLabel': 'Islamic Date',
-                'hijriYearSuffix': 'AH',
-                'statusEnterName': 'Please enter your name.',
-                'statusShareOptions': 'Share options are shown!',
-                'statusShareError': 'Share option failed/cancelled. Please copy the link.',
-                'statusNoAutoShare': 'Your browser does not support auto-share. Please copy the link.',
-                'statusLinkCopied': 'Link copied successfully!',
-                'statusLinkCopiedFallback': 'Link copied (fallback)!',
-                'statusCopyError': 'Sorry, could not copy the link. Please copy it manually.',
-                'hijriDateLoading': 'Checking Islamic date...',
-                'hijriDateError': 'Error in Islamic date conversion.',
-                'hijriCalcError': 'Error in Hijri month calculation.',
-                'hijriNotLoaded': 'Islamic calendar not loaded.'
-            }
-            // প্রয়োজনে আরও ভাষা যোগ করা যাবে
-        };
-
-        let currentLang = 'bn'; // ডিফল্ট ভাষা
-        let userTimeZone = 'Etc/UTC'; // ডিফল্ট টাইমজোন
-        let userLocale = 'bn-BD';   // ডিফল্ট লোকাল তারিখ/সময় ফরম্যাটের জন্য
-
-        const backgroundMusic = document.getElementById('backgroundMusic');
-        const userNameInput = document.getElementById('userNameInput');
-        const generateButton = document.getElementById('generateButton');
-        const statusMessageDiv = document.getElementById('statusMessage');
-        let statusTimeout;
-
-        const currentTimeEl = document.getElementById('currentTime');
-        const currentDateEl = document.getElementById('currentDate');
-        const currentHijriDateEl = document.getElementById('currentHijriDate');
-        const greetingMessageEl = document.getElementById('greetingMessage');
-
-
-        let timeOffset = 0;
-        let initialTimeSynced = false;
-
-        const bengaliHijriMonths = ["মহররম", "সফর", "রবিউল আউয়াল", "রবিউস সানি", "জমাদিউল আউয়াল", "জমাদিউস সানি", "রজব", "শাবান", "রমজান", "শাওয়াল", "জ্বিলকদ", "জ্বিলহজ্জ"];
-        const englishHijriMonths = ["Muharram", "Safar", "Rabi' al-awwal", "Rabi' al-thani", "Jumada al-awwal", "Jumada al-thani", "Rajab", "Sha'ban", "Ramadan", "Shawwal", "Dhu al-Qi'dah", "Dhu al-Hijjah"];
-
-
-        function getTranslation(key, params = {}) {
-            let text = translations[currentLang]?.[key] || translations['en']?.[key] || key; // ফলব্যাক ইংরেজি, তারপর কী নিজেই
-            for (const param in params) {
-                text = text.replace(`{${param}}`, params[param]);
-            }
-            return text;
-        }
-
-        function applyTranslations() {
-            document.querySelectorAll('[data-lang-key]').forEach(element => {
-                const key = element.getAttribute('data-lang-key');
-                if (element.tagName === 'INPUT' && element.hasAttribute('placeholder')) {
-                    element.placeholder = getTranslation(key);
-                } else {
-                    element.textContent = getTranslation(key);
-                }
-            });
-            document.title = getTranslation('pageTitle');
-            // গ্রিটিং মেসেজ আলাদাভাবে সেট করা হবে কারণ এটি ডাইনামিক
-        }
-
-
-        function toNativeNumeral(numStr, lang) {
-            if (lang.startsWith('bn')) {
-                const bengaliDigits = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
-                return String(numStr).split('').map(digit => /\d/.test(digit) ? bengaliDigits[parseInt(digit)] : digit).join('');
-            }
-            // অন্যান্য ভাষার জন্য এখানে যোগ করা যেতে পারে, আপাতত ইংরেজি সংখ্যাই থাকবে
-            return String(numStr);
-        }
-
-        async function fetchUserLocationAndSetLanguage() {
-            // ১. ব্রাউজারের ভাষা নির্ধারণ
-            let browserLang = (navigator.languages && navigator.languages[0]) || navigator.language || 'bn';
-            if (browserLang.toLowerCase().startsWith('en')) {
-                currentLang = 'en';
-                userLocale = 'en-US';
-            } else if (browserLang.toLowerCase().startsWith('bn')) {
-                currentLang = 'bn';
-                userLocale = 'bn-BD';
-            } else {
-                // অন্যান্য ভাষার জন্য ডিফল্ট ইংরেজি
-                currentLang = 'en';
-                userLocale = 'en-US'; 
-            }
-            document.body.lang = currentLang; // বডি ট্যাগে lang অ্যাট্রিবিউট সেট করা
-            console.log(`Browser language detected: ${browserLang}, Using app language: ${currentLang}`);
-            applyTranslations(); // প্রাথমিক অনুবাদ প্রয়োগ
-
-            // ২. IP থেকে টাইমজোন পাওয়ার চেষ্টা (HTTPS ব্যবহার করা হচ্ছে)
-            try {
-                const response = await fetch('https://ip-api.com/json/?fields=status,message,timezone,countryCode');
-                if (!response.ok) throw new Error(`IP API HTTP error! status: ${response.status}`);
-                const data = await response.json();
-                if (data.status === 'success' && data.timezone) {
-                    userTimeZone = data.timezone;
-                    console.log('User timezone from IP API:', userTimeZone);
-                    // এখানে দেশের কোড (data.countryCode) অনুযায়ী userLocale আরও সঠিকভাবে সেট করা যেতে পারে
-                } else {
-                    console.warn('Failed to get timezone from IP API, using default UTC. Message:', data.message);
-                    userTimeZone = 'Etc/UTC'; // ফলব্যাক
-                }
-            } catch (error) {
-                console.error("Error fetching user location/timezone from IP API:", error);
-                userTimeZone = 'Etc/UTC'; // গুরুতর ত্রুটির ক্ষেত্রে ফলব্যাক
-            }
-            await fetchCorrectTime(); // সঠিক সময় আনার জন্য কল
-        }
+        // ... (translations এবং অন্যান্য ভ্যারিয়েবল আগের মতোই থাকবে) ...
+        const translations={'bn':{'pageTitle':'ঈদ মোবারক!','greetingMessage':'ঈদ মোবারক!','greetingMessageFrom':'{name} এর পক্ষ থেকে, ঈদ মোবারক!','yourNameLabel':'আপনার নাম লিখুন:','namePlaceholder':'এখানে আপনার নাম দিন','shareButtonText':'WhatsApp এ শেয়ার করুন','shareLinkManualText':'এই লিঙ্কটি বন্ধুদের সাথে শেয়ার করুন (যদি অটো-শেয়ার কাজ না করে):','copyButtonText':'কপি করুন','eidWishesFooter':'সবাইকে ঈদের আন্তরিক শুভেচ্ছা!','timeLabel':'সময়','dateLabel':'তারিখ','hijriDateLabel':'ইসলামী তারিখ','hijriYearSuffix':'হিজরি','statusEnterName':'অনুগ্রহ করে আপনার নাম লিখুন।','statusShareOptions':'শুভেচ্ছা শেয়ার করার জন্য অপশন দেখানো হয়েছে!','statusShareError':'শেয়ার অপশন কাজ করেনি/বাতিল হয়েছে। লিঙ্ক কপি করুন।','statusNoAutoShare':'আপনার ব্রাউজার অটো-শেয়ার সাপোর্ট করে না। লিঙ্ক কপি করুন।','statusLinkCopied':'লিঙ্ক সফলভাবে কপি করা হয়েছে!','statusLinkCopiedFallback':'লিঙ্ক কপি করা হয়েছে (ফলব্যাক)!','statusCopyError':'দুঃখিত, লিঙ্ক কপি করা যায়নি। নিজে কপি করে নিন।','hijriDateLoading':'ইসলামী তারিখ পরীক্ষা করা হচ্ছে...','hijriDateError':'ইসলামী তারিখ রূপান্তরে ত্রুটি।','hijriCalcError':'হিজরি মাস গণনায় ত্রুটি।','hijriNotLoaded':'ইসলামী ক্যালকুলেটর লোড হয়নি।'},'en':{'pageTitle':'Eid Mubarak!','greetingMessage':'Eid Mubarak!','greetingMessageFrom':'Eid Mubarak from {name}!','yourNameLabel':'Enter your name:','namePlaceholder':'Enter your name here','shareButtonText':'Share on WhatsApp','shareLinkManualText':'Share this link with friends (if auto-share doesn\'t work):','copyButtonText':'Copy','eidWishesFooter':'Eid greetings to everyone!','timeLabel':'Time','dateLabel':'Date','hijriDateLabel':'Islamic Date','hijriYearSuffix':'AH','statusEnterName':'Please enter your name.','statusShareOptions':'Share options are shown!','statusShareError':'Share option failed/cancelled. Please copy the link.','statusNoAutoShare':'Your browser does not support auto-share. Please copy the link.','statusLinkCopied':'Link copied successfully!','statusLinkCopiedFallback':'Link copied (fallback)!','statusCopyError':'Sorry, could not copy the link. Please copy it manually.','hijriDateLoading':'Checking Islamic date...','hijriDateError':'Error in Islamic date conversion.','hijriCalcError':'Error in Hijri month calculation.','hijriNotLoaded':'Islamic calendar not loaded.'}};
+        let currentLang='bn';let userTimeZone='Etc/UTC';let userLocale='bn-BD';
+        const backgroundMusic=document.getElementById('backgroundMusic');const userNameInput=document.getElementById('userNameInput');const generateButton=document.getElementById('generateButton');const statusMessageDiv=document.getElementById('statusMessage');let statusTimeout;
+        const currentTimeEl=document.getElementById('currentTime');const currentDateEl=document.getElementById('currentDate');const currentHijriDateEl=document.getElementById('currentHijriDate');const greetingMessageEl=document.getElementById('greetingMessage');
+        let timeOffset=0;let initialTimeSynced=false;
+        const bengaliHijriMonths=["মহররম","সফর","রবিউল আউয়াল","রবিউস সানি","জমাদিউল আউয়াল","জমাদিউস সানি","রজব","শাবান","রমজান","শাওয়াল","জ্বিলকদ","জ্বিলহজ্জ"];const englishHijriMonths=["Muharram","Safar","Rabi' al-awwal","Rabi' al-thani","Jumada al-awwal","Jumada al-thani","Rajab","Sha'ban","Ramadan","Shawwal","Dhu al-Qi'dah","Dhu al-Hijjah"];
         
-        async function fetchCorrectTime() {
-            try {
-                const response = await fetch(`https://worldtimeapi.org/api/timezone/${userTimeZone}`);
-                if (!response.ok) {
-                    if (userTimeZone !== 'Etc/UTC') { // যদি নির্দিষ্ট টাইমজোনে না পায়, UTC তে চেষ্টা করো
-                        console.warn(`Timezone ${userTimeZone} not found on worldtimeapi, falling back to UTC.`);
-                        userTimeZone = 'Etc/UTC'; // UTC তে ফলব্যাক
-                        return await fetchCorrectTime(); // আবার কল করো UTC দিয়ে
-                    }
-                    throw new Error(`WorldTimeAPI HTTP error! status: ${response.status}`);
-                }
-                const data = await response.json();
-                const serverTime = new Date(data.utc_datetime); // API সবসময় UTC সময় দেয়
-                const clientTimeAtFetch = new Date();
-                timeOffset = serverTime.getTime() - clientTimeAtFetch.getTime();
-                initialTimeSynced = true;
-                console.log(`Successfully synced time with server for timezone ${data.timezone}. Offset: ${timeOffset} ms`);
-            } catch (error) {
-                console.error("Failed to fetch correct time from WorldTimeAPI:", error);
-                timeOffset = 0; // ফলব্যাক হিসেবে ক্লায়েন্টের লোকাল সময় (নো অফসেট)
-                initialTimeSynced = false;
-            }
-            updateTimeDate(); // API কল শেষে সময় আপডেট
+        // নতুন: GIF ফাইলের তালিকা (তোমার রিপোজিটরির নাম অনুযায়ী)
+        const eidGifList = [
+            "eidmubarak.gif",   "eidmubarak1.gif",  "eidmubarak2.gif",  "eidmubarak3.gif",
+            "eidmubarak4.gif",  "eidmubarak5.gif",  "eidmubarak6.gif",  "eidmubarak7.gif",
+            "eidmubarak8.gif",  "eidmubarak9.gif",  "eidmubarak10.gif", "eidmubarak11.gif",
+            "eidmubarak12.gif", "eidmubarak13.gif", "eidmubarak14.gif", "eidmubarak15.gif",
+            "eidmubarak16.gif", "eidmubarak17.gif", "eidmubarak18.gif", "eidmubarak19.gif",
+            "eidmubarak20.gif"
+            // যদি তোমার eidmubarak21.gif থাকে, তাহলে সেটিও যোগ করো: "eidmubarak21.gif"
+        ];
+        let currentGifIndex = 0;
+        const eidImageEl = document.getElementById('eidImage');
+        const gifChangeInterval = 5000; // প্রতি ৫ সেকেন্ডে GIF পরিবর্তন হবে (তোমার পছন্দ অনুযায়ী সময় দাও)
+
+        function changeEidGif() {
+            if (eidGifList.length === 0 || !eidImageEl) return;
+            currentGifIndex = (currentGifIndex + 1) % eidGifList.length; // পরের GIF এ যাও, লিস্ট শেষ হলে প্রথমে ফিরে আসো
+            eidImageEl.src = eidGifList[currentGifIndex];
         }
 
-        function initializeDateTimeDisplay() {
-            if (!currentTimeEl || !currentDateEl || !currentHijriDateEl) { return; }
-            updateTimeDate(); // প্রথমবার দেখানোর জন্য
-            setInterval(updateTimeDate, 1000); 
-        }
-        
-        function updateTimeDate() {
-            const clientNow = new Date();
-            const correctedNow = new Date(clientNow.getTime() + timeOffset);
 
-            const timeOptions = { hour: 'numeric', minute: '2-digit', second: '2-digit', hour12: true, timeZone: userTimeZone };
-            let timeString = correctedNow.toLocaleTimeString(userLocale, timeOptions);
-            if (currentTimeEl) currentTimeEl.textContent = `${getTranslation('timeLabel')}: ${timeString}`;
-
-            const dateOptions = { day: 'numeric', month: 'long', year: 'numeric', timeZone: userTimeZone };
-            let dateString = correctedNow.toLocaleDateString(userLocale, dateOptions);
-            if (currentDateEl) currentDateEl.textContent = `${getTranslation('dateLabel')}: ${dateString}`;
-
-            if (currentHijriDateEl) {
-                if (typeof HijriDate !== 'undefined' && HijriDate.JS && typeof HijriDate.JS.convert === 'function') {
-                    try {
-                        const hijriInstance = HijriDate.JS.convert(correctedNow); 
-                        if (hijriInstance && typeof hijriInstance.getDate === 'function') {
-                            const hijriDay = toNativeNumeral(hijriInstance.getDate(), currentLang);
-                            const hijriMonthIndex = hijriInstance.getMonth() - 1;
-                            const hijriMonths = currentLang === 'bn' ? bengaliHijriMonths : englishHijriMonths;
-                            
-                            if (hijriMonthIndex >= 0 && hijriMonthIndex < hijriMonths.length) {
-                                const hijriMonthName = hijriMonths[hijriMonthIndex];
-                                const hijriYear = toNativeNumeral(hijriInstance.getFullYear(), currentLang);
-                                currentHijriDateEl.textContent = `${getTranslation('hijriDateLabel')}: ${hijriDay} ${hijriMonthName}, ${hijriYear} ${getTranslation('hijriYearSuffix')}`;
-                            } else {
-                                currentHijriDateEl.textContent = getTranslation('hijriCalcError');
-                            }
-                        } else { throw new Error("HijriDate conversion invalid object."); }
-                    } catch (e) {
-                        currentHijriDateEl.textContent = getTranslation('hijriDateError');
-                    }
-                } else {
-                    currentHijriDateEl.textContent = getTranslation('hijriNotLoaded');
-                }
-            }
-        }
+        function getTranslation(key,params={}){let text=translations[currentLang]?.[key]||translations['en']?.[key]||key;for(const param in params){text=text.replace(`{${param}}`,params[param]);}return text;}
+        function applyTranslations(){document.querySelectorAll('[data-lang-key]').forEach(element=>{const key=element.getAttribute('data-lang-key');if(element.tagName==='INPUT'&&element.hasAttribute('placeholder')){element.placeholder=getTranslation(key);}else{element.textContent=getTranslation(key);}});document.title=getTranslation('pageTitle');}
+        function toNativeNumeral(numStr,lang){if(lang.startsWith('bn')){const bengaliDigits=['০','১','২','৩','৪','৫','৬','৭','৮','৯'];return String(numStr).split('').map(digit=>/\d/.test(digit)?bengaliDigits[parseInt(digit)]:digit).join('');}return String(numStr);}
+        async function fetchUserLocationAndSetLanguage(){let browserLang=(navigator.languages&&navigator.languages[0])||navigator.language||'bn';if(browserLang.toLowerCase().startsWith('en')){currentLang='en';userLocale='en-US';}else if(browserLang.toLowerCase().startsWith('bn')){currentLang='bn';userLocale='bn-BD';}else{currentLang='en';userLocale='en-US';}document.body.lang=currentLang;console.log(`Browser language detected: ${browserLang}, Using app language: ${currentLang}`);applyTranslations();try{const response=await fetch('https://ip-api.com/json/?fields=status,message,timezone,countryCode');if(!response.ok)throw new Error(`IP API HTTP error! status: ${response.status}`);const data=await response.json();if(data.status==='success'&&data.timezone){userTimeZone=data.timezone;console.log('User timezone from IP API:',userTimeZone);}else{console.warn('Failed to get timezone from IP API, using default UTC. Message:',data.message);userTimeZone='Etc/UTC';}}catch(error){console.error("Error fetching user location/timezone from IP API:",error);userTimeZone='Etc/UTC';}await fetchCorrectTime();}
+        async function fetchCorrectTime(){try{const response=await fetch(`https://worldtimeapi.org/api/timezone/${userTimeZone}`);if(!response.ok){if(userTimeZone!=='Etc/UTC'){console.warn(`Timezone ${userTimeZone} not found on worldtimeapi, falling back to UTC.`);userTimeZone='Etc/UTC';return await fetchCorrectTime();}throw new Error(`WorldTimeAPI HTTP error! status: ${response.status}`);}const data=await response.json();const serverTime=new Date(data.utc_datetime);const clientTimeAtFetch=new Date();timeOffset=serverTime.getTime()-clientTimeAtFetch.getTime();initialTimeSynced=true;console.log(`Successfully synced time with server for timezone ${data.timezone}. Offset: ${timeOffset} ms`);}catch(error){console.error("Failed to fetch correct time from WorldTimeAPI:",error);timeOffset=0;initialTimeSynced=false;}updateTimeDate();}
+        function initializeDateTimeDisplay(){if(!currentTimeEl||!currentDateEl||!currentHijriDateEl){return;}updateTimeDate();setInterval(updateTimeDate,1000);}
+        function updateTimeDate(){const clientNow=new Date();const correctedNow=new Date(clientNow.getTime()+timeOffset);const timeOptions={hour:'numeric',minute:'2-digit',second:'2-digit',hour12:true,timeZone:userTimeZone};let timeString=correctedNow.toLocaleTimeString(userLocale,timeOptions);if(currentTimeEl)currentTimeEl.textContent=`${getTranslation('timeLabel')}: ${timeString}`;const dateOptions={day:'numeric',month:'long',year:'numeric',timeZone:userTimeZone};let dateString=correctedNow.toLocaleDateString(userLocale,dateOptions);if(currentDateEl)currentDateEl.textContent=`${getTranslation('dateLabel')}: ${dateString}`;if(currentHijriDateEl){if(typeof HijriDate!=='undefined'&&HijriDate.JS&&typeof HijriDate.JS.convert==='function'){try{const hijriInstance=HijriDate.JS.convert(correctedNow);if(hijriInstance&&typeof hijriInstance.getDate==='function'){const hijriDay=toNativeNumeral(hijriInstance.getDate(),currentLang);const hijriMonthIndex=hijriInstance.getMonth()-1;const hijriMonths=currentLang==='bn'?bengaliHijriMonths:englishHijriMonths;if(hijriMonthIndex>=0&&hijriMonthIndex<hijriMonths.length){const hijriMonthName=hijriMonths[hijriMonthIndex];const hijriYear=toNativeNumeral(hijriInstance.getFullYear(),currentLang);currentHijriDateEl.textContent=`${getTranslation('hijriDateLabel')}: ${hijriDay} ${hijriMonthName}, ${hijriYear} ${getTranslation('hijriYearSuffix')}`;}}else{throw new Error("HijriDate conversion invalid object.");}}catch(e){currentHijriDateEl.textContent=getTranslation('hijriDateError');}}else{currentHijriDateEl.textContent=getTranslation('hijriNotLoaded');}}}
 
         window.onload = async function() {
-            await fetchUserLocationAndSetLanguage(); // ভাষা ও টাইমজোন সেট করার চেষ্টা
+            await fetchUserLocationAndSetLanguage(); 
 
             const urlParams = new URLSearchParams(window.location.search);
             const sharerNameParam = urlParams.get('name');
@@ -495,9 +317,17 @@
             startFireworks();
             animateFireworks();
             initializeDateTimeDisplay(); 
+
+            // GIF পরিবর্তনের জন্য সেটআপ
+            if (eidGifList.length > 0 && eidImageEl) {
+                eidImageEl.src = eidGifList[0]; // প্রথম GIF টি লোড করো
+                setInterval(changeEidGif, gifChangeInterval); // নির্দিষ্ট সময় পর পর GIF পরিবর্তন করো
+            } else if (eidImageEl) {
+                eidImageEl.src = "eidmubarak.gif"; // ফলব্যাক হিসেবে একটি ডিফল্ট GIF
+            }
         };
 
-        // ... (বাকি JavaScript ফাংশনগুলো আগের মতোই থাকবে)
+        // ... (বাকি JavaScript ফাংশনগুলো আগের মতোই থাকবে) ...
         userNameInput.addEventListener('input', function() {
             if (userNameInput.value.trim() !== "") { generateButton.disabled = false; }
             else { generateButton.disabled = true; }
@@ -505,7 +335,7 @@
 
         function showStatusMessage(messageKey, type = 'info', duration = 3000, params = {}) {
             clearTimeout(statusTimeout);
-            statusMessageDiv.textContent = getTranslation(messageKey, params); // অনুবাদ করা বার্তা
+            statusMessageDiv.textContent = getTranslation(messageKey, params); 
             statusMessageDiv.className = '';
             statusMessageDiv.classList.add(type);
             statusMessageDiv.style.display = 'block';
@@ -519,7 +349,7 @@
         async function generateAndShareLink() {
             const userName = userNameInput.value.trim();
             if (userName === "") {
-                showStatusMessage("statusEnterName", "error"); // অনুবাদিত বার্তা
+                showStatusMessage("statusEnterName", "error"); 
                 return;
             }
             if (backgroundMusic && backgroundMusic.paused) {
@@ -529,9 +359,8 @@
             currentUrl.searchParams.set('name', userName);
             const newLink = currentUrl.toString();
             
-            // শেয়ার বার্তার জন্য প্রেরকের নাম ব্যবহার করা হচ্ছে, এটি অনুবাদ করার প্রয়োজন নেই যদি নাম অপরিবর্তিত থাকে
             const sharerNameForMessage = decodeURIComponent(userName); 
-            const shareText = getTranslation('greetingMessageFrom', {name: sharerNameForMessage}) + ` ${getTranslation('pageTitle')}! ${newLink}`; // একটি পূর্ণাঙ্গ শেয়ার বার্তা
+            const shareText = getTranslation('greetingMessageFrom', {name: sharerNameForMessage}) + ` ${getTranslation('pageTitle')}! ${newLink}`; 
 
             if (navigator.share) {
                 try {
