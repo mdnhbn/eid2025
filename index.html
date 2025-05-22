@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ঈদ মোবারক!</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Hijri Date Library -->
+    <script src="https://unpkg.com/hijri-date/hijri-date.js"></script>
     <style>
         body {
             font-family: 'Noto Sans Bengali', 'Arial', sans-serif;
@@ -146,18 +148,9 @@
             opacity: 0;
             transition: opacity 0.5s ease-in-out;
         }
-        #statusMessage.success {
-            background-color: #1DAE54;
-            color: white;
-        }
-        #statusMessage.error {
-            background-color: #d9534f;
-            color: white;
-        }
-        #statusMessage.info {
-            background-color: #5bc0de;
-            color: white;
-        }
+        #statusMessage.success { background-color: #1DAE54; color: white; }
+        #statusMessage.error { background-color: #d9534f; color: white; }
+        #statusMessage.info { background-color: #5bc0de; color: white; }
 
         #generatedLinkContainer {
             margin-top: 20px;
@@ -201,14 +194,11 @@
             z-index: 1;
             padding-bottom: 20px;
         }
-        #dateTimeDisplay { /* নতুন সময় ও তারিখের জন্য স্টাইল */
-            margin-top: 10px;
+        .dateTimeEntry { /* সময় ও তারিখের প্রতিটি লাইনের জন্য */
+            margin-top: 5px;
             font-size: 0.95em;
-            color: #f0e68c; /* Ensure text color matches footer */
         }
-        #dateTimeDisplay span {
-            margin: 0 5px; /* Add some spacing around the separator */
-        }
+        .dateTimeEntry span { margin: 0 3px; }
     </style>
 </head>
 <body>
@@ -216,19 +206,13 @@
     <audio id="backgroundMusic" src="eidmubarak.mp3" loop preload="auto"></audio>
 
     <div class="container">
-        <div id="greetingMessage" class="greeting-message">
-            <!-- Greeting will be inserted here by JavaScript -->
-        </div>
-
+        <div id="greetingMessage" class="greeting-message"></div>
         <img id="eidImage" src="eidmubarak.gif" alt="Eid Mubarak Animation">
-
         <div class="input-group">
             <label for="userNameInput">আপনার নাম লিখুন:</label>
             <input type="text" id="userNameInput" placeholder="এখানে আপনার নাম দিন">
             <button id="generateButton" onclick="generateAndShareLink()" disabled>
-                <svg viewBox="0 0 24 24">
-                    <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.61 15.31 3.4 16.78L2 22L7.31 20.62C8.72 21.37 10.33 21.82 12.04 21.82C17.5 21.82 21.95 17.37 21.95 11.91C21.95 6.45 17.5 2 12.04 2M12.04 19.96C10.6 19.96 9.22 19.57 8.03 18.89L7.62 18.65L4.32 19.53L5.22 16.32L4.96 15.89C4.14 14.57 3.74 13.07 3.74 11.91C3.74 7.36 7.48 3.62 12.04 3.62C16.6 3.62 20.34 7.36 20.34 11.91C20.34 16.47 16.6 19.96 12.04 19.96M17.01 14.34C16.76 14.22 15.56 13.64 15.34 13.56C15.13 13.48 14.97 13.44 14.82 13.67C14.67 13.91 14.17 14.51 14.03 14.67C13.88 14.82 13.73 14.84 13.48 14.72C13.24 14.6 12.26 14.27 11.11 13.24C10.21 12.43 9.62 11.47 9.44 11.18C9.27 10.89 9.41 10.76 9.53 10.64C9.64 10.53 9.78 10.34 9.91 10.19C10.03 10.04 10.07 9.93 10.15 9.76C10.23 9.59 10.19 9.45 10.11 9.33C10.04 9.22 9.46 7.78 9.22 7.23C8.99 6.68 8.76 6.72 8.59 6.72H8.24C8.06 6.72 7.78 6.8 7.54 7.04C7.3 7.28 6.67 7.85 6.67 8.99C6.67 10.13 7.58 11.21 7.7 11.37C7.82 11.53 9.32 13.83 11.59 14.73C12.14 14.96 12.58 15.09 12.95 15.19C13.48 15.32 14.25 15.25 14.58 14.94C14.96 14.58 15.34 14.04 15.49 13.81C15.65 13.59 15.57 13.48 15.5 13.38C15.42 13.28 15.2 13.2 14.95 13.08C14.7 12.96 17.25 14.46 17.01 14.34Z"/>
-                </svg>
+                <svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.61 15.31 3.4 16.78L2 22L7.31 20.62C8.72 21.37 10.33 21.82 12.04 21.82C17.5 21.82 21.95 17.37 21.95 11.91C21.95 6.45 17.5 2 12.04 2M12.04 19.96C10.6 19.96 9.22 19.57 8.03 18.89L7.62 18.65L4.32 19.53L5.22 16.32L4.96 15.89C4.14 14.57 3.74 13.07 3.74 11.91C3.74 7.36 7.48 3.62 12.04 3.62C16.6 3.62 20.34 7.36 20.34 11.91C20.34 16.47 16.6 19.96 12.04 19.96M17.01 14.34C16.76 14.22 15.56 13.64 15.34 13.56C15.13 13.48 14.97 13.44 14.82 13.67C14.67 13.91 14.17 14.51 14.03 14.67C13.88 14.82 13.73 14.84 13.48 14.72C13.24 14.6 12.26 14.27 11.11 13.24C10.21 12.43 9.62 11.47 9.44 11.18C9.27 10.89 9.41 10.76 9.53 10.64C9.64 10.53 9.78 10.34 9.91 10.19C10.03 10.04 10.07 9.93 10.15 9.76C10.23 9.59 10.19 9.45 10.11 9.33C10.04 9.22 9.46 7.78 9.22 7.23C8.99 6.68 8.76 6.72 8.59 6.72H8.24C8.06 6.72 7.78 6.8 7.54 7.04C7.3 7.28 6.67 7.85 6.67 8.99C6.67 10.13 7.58 11.21 7.7 11.37C7.82 11.53 9.32 13.83 11.59 14.73C12.14 14.96 12.58 15.09 12.95 15.19C13.48 15.32 14.25 15.25 14.58 14.94C14.96 14.58 15.34 14.04 15.49 13.81C15.65 13.59 15.57 13.48 15.5 13.38C15.42 13.28 15.2 13.2 14.95 13.08C14.7 12.96 17.25 14.46 17.01 14.34Z"/></svg>
                 WhatsApp এ শেয়ার করুন
             </button>
             <div id="statusMessage"></div>
@@ -243,8 +227,13 @@
 
     <footer>
         <p>সবাইকে ঈদের আন্তরিক শুভেচ্ছা!</p>
-        <div id="dateTimeDisplay"> <!-- নতুন সময় ও তারিখ দেখানোর স্থান -->
-            <span id="currentTime"></span> | <span id="currentDate"></span>
+        <div id="dateTimeDisplay">
+            <div class="dateTimeEntry">
+                <span id="currentTime"></span> | <span id="currentDate"></span>
+            </div>
+            <div class="dateTimeEntry">
+                <span id="currentHijriDate"></span>
+            </div>
         </div>
     </footer>
 
@@ -255,36 +244,55 @@
         const statusMessageDiv = document.getElementById('statusMessage');
         let statusTimeout;
 
-        // নতুন: সময় ও তারিখের এলিমেন্ট
         const currentTimeEl = document.getElementById('currentTime');
         const currentDateEl = document.getElementById('currentDate');
+        const currentHijriDateEl = document.getElementById('currentHijriDate');
+
+        const bengaliHijriMonths = [
+            "মহররম", "সফর", "রবিউল আউয়াল", "রবিউস সানি",
+            "জমাদিউল আউয়াল", "জমাদিউস সানি", "রজব", "শাবান",
+            "রমজান", "শাওয়াল", "জ্বিলকদ", "জ্বিলহজ্জ"
+        ];
+
+        function toBengaliNumeral(num) {
+            const bengaliDigits = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
+            return String(num).split('').map(digit => {
+                if (/\d/.test(digit)) { // Check if it's a digit
+                    return bengaliDigits[parseInt(digit)];
+                }
+                return digit; // Return non-digits as is (e.g., for time separators)
+            }).join('');
+        }
 
         function initializeDateTimeDisplay() {
-            if (!currentTimeEl || !currentDateEl) {
-                // console.error("Date/Time display elements not found!");
+            if (!currentTimeEl || !currentDateEl || !currentHijriDateEl) {
+                console.error("Date/Time display elements not found!");
                 return;
             }
 
             function updateTimeDate() {
                 const now = new Date();
                 
-                const timeOptions = {
-                    hour: 'numeric',
-                    minute: '2-digit',
-                    second: '2-digit',
-                    hour12: true,
-                };
+                // Gregorian Time
+                const timeOptions = { hour: 'numeric', minute: '2-digit', second: '2-digit', hour12: true };
                 let timeString = now.toLocaleTimeString('bn-BD', timeOptions);
-
-                const dateOptions = {
-                    day: 'numeric',
-                    month: 'long',
-                    year: 'numeric'
-                };
-                let dateString = now.toLocaleDateString('bn-BD', dateOptions);
-
                 currentTimeEl.textContent = `সময়: ${timeString}`;
+
+                // Gregorian Date
+                const dateOptions = { day: 'numeric', month: 'long', year: 'numeric' };
+                let dateString = now.toLocaleDateString('bn-BD', dateOptions);
                 currentDateEl.textContent = `তারিখ: ${dateString}`;
+
+                // Hijri Date
+                if (typeof HijriDate !== 'undefined') { // Check if library is loaded
+                    const hijri = new HijriDate(now); // Convert Gregorian date to Hijri
+                    const hijriDay = toBengaliNumeral(hijri.getDate());
+                    const hijriMonthName = bengaliHijriMonths[hijri.getMonth() - 1]; // getMonth is 1-indexed
+                    const hijriYear = toBengaliNumeral(hijri.getFullYear());
+                    currentHijriDateEl.textContent = `ইসলামী তারিখ: ${hijriDay} ${hijriMonthName}, ${hijriYear} হিজরি`;
+                } else {
+                    currentHijriDateEl.textContent = "ইসলামী তারিখ লোড হচ্ছে...";
+                }
             }
 
             updateTimeDate(); 
@@ -315,7 +323,7 @@
             generateButton.disabled = true;
             startFireworks();
             animateFireworks();
-            initializeDateTimeDisplay(); // নতুন: সময় ও তারিখ চালু করা
+            initializeDateTimeDisplay();
         };
 
         userNameInput.addEventListener('input', function() {
@@ -333,15 +341,11 @@
             statusMessageDiv.classList.add(type);
             
             statusMessageDiv.style.display = 'block';
-            setTimeout(() => {
-                statusMessageDiv.style.opacity = '1';
-            }, 10);
+            setTimeout(() => { statusMessageDiv.style.opacity = '1'; }, 10);
 
             statusTimeout = setTimeout(() => {
                 statusMessageDiv.style.opacity = '0';
-                setTimeout(() => {
-                    statusMessageDiv.style.display = 'none';
-                }, 500);
+                setTimeout(() => { statusMessageDiv.style.display = 'none'; }, 500);
             }, duration);
         }
 
@@ -373,7 +377,6 @@
                     showStatusMessage('শুভেচ্ছা শেয়ার করার জন্য অপশন দেখানো হয়েছে!', 'success', 4000);
                     document.getElementById('generatedLinkContainer').style.display = 'none';
                 } catch (error) {
-                    // console.error('Error sharing:', error);
                     showManualLink(newLink);
                     showStatusMessage('শেয়ার অপশন কাজ করেনি/বাতিল হয়েছে। লিঙ্ক কপি করুন।', 'info', 4000);
                 }
@@ -398,11 +401,8 @@
 
             try {
                 navigator.clipboard.writeText(sharableLinkInput.value)
-                    .then(() => {
-                        showStatusMessage("লিঙ্ক সফলভাবে কপি করা হয়েছে!", "success");
-                    })
+                    .then(() => { showStatusMessage("লিঙ্ক সফলভাবে কপি করা হয়েছে!", "success"); })
                     .catch(err => {
-                        // console.error('Failed to copy with navigator.clipboard: ', err);
                         if(document.execCommand('copy')) {
                             showStatusMessage("লিঙ্ক কপি করা হয়েছে (ফলব্যাক)!", "success");
                         } else {
@@ -410,7 +410,6 @@
                         }
                     });
             } catch (err) {
-                // console.error('Clipboard API not available: ', err);
                 if(document.execCommand('copy')) {
                     showStatusMessage("লিঙ্ক কপি করা হয়েছে (ফলব্যাক)!", "success");
                 } else {
@@ -419,7 +418,7 @@
             }
         }
 
-        // --- Fireworks Animation Code (Speed Adjusted - Unchanged) ---
+        // --- Fireworks Animation Code (Unchanged) ---
         const canvas = document.getElementById('fireworksCanvas');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth;
