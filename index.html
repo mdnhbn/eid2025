@@ -1,141 +1,146 @@
-<!DOCTYPE html>
+ কোনো সেটিংসের জন্য, যা তাদের অপটিমাইজেশনকে বাইপাস করতে বলে।
+    *   এই<!DOCTYPE html>
 <html lang="bn">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8 `<script>` ট্যাগটি সাধারণত HTML ডকুমেন্টের `<body>` ট্যাগের একেবারে শেষে, অন্যান্য কন্টেন্ট এবং স্ক্রিপ্টের পরে">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ঈদ মোবারক!</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/ যোগ করা হয়। কিছু ক্ষেত্রে `<head>` ট্যাগেও যোগ করতে বলা হতে পারে, তবে `<body>` ট্যাগেরcss2?family=Noto+Sans+Bengali:wght@400;700&display= শেষেই বেশি প্রচলিত।
+
+2.  **HTML কন্টেইনার ডিভ:** `<div id="container-851swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <style>
+    <09f96700d03d3fa18f3d4cacdcd6style>
         /* আপনার সম্পূর্ণ CSS কোড এখানে থাকবে */
-        body[lang="bn"] { font-family: 'Noto Sans Bengali', 'Arial', sans-serif; }
-        body[lang="en"] { font-family: 'Roboto', 'Arial', sans-serif; }
+        body[lang="bn"] { font-family: 'a"></div>`
+    *   এই `<div>` এলিমেন্টটি হলো সেই জায়গা যেখানে বিজ্ঞাপনটি দেখানো হবে। `Noto Sans Bengali', 'Arial', sans-serif; }
+        body[lang="en"] { font-familyid`-তে থাকা ইউনিক কোডটি (`85109f96...`) সম্ভবত উপরের জাভাস্ক্রিপ: 'Roboto', 'Arial', sans-serif; }
         body {
-            background: linear-gradient(to bottom, #001c00, #003800, #004d00);
+            background: linear-gradient(to bottom, #001c00, #003800, #004d্ট ফাইলটিকে এই নির্দিষ্ট `div`-টিকে খুঁজে পেতে এবং এখানে বিজ্ঞাপন লোড করতে সাহায্য করে।
+    *   এই `<div>00);
             color: #f0e68c;
             text-align: center;
-            display: flex;
+` ট্যাগটি আপনার HTML ডকুমেন্টের সেই অংশে বসাতে হবে যেখানে আপনি বিজ্ঞাপনটি প্রদর্শন করতে চান। উদাহরণস্বরূপ, এটি            display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            overflow-x: hidden;
+            overflow-x: hidden আপনার মূল কন্টেইনারের (`<div class="container">`) ভিতরে, ভিডিওর নিচে, ইনপুট গ্রুপের;
             position: relative;
             line-height: 1.6;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        #fireworksCanvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
-        .container { background-color: rgba(1, 32, 1, 0.88); padding: 25px 20px; border-radius: 20px; box-shadow: 0 8px 25px rgba(255, 215, 0, 0.25); max-width: 500px; width: 90%; border: 2px solid #ffd700; position: relative; z-index: 1; margin: 3vh auto; }
-        #eidVideo { width: 100%; max-height: 260px; object-fit: contain; border-radius: 15px; margin-bottom: 20px; border: 3px solid #ffd700; box-shadow: 0 0 12px rgba(255, 215, 0, 0.4); background-color: #001000; }
-        .greeting-message { font-size: 2em; font-weight: 700; color: #fff; margin-bottom: 20px; text-shadow: 1px 1px 4px rgba(0,0,0,0.6); animation: fadeInGrow 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
-        @keyframes fadeInGrow { 0% { opacity: 0; transform: scale(0.7) translateY(25px); } 100% { opacity: 1; transform: scale(1) translateY(0); } }
-        .input-group { margin-top: 25px; margin-bottom: 15px; }
-        label { display: block; margin-bottom: 8px; color: #f0e68c; font-weight: bold; font-size: 1.05em; }
-        input[type="text"] { width: 100%; padding: 12px; margin-bottom: 15px; border: 2px solid #ffd700; border-radius: 10px; font-size: 1em; background-color: #002a00; color: #fff; }
-        input[type="text"]::placeholder { color: #b0a060; }
-        button#generateButton { background-color: #25D366; color: #fff; padding: 12px 20px; border: none; border-radius: 10px; cursor: pointer; font-size: 1em; font-weight: bold; transition: background-color 0.2s ease, transform 0.15s ease, opacity 0.2s ease; letter-spacing: 0.5px; box-shadow: 0 3px 7px rgba(0,0,0,0.25); display: flex; align-items: center; justify-content: center; width: 100%; max-width: 280px; margin: 0 auto; }
-        button#generateButton svg { width: 20px; height: 20px; margin-right: 8px; fill: #fff; }
-        button#generateButton:disabled { background-color: #cccccc; color: #666666; cursor: not-allowed; opacity: 0.7; }
-        button#generateButton:disabled svg { fill: #666666; }
-        button#generateButton:not(:disabled):hover { background-color: #1DAE54; transform: translateY(-1px) scale(1.02); box-shadow: 0 5px 10px rgba(0,0,0,0.3); }
-        button#generateButton:not(:disabled):active { transform: translateY(0px) scale(1); }
-        #statusMessage { padding: 10px; margin-top: 10px; margin-bottom: 10px; border-radius: 8px; font-size: 0.9em; display: none; opacity: 0; transition: opacity 0.4s ease-in-out; }
-        #statusMessage.success { background-color: #1DAE54; color: white; } #statusMessage.error { background-color: #d9534f; color: white; } #statusMessage.info { background-color: #5bc0de; color: white; }
-        #generatedLinkContainer { margin-top: 15px; padding: 15px; background-color: rgba(0, 0, 0, 0.4); border-radius: 10px; border: 1px solid #DAA520; display: none; }
-        #generatedLinkContainer p { color: #f0e68c; margin-bottom: 8px; font-size: 0.95em; }
-        #sharableLink { width: calc(100% - 110px); padding: 10px; border: 1px solid #DAA520; border-radius: 8px; margin-right: 8px; background-color: #002a00; color: #fff; font-size: 0.95em;}
-        button#copyButton { padding: 10px 15px; background-color: #B8860B; color: #fff; font-size: 0.95em; border: none; border-radius: 8px; cursor: pointer; transition: background-color 0.2s ease; }
-        button#copyButton:hover { background-color: #DAA520; }
-        footer { margin-top: 15px; font-size: 0.85em; color: #f0e68c; position: relative; z-index: 1; padding-bottom: 15px; }
-        .dateTimeEntry { margin-top: 4px; font-size: 0.9em; } .dateTimeEntry span { margin: 0 3px; }
-        @media (max-width: 480px) { .container { padding: 20px 15px; margin-top: 2vh; margin-bottom: 2vh; } #eidVideo { max-height: 220px; margin-bottom: 15px; } .greeting-message { font-size: 1.7em; margin-bottom: 15px; } label { font-size: 1em; } input[type="text"] { padding: 10px; font-size: 0.95em; } button#generateButton { padding: 10px 15px; font-size: 0.95em; max-width: 250px; } button#generateButton svg { width: 18px; height: 18px; } #statusMessage { font-size: 0.85em; } #sharableLink, button#copyButton { font-size: 0.9em; } footer { font-size: 0.8em; } .dateTimeEntry { font-size: 0.85em; } }
-        @media (max-width: 360px) { .greeting-message { font-size: 1.5em; } #eidVideo { max-height: 180px; } }
+        #fire আগে বা পরে, অথবা ফুটারের আগে যেকোনো উপযুক্ত স্থানে হতে পারে।
+
+**আপনার আগের কোডের ভিত্তিতে, যদি আপনিworksCanvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+        . এই বিজ্ঞাপনটি আপনার `.container` ডিভের ভিতরে, "Share on WhatsApp" বাটনের ঠিক নিচে এবং "Generated Link Container"container { background-color: rgba(1, 32, 1, 0.88); padding এর ঠিক উপরে দেখাতে চান, তাহলে কোডটি এমন হতে পারে:**
+
+```html
+<!DOCTYPE html>
+<html lang=": 25px 20px; border-radius: 20px; box-shadow: 0 8bn">
+<head>
+    <!-- ... আপনার <head> ট্যাগের অন্যান্য এলিমেন্ট ... -->
+    px 25px rgba(255, 215, 0, 0.25<style>
+        /* ... আপনার CSS কোড ... */
+        /* বিজ্ঞাপনের কন্টেইনারের জন্য কিছু); max-width: 500px; width: 90%; border: 2px solid #ffd700; position: relative; z-index: 1; margin: 3vh auto; } বেসিক স্টাইল যোগ করতে পারেন যদি চান */
+        #container-85109f96700
+        #eidVideo { width: 100%; max-height: 260px; object-fit:d03d3fa18f3d4cacdcd6a {
+            margin: 2 contain; border-radius: 15px; margin-bottom: 20px; border: 3px solid #ffd700; box-shadow: 0 0 12px rgba(250px auto; /* উপরে-নিচে মার্জিন এবং সেন্টারে আনার জন্য */
+            text-align:5, 215, 0, 0.4); background-color: #0010 center; /* কন্টেইনারের ভিতরের কন্টেন্ট সেন্টারে রাখতে (যদি অ্যাড নেটওয়ার্ক এটি কন্00; }
+        .greeting-message { font-size: 2em; font-weight: 700; color: #fff; margin-bottom: 20px; text-shadow: 1px 1px 4px rgba(0,0,0,0.6); animation: fadeInGrow 1.5ট্রোল না করে) */
+            /* বিজ্ঞাপন নেটওয়ার্ক থেকে সাইজ নির্দিষ্ট করে দিতে পারে, অথবা এটি ডাইনামিকs cubic-bezier(0.25, 0.46, 0.45, 0 হতে পারে */
+        }
     </style>
-
-    <!-- Adsterra বা Advertica থেকে head-এ বসানোর জন্য কোনো কোড থাকলে এখানে বসান -->
-    <!-- যেমন: <meta name="ad.size" content="width=300,height=250"> (কিছু অ্যাড নেটওয়ার্ক ব্যবহার করে) -->
-    <!-- Adsterra Head Script Placeholder -->
-    <!-- <script type='text/javascript'> // Adsterra Head Script Here </script> -->
-    <!-- Advertica Head Script Placeholder -->
-    <!-- <script type='text/javascript'> // Advertica Head Script Here </script> -->
-
 </head>
 <body lang="bn">
-    <canvas id="fireworksCanvas"></canvas>
-    <audio id="backgroundMusic" src="eidmubarak.mp3" loop preload="metadata"></audio>
+    .94); }
+        @keyframes fadeInGrow { 0% { opacity: 0; transform: scale<canvas id="fireworksCanvas"></canvas>
+    <audio id="backgroundMusic" src="eidmub(0.7) translateY(25px); } 100% { opacity: 1; transformarak.mp3" loop preload="metadata"></audio>
+
+    <div class="container">
+        <div: scale(1) translateY(0); } }
+        .input-group { margin-top: 2 id="greetingMessage" class="greeting-message"></div>
+        <video id="eidVideo" src="eid5px; margin-bottom: 15px; }
+        label { display: block; margin-bottommubarak.mp4" autoplay loop muted playsinline preload="metadata">
+            Your browser does not support the: 8px; color: #f0e68c; font-weight: bold; font-size: 1 video tag.
+        </video>
+
+        <!-- এখানে Adsterra বা অন্য কোনো ব্যানার অ্যাড বসাতে পারেন যদি.05em; }
+        input[type="text"] { width: 100%; padding: 12px; margin-bottom: 15px; border: 2px solid #ffd70 চান -->
+        <!-- <div id="some-other-ad-unit" style="margin: 15px0; border-radius: 10px; font-size: 1em; background-color: # auto;"></div> -->
+
+        <div class="input-group">
+            <label for="userNameInput" data-lang002a00; color: #fff; }
+        input[type="text"]::placeholder {-key="yourNameLabel">আপনার নাম লিখুন:</label>
+            <input type="text" id=" color: #b0a060; }
+        button#generateButton { background-color: #2userNameInput" data-lang-key="namePlaceholder" placeholder="এখানে আপনার নাম দিন">
+            <button id5D366; color: #fff; padding: 12px 20px; border: none; border="generateButton" onclick="generateAndShareLink()" disabled>
+                <svg viewBox="0 0 2-radius: 10px; cursor: pointer; font-size: 1em; font-weight:4 24"><path d="M12.04 2C6.58 2 2 bold; transition: background-color 0.2s ease, transform 0.15s ease, opacity.13 6.45 2.13 11.91C2.13 0.2s ease; letter-spacing: 0.5px; box-shadow: 0  13.66 2.61 15.31 3.4 163px 7px rgba(0,0,0,0.25); display: flex; align-.78L2 22L7.31 20.62C8.72items: center; justify-content: center; width: 100%; max-width: 28 21.37 10.33 21.82 12.040px; margin: 0 auto; }
+        button#generateButton svg { width: 20px 21.82C17.5 21.82 21.95 ; height: 20px; margin-right: 8px; fill: #fff; }
+        17.37 21.95 11.91C21.95 button#generateButton:disabled { background-color: #cccccc; color: #666666;6.45 17.5 2 12.04 2M12.04 1 cursor: not-allowed; opacity: 0.7; }
+        button#generateButton:disabled svg {9.96C10.6 19.96 9.22 19. fill: #666666; }
+        button#generateButton:not(:disabled):hover {57 8.03 18.89L7.62 18.65L4 background-color: #1DAE54; transform: translateY(-1px) scale(1.02); box-shadow: 0 5px 10px rgba(0,0,0,0..32 19.53L5.22 16.32L4.96 15.89C4.14 14.57 3.74 3); }
+        button#generateButton:not(:disabled):active { transform: translateY(0px) scale13.07 3.74 11.91C3.74 7.(1); }
+        #statusMessage { padding: 10px; margin-top: 10px; margin36 7.48 3.62 12.04 3.62C-bottom: 10px; border-radius: 8px; font-size: 0.916.6 3.62 20.34 7.36 20.34 em; display: none; opacity: 0; transition: opacity 0.4s ease-in-out; }
+11.91C20.34 16.47 16.6 1        #statusMessage.success { background-color: #1DAE54; color: white; } #9.96 12.04 19.96M17.01 1statusMessage.error { background-color: #d9534f; color: white; } #status4.34C16.76 14.22 15.56 1Message.info { background-color: #5bc0de; color: white; }
+        #generatedLink3.64 15.34 13.56C15.13 1Container { margin-top: 15px; padding: 15px; background-color: rgba(3.48 14.97 13.44 14.82 13.60, 0, 0, 0.4); border-radius: 10px; border:7C14.67 13.91 14.17 14.5 1px solid #DAA520; display: none; }
+        #generatedLinkContainer p {1 14.03 14.67C13.88 14.8 color: #f0e68c; margin-bottom: 8px; font-size: 02 13.73 14.84 13.48 14.7.95em; }
+        #sharableLink { width: calc(100% - 110px); padding: 10px; border: 1px solid #DAA520;2C13.24 14.6 12.26 14.27 11 border-radius: 8px; margin-right: 8px; background-color: #002.11 13.24C10.21 12.43 9.a00; color: #fff; font-size: 0.95em;}
+        button#62 11.47 9.44 11.18C9.27 10copyButton { padding: 10px 15px; background-color: #B8860.89 9.41 10.76 9.53 10.6B; color: #fff; font-size: 0.95em; border: none; border-4C9.64 10.53 9.78 10.34 radius: 8px; cursor: pointer; transition: background-color 0.2s ease; }
+9.91 10.19C10.03 10.04 1        button#copyButton:hover { background-color: #DAA520; }
+        footer { margin-top0.07 9.93 10.15 9.76C10.23 9.59 10.19 9.45 10.11 9.: 15px; font-size: 0.85em; color: #f0e68c;33C10.04 9.22 9.46 7.78  position: relative; z-index: 1; padding-bottom: 15px; }
+        .9.22 7.23C8.99 6.68 8.76dateTimeEntry { margin-top: 4px; font-size: 0.9em; } .dateTime 6.72 8.59 6.72H8.24C8.0Entry span { margin: 0 3px; }
+        @media (max-width: 486 6.72 7.78 6.8 7.54 7.00px) { .container { padding: 20px 15px; margin-top: 2vh; margin4C7.3 7.28 6.67 7.85 6.6-bottom: 2vh; } #eidVideo { max-height: 220px; margin-7 8.99C6.67 10.13 7.58 1bottom: 15px; } .greeting-message { font-size: 1.7em; margin-1.21 7.7 11.37C7.82 11.5bottom: 15px; } label { font-size: 1em; } input[type="text3 9.32 13.83 11.59 14.73"] { padding: 10px; font-size: 0.95em; } button#generateC12.14 14.96 12.58 15.09 12Button { padding: 10px 15px; font-size: 0.95em;.95 15.19C13.48 15.32 14 max-width: 250px; } button#generateButton svg { width: 18px;.25 15.25 14.58 14.94C14 height: 18px; } #statusMessage { font-size: 0.85em; }.96 14.58 15.34 14.04 15 #sharableLink, button#copyButton { font-size: 0.9em; } footer { font.49 13.81C15.65 13.59 15-size: 0.8em; } .dateTimeEntry { font-size: 0.85em.57 13.48 15.5 13.38C15.; } }
+        @media (max-width: 360px) { .greeting-message {42 13.28 15.2 13.2 14.95 font-size: 1.5em; } #eidVideo { max-height: 180px 13.08C14.7 12.96 17.25 ; } }
+    </style>
+</head>
+<body lang="bn">
+    <canvas id14.46 17.01 14.34Z"/></svg>
+                <="fireworksCanvas"></canvas>
+    <audio id="backgroundMusic" src="eidmubarak.mpspan data-lang-key="shareButtonText">WhatsApp এ শেয়ার করুন</span>
+            </button>
+            <3" loop preload="metadata"></audio>
 
     <div class="container">
         <div id="greetingMessage" class="greeting-message"></div>
-        <video id="eidVideo" src="eidmubarak.mp4" autoplay loop muted playsinline preload="metadata">
-            Your browser does not support the video tag.
+        <video id="eidVideo" src="eidmubarakdiv id="statusMessage"></div>
+
+            <!-- আপনার দেওয়া নতুন বিজ্ঞাপনের কন্টেইনার div -->
+            <.mp4" autoplay loop muted playsinline preload="metadata">
+            Your browser does not support the video tag.div id="container-85109f96700d03d3fa18
         </video>
-
-        <!-- Adsterra Banner Placeholder 1 (উদাহরণ - যেখানে ব্যানার দেখাতে চান) -->
-        <!-- <div id="adsterra-banner-top-XXXXXXXX" style="margin: 15px auto; text-align: center;"></div> -->
-        <!-- Advertica Banner/Ad Unit Placeholder 1 (উদাহরণ - যেখানে ব্যানার দেখাতে চান) -->
-        <!-- <div id="advertica-unit-YYYYYYYY" style="margin: 15px auto; text-align: center;"></div> -->
-
         <div class="input-group">
-            <label for="userNameInput" data-lang-key="yourNameLabel">আপনার নাম লিখুন:</label>
-            <input type="text" id="userNameInput" data-lang-key="namePlaceholder" placeholder="এখানে আপনার নাম দিন">
-            <button id="generateButton" onclick="generateAndShareLink()" disabled>
-                <svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.61 15.31 3.4 16.78L2 22L7.31 20.62C8.72 21.37 10.33 21.82 12.04 21.82C17.5 21.82 21.95 17.37 21.95 11.91C21.95 6.45 17.5 2 12.04 2M12.04 19.96C10.6 19.96 9.22 19.57 8.03 18.89L7.62 18.65L4.32 19.53L5.22 16.32L4.96 15.89C4.14 14.57 3.74 13.07 3.74 11.91C3.74 7.36 7.48 3.62 12.04 3.62C16.6 3.62 20.34 7.36 20.34 11.91C20.34 16.47 16.6 19.96 12.04 19.96M17.01 14.34C16.76 14.22 15.56 13.64 15.34 13.56C15.13 13.48 14.97 13.44 14.82 13.67C14.67 13.91 14.17 14.51 14.03 14.67C13.88 14.82 13.73 14.84 13.48 14.72C13.24 14.6 12.26 14.27 11.11 13.24C10.21 12.43 9.62 11.47 9.44 11.18C9.27 10.89 9.41 10.76 9.53 10.64C9.64 10.53 9.78 10.34 9.91 10.19C10.03 10.04 10.07 9.93 10.15 9.76C10.23 9.59 10.19 9.45 10.11 9.33C10.04 9.22 9.46 7.78 9.22 7.23C8.99 6.68 8.76 6.72 8.59 6.72H8.24C8.06 6.72 7.78 6.8 7.54 7.04C7.3 7.28 6.67 7.85 6.67 8.99C6.67 10.13 7.58 11.21 7.7 11.37C7.82 11.53 9.32 13.83 11.59 14.73C12.14 14.96 12.58 15.09 12.95 15.19C13.48 15.32 14.25 15.25 14.58 14.94C14.96 14.58 15.34 14.04 15.49 13.81C15.65 13.59 15.57 13.48 15.5 13.38C15.42 13.28 15.2 13.2 14.95 13.08C14.7 12.96 17.25 14.46 17.01 14.34Z"/></svg>
-                <span data-lang-key="shareButtonText">WhatsApp এ শেয়ার করুন</span>
-            </button>
-            <div id="statusMessage"></div>
-        </div>
+            <label for="userNameInput"f3d4cacdcd6a"></div>
 
+        </div>
         <div id="generatedLinkContainer">
-             <!-- ... লিঙ্ক কন্টেইনার ... -->
+            <p data-lang-key="shareLinkManualText">এই লিঙ্কটি বন্ধুদের সাথে শেয়ার করুন ( data-lang-key="yourNameLabel">আপনার নাম লিখুন:</label>
+            <input type="text" id="userNameInput" data-lang-key="namePlaceholder" placeholder="এখানে আপনার নাম দিন">
+            যদি অটো-শেয়ার কাজ না করে):</p>
+            <input type="text" id="sharable<button id="generateButton" onclick="generateAndShareLink()" disabled>
+                <svg viewBox="0 Link" readonly>
+            <button id="copyButton" onclick="copyLink()" data-lang-key="0 24 24"><path d="M12.04 2C6.58copyButtonText">কপি করুন</button>
         </div>
     </div>
     <footer>
-        <!-- ... ফুটার ... -->
+        <!-- ... আপনার 2 2.13 6.45 2.13 11.91C ফুটারের কন্টেন্ট ... -->
     </footer>
 
     <!-- HijriDate Library -->
-    <script> (function(global) { /* ... HijriDate Code ... */ })(this); </script>
+    <script>
+    2.13 13.66 2.61 15.31 3.(function(global) { /* ... আপনার HijriDate লাইব্রেরির কোড ... */ })(this);
+    4 16.78L2 22L7.31 20.62C8.7</script>
 
     <!-- আপনার প্রধান JavaScript কোড -->
     <script>
-        // আপনার সম্পূর্ণ JavaScript কোড এখানে থাকবে
-        const translations = { /* ... */ };
-        // ... (আগের সব JavaScript কোড) ...
-    </script>
+        // আপনার সম্পূর্ণ JavaScript কো2 21.37 10.33 21.82 12.0ড এখানে থাকবে 
+        // ... (translations, helper functions, API calls, event listeners ইত্যাদি) ...
+    </script4 21.82C17.5 21.82 21.95>
 
-    <!-- 
-        ==================================================
-        ADVERTISEMENT SCRIPTS - REPLACE WITH YOUR ACTUAL CODES
-        ==================================================
-    -->
-
-    <!-- Advertica.com Ad Script (উদাহরণ - আপনার আসল কোড ব্যবহার করুন) -->
-    <!-- Example: Popunder or General Purpose Script -->
-    <!-- <script type="text/javascript" src="//data258.click/YOUR_ADVERTICA_CODE_HERE"></script> -->
+    <!-- Advertica Ad Script (যদি আগেরটি ব্যবহার করেন) -->
+    <!-- <script type="text 17.37 21.95 11.91C21.95 6.45 17.5 2 12.04 2M12./javascript" src="//data258.click/YOUR_ADVERTICA_CODE_HERE"></script>04 19.96C10.6 19.96 9.22 -->
     
-    <!-- Example: Banner Script with Container (যদি Advertica এভাবে কোড দেয়) -->
-    <!-- 
-        <script type="text/javascript">
-            // Advertica banner config here
-        </script>
-        <script type="text/javascript" src="//ADVERTICA_BANNER_JS_URL"></script> 
-    -->
-
-
-    <!-- Adsterra.com Ad Scripts (উদাহরণ - আপনার আসল কোড ব্যবহার করুন) -->
-    <!-- Example: Popunder Script -->
-    <!-- <script type='text/javascript' src='//ADSTERRA_OFFICIAL_DOMAIN.com/YOUR_POPONDER_CODE.js'></script> -->
-
-    <!-- Example: Social Bar Script -->
-    <!-- <script type='text/javascript' src='//ADSTERRA_OFFICIAL_DOMAIN.com/YOUR_SOCIALBAR_CODE.js'></script> -->
+    <!-- আপনার দেওয়া নতুন Adsterra (সন্দেহজনক) Ad Script -->
+    <script async 19.57 8.03 18.89L7.62 18.6="async" data-cfasync="false" src="//genuinelyunacceptableweep.com/855L4.32 19.53L5.22 16.32L4.109f96700d03d3fa18f3d4cacdcd96 15.89C4.14 14.57 3.746a/invoke.js"></script>
     
-    <!-- Example: Banner Script (যদি ব্যানার div এর পরে লোড করতে হয়) -->
-    <!-- 
-        <script type="text/javascript">
-            // Adsterra banner config here (e.g., atOptions = { 'key' : 'YOUR_KEY', ... })
-        </script>
-        <script type="text/javascript" src="//ADSTERRA_BANNER_JS_DOMAIN.com/YOUR_SCRIPT.js"></script> 
-    -->
-
 </body>
 </html>
