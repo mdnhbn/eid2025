@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ঈদ মোবারক!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans Bengali', 'Arial', sans-serif;
+            background: linear-gradient(to bottom, #001c00, #003800, #004d00); /* গাঢ় সবুজ থেকে একটু হালকা সবুজ গ্রেডিয়েন্ট */
+            color: #f0e68c; /* ফ্যাকাশে সোনালী টেক্সট */
+            text-align: center;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow: hidden; /* ক্যানভাসের জন্য স্ক্রলবার হাইড */
+        }
+
+        #fireworksCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0; /* কন্টেন্টের পেছনে */
+        }
+
+        .container {
+            background-color: rgba(1, 32, 1, 0.85); /* গাঢ় সবুজ, কিছুটা স্বচ্ছ */
+            padding: 30px 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3); /* সোনালী আভা */
+            max-width: 500px;
+            width: 90%;
+            border: 2px solid #ffd700; /* সোনালী বর্ডার */
+            position: relative;
+            z-index: 1; /* ক্যানভাসের উপরে */
+            margin-top: 5vh; /* উপরে কিছুটা ফাঁকা জায়গা */
+        }
+
+        #eidImage {
+            max-width: 100%;
+            height: auto;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            border: 4px solid #ffd700; /* সোনালী বর্ডার */
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+        }
+
+        .greeting-message {
+            font-size: 2.3em;
+            font-weight: 700;
+            color: #fff; /* সাদা টেক্সট */
+            margin-bottom: 25px;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.7);
+            animation: fadeInGrow 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        @keyframes fadeInGrow {
+            0% {
+                opacity: 0;
+                transform: scale(0.7) translateY(30px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .input-group {
+            margin-top: 30px;
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #f0e68c; /* ফ্যাকাশে সোনালী */
+            font-weight: bold;
+            font-size: 1.15em;
+        }
+
+        input[type="text"] {
+            width: calc(100% - 26px); /* প্যাডিং ও বর্ডারের জন্য অ্যাডজাস্ট */
+            padding: 14px;
+            margin-bottom: 18px;
+            border: 2px solid #ffd700; /* সোনালী বর্ডার */
+            border-radius: 10px;
+            box-sizing: border-box;
+            font-size: 1em;
+            background-color: #002a00; /* আরও গাঢ় সবুজ ইনপুট ব্যাকগ্রাউন্ড */
+            color: #fff; /* সাদা টেক্সট */
+            font-family: 'Noto Sans Bengali', 'Arial', sans-serif;
+        }
+        input[type="text"]::placeholder {
+            color: #b0a060; /* placeholder এর জন্য হালকা সোনালী */
+        }
+
+        button {
+            background-color: #DAA520; /* গোল্ডেনরড */
+            color: #001c00; /* বাটনের লেখার জন্য গাঢ় সবুজ */
+            padding: 14px 30px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+
+        button:hover {
+            background-color: #FFD700; /* সোনালী */
+            transform: translateY(-2px) scale(1.03);
+            box-shadow: 0 6px 12px rgba(255,215,0,0.4);
+        }
+        button:active {
+            transform: translateY(0px) scale(1);
+        }
+
+        #generatedLinkContainer {
+            margin-top: 25px;
+            padding: 18px;
+            background-color: rgba(0, 0, 0, 0.4); /* গাঢ় স্বচ্ছ ব্যাকগ্রাউন্ড */
+            border-radius: 10px;
+            border: 1px solid #DAA520;
+            display: none; /* প্রথমে হাইড করা থাকবে */
+        }
+        #generatedLinkContainer p {
+            color: #f0e68c;
+            margin-bottom: 10px;
+        }
+
+        #sharableLink {
+            width: calc(100% - 125px); /* কপি বাটনের জন্য জায়গা */
+            padding: 12px;
+            border: 1px solid #DAA520;
+            border-radius: 8px;
+            margin-right: 10px;
+            box-sizing: border-box;
+            background-color: #002a00;
+            color: #fff;
+            font-family: 'Noto Sans Bengali', 'Arial', sans-serif;
+        }
+
+        #copyButton {
+            padding: 12px 18px;
+            background-color: #B8860B; /* ডার্ক গোল্ডেনরড */
+            color: #fff;
+            font-size: 1em; /* বাটন টেক্সট সাইজ অ্যাডজাস্ট */
+        }
+        #copyButton:hover {
+            background-color: #DAA520;
+        }
+
+        footer {
+            margin-top: 30px;
+            font-size: 0.95em;
+            color: #f0e68c;
+            position: relative;
+            z-index: 1;
+            padding-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="fireworksCanvas"></canvas>
+
+    <div class="container">
+        <div id="greetingMessage" class="greeting-message">
+            <!-- Greeting will be inserted here by JavaScript -->
+        </div>
+
+        <img id="eidImage" src="eidmubarak.gif" alt="Eid Mubarak Animation">
+
+        <div class="input-group">
+            <label for="userNameInput">আপনার নাম লিখুন:</label>
+            <input type="text" id="userNameInput" placeholder="এখানে আপনার নাম দিন">
+            <button onclick="generateLink()">লিঙ্ক তৈরি করুন</button>
+        </div>
+
+        <div id="generatedLinkContainer">
+            <p>এই লিঙ্কটি বন্ধুদের সাথে শেয়ার করুন:</p>
+            <input type="text" id="sharableLink" readonly>
+            <button id="copyButton" onclick="copyLink()">কপি করুন</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>সবাইকে ঈদের আন্তরিক শুভেচ্ছা!</p>
+    </footer>
+
+    <script>
+        // Greeting Logic
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const sharerName = urlParams.get('name'); // Correctly get the sharer's name
+            const greetingElement = document.getElementById('greetingMessage');
+
+            if (sharerName) {
+                // The message format you requested: "Eid Mubarak from [Sharer's Name]"
+                // Or in Bengali: "[Sharer's Name] এর পক্ষ থেকে, ঈদ মোবারক!"
+                greetingElement.textContent = `${decodeURIComponent(sharerName)} এর পক্ষ থেকে, ঈদ মোবারক!`;
+            } else {
+                greetingElement.textContent = 'ঈদ মোবারক!';
+            }
+            // Ensure animation restarts if content changes
+            greetingElement.style.animation = 'none';
+            greetingElement.offsetHeight; // Trigger reflow
+            greetingElement.style.animation = null;
+
+            // Start fireworks
+            startFireworks();
+            animateFireworks();
+        };
+
+        function generateLink() {
+            const userName = document.getElementById('userNameInput').value.trim();
+            if (userName === "") {
+                alert("অনুগ্রহ করে আপনার নাম লিখুন।");
+                return;
+            }
+
+            // Use current URL structure, but replace/add the 'name' parameter
+            const currentUrl = new URL(window.location.href);
+            currentUrl.searchParams.set('name', userName); // Sets or replaces 'name'
+
+            const newLink = currentUrl.toString();
+
+
+            const sharableLinkInput = document.getElementById('sharableLink');
+            sharableLinkInput.value = newLink;
+
+            document.getElementById('generatedLinkContainer').style.display = 'block';
+            document.getElementById('userNameInput').value = ''; // Clear input after generating
+        }
+
+        function copyLink() {
+            const sharableLinkInput = document.getElementById('sharableLink');
+            sharableLinkInput.select();
+            sharableLinkInput.setSelectionRange(0, 99999); // For mobile devices
+
+            try {
+                navigator.clipboard.writeText(sharableLinkInput.value)
+                    .then(() => {
+                        alert("লিঙ্ক কপি করা হয়েছে!");
+                    })
+                    .catch(err => {
+                        console.error('Failed to copy with navigator.clipboard: ', err);
+                        // Fallback for older browsers
+                        if(document.execCommand('copy')) {
+                            alert("লিঙ্ক কপি করা হয়েছে (ফলব্যাক)!");
+                        } else {
+                            alert("দুঃখিত, লিঙ্ক কপি করা যায়নি। নিজে কপি করে নিন।");
+                        }
+                    });
+            } catch (err) {
+                console.error('Clipboard API not available: ', err);
+                 // Fallback for very old browsers / insecure contexts
+                if(document.execCommand('copy')) {
+                    alert("লিঙ্ক কপি করা হয়েছে (ফলব্যাক)!");
+                } else {
+                    alert("দুঃখিত, লিঙ্ক কপি করা যায়নি। নিজে কপি করে নিন।");
+                }
+            }
+        }
+
+        // Fireworks Animation
+        const canvas = document.getElementById('fireworksCanvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        let fireworks = [];
+        let particles = [];
+
+        const fireworkLaunchProbability = 0.02; // Chance to launch a firework each frame
+        const maxFireworksAtOnce = 7; // Max fireworks on screen
+
+        function Firework(startX, startY, targetX, targetY) {
+            this.x = startX;
+            this.y = startY;
+            this.startX = startX;
+            this.startY = startY;
+            this.targetX = targetX;
+            this.targetY = targetY;
+            this.distanceToTarget = Math.sqrt(Math.pow(targetX - startX, 2) + Math.pow(targetY - startY, 2));
+            this.distanceTraveled = 0;
+            this.trail = [];
+            this.angle = Math.atan2(targetY - startY, targetX - startX);
+            this.speed = 2;
+            this.acceleration = 1.03 + Math.random() * 0.02; // Slight variation in acceleration
+            this.brightness = Math.random() * 70 + 50;
+            this.color = `hsl(${Math.random() * 360}, 100%, ${this.brightness}%)`;
+            this.lineWidth = Math.random() * 2 + 1;
+        }
+
+        Firework.prototype.update = function(index) {
+            this.trail.push({ x: this.x, y: this.y });
+            if (this.trail.length > 10) this.trail.shift();
+
+            this.speed *= this.acceleration;
+            let vx = Math.cos(this.angle) * this.speed;
+            let vy = Math.sin(this.angle) * this.speed;
+            this.distanceTraveled = Math.sqrt(Math.pow(this.x - this.startX, 2) + Math.pow(this.y - this.startY, 2));
+
+            if (this.distanceTraveled >= this.distanceToTarget || this.y < this.targetY) { // Explode if reached target or passed it upwards
+                createParticles(this.targetX, this.targetY, this.color);
+                fireworks.splice(index, 1);
+            } else {
+                this.x += vx;
+                this.y += vy;
+            }
+        };
+
+        Firework.prototype.draw = function() {
+            ctx.beginPath();
+            if(this.trail.length > 0) {
+                 ctx.moveTo(this.trail[this.trail.length - 1].x, this.trail[this.trail.length - 1].y);
+            } else {
+                 ctx.moveTo(this.x - Math.cos(this.angle) * 10, this.y - Math.sin(this.angle) * 10); // Approximate previous point
+            }
+            ctx.lineTo(this.x, this.y);
+            ctx.strokeStyle = this.color;
+            ctx.lineWidth = this.lineWidth;
+            ctx.stroke();
+
+            // Glowing effect for the head
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.lineWidth + 2, 0, Math.PI * 2);
+            ctx.fillStyle = this.color.replace(')', ', 0.5)').replace('hsl', 'hsla'); // Add alpha for glow
+            ctx.fill();
+        };
+
+        function Particle(x, y, color) {
+            this.x = x;
+            this.y = y;
+            this.angle = Math.random() * Math.PI * 2;
+            this.speed = Math.random() * 10 + 2; // Particles spread wider
+            this.friction = 0.96 + Math.random() * 0.02;
+            this.gravity = 0.5 + Math.random() * 0.4;
+            this.alpha = 1;
+            this.decay = Math.random() * 0.02 + 0.015;
+            this.color = color;
+            this.size = Math.random() * 3 + 1;
+        }
+
+        Particle.prototype.update = function(index) {
+            this.speed *= this.friction;
+            this.x += Math.cos(this.angle) * this.speed;
+            this.y += Math.sin(this.angle) * this.speed + this.gravity;
+            this.alpha -= this.decay;
+            if (this.alpha <= this.decay) {
+                particles.splice(index, 1);
+            }
+        };
+
+        Particle.prototype.draw = function() {
+            ctx.save();
+            ctx.globalAlpha = this.alpha;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
+            ctx.fillStyle = this.color;
+            ctx.fill();
+            ctx.restore();
+        };
+
+        function createParticles(x, y, color) {
+            let particleCount = 100 + Math.floor(Math.random() * 50); // More particles
+            while (particleCount--) {
+                particles.push(new Particle(x, y, color));
+            }
+        }
+
+        function launchFirework() {
+            if (fireworks.length < maxFireworksAtOnce && Math.random() < fireworkLaunchProbability) {
+                const startX = Math.random() * canvas.width / 2 + canvas.width / 4; // Launch from bottom center quarter
+                const startY = canvas.height;
+                const targetX = Math.random() * canvas.width;
+                const targetY = Math.random() * (canvas.height / 2); // Explode in top half
+                fireworks.push(new Firework(startX, startY, targetX, targetY));
+            }
+        }
+        
+        // Initial burst of fireworks
+        function startFireworks() {
+            for(let i=0; i<3 + Math.floor(Math.random()*3); i++) { // Launch 3 to 5 fireworks initially
+                setTimeout(() => {
+                    const startX = Math.random() * canvas.width / 2 + canvas.width / 4;
+                    const startY = canvas.height;
+                    const targetX = Math.random() * canvas.width;
+                    const targetY = Math.random() * (canvas.height / 2);
+                    fireworks.push(new Firework(startX, startY, targetX, targetY));
+                }, i * (200 + Math.random()*300)); // Staggered launch
+            }
+        }
+
+
+        function animateFireworks() {
+            requestAnimationFrame(animateFireworks);
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.15)'; // Darker trail, adjust alpha for longer/shorter trails
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            launchFirework(); // Try to launch a new firework each frame
+
+            fireworks.forEach((firework, index) => {
+                firework.update(index);
+                firework.draw();
+            });
+
+            particles.forEach((particle, index) => {
+                particle.update(index);
+                particle.draw();
+            });
+        }
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
+</body>
+</html>
