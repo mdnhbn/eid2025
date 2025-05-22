@@ -63,7 +63,7 @@
 </head>
 <body lang="bn">
     <canvas id="fireworksCanvas"></canvas>
-    <audio id="backgroundMusic" src="eidmubarak.mp3" loop preload="auto"></audio>
+    <audio id="backgroundMusic" src="eidmubarak.mp3" loop preload="metadata"></audio>
 
     <div class="container">
         <div id="greetingMessage" class="greeting-message"></div>
@@ -118,12 +118,12 @@
 
     <script>
         const translations = {
-            'bn': { 'pageTitle':'ঈদ মোবারক!', 'greetingMessage':'ঈদ মোবারক!', 'greetingMessageFrom':'{name} এর পক্ষ থেকে, ঈদ মোবারক!', 'yourNameLabel':'আপনার নাম লিখুন:', 'namePlaceholder':'এখানে আপনার নাম দিন', 'shareButtonText':'WhatsApp এ শেয়ার করুন', 'shareLinkManualText':'এই লিঙ্কটি বন্ধুদের সাথে শেয়ার করুন (যদি অটো-শেয়ার কাজ না করে):', 'copyButtonText':'কপি করুন', 'eidWishesFooter':'সবাইকে ঈদের আন্তরিক শুভেচ্ছা!', 'timeLabel':'সময়', 'dateLabel':'তারিখ', 'hijriDateLabel':'ইসলামী তারিখ', 'hijriYearSuffix':'হিজরি', 'statusEnterName':'অনুগ্রহ করে আপনার নাম লিখুন।', 'statusShareOptions':'শুভেচ্ছা শেয়ার করার জন্য অপশন দেখানো হয়েছে!', 'statusShareError':'শেয়ার অপশন কাজ করেনি/বাতিল হয়েছে। লিঙ্ক কপি করুন।', 'statusNoAutoShare':'আপনার ব্রাউজার অটো-শেয়ার সাপোর্ট করে না। লিঙ্ক কপি করুন।', 'statusLinkCopied':'লিঙ্ক সফলভাবে কপি করা হয়েছে!', 'statusLinkCopiedFallback':'লিঙ্ক কপি করা হয়েছে (ফলব্যাক)!', 'statusCopyError':'দুঃখিত, লিঙ্ক কপি করা যায়নি। নিজে কপি করে নিন।', 'hijriDateLoading':'ইসলামী তারিখ পরীক্ষা করা হচ্ছে...', 'hijriDateError':'ইসলামী তারিখ রূপান্তরে ত্রুটি।', 'hijriCalcError':'হিজরি মাস গণনায় ত্রুটি।', 'hijriNotLoaded':'ইসলামী ক্যালকুলেটর লোড হয়নি.', 'musicPlayError':'মিউজিক প্লে করা যায়নি। আপনার ডিভাইসের সাউন্ড চেক করুন।' },
-            'en': { 'pageTitle':'Eid Mubarak!', 'greetingMessage':'Eid Mubarak!', 'greetingMessageFrom':'Eid Mubarak from {name}!', 'yourNameLabel':'Enter your name:', 'namePlaceholder':'Enter your name here', 'shareButtonText':'Share on WhatsApp', 'shareLinkManualText':'Share this link with friends (if auto-share doesn\'t work):', 'copyButtonText':'Copy', 'eidWishesFooter':'Eid greetings to everyone!', 'timeLabel':'Time', 'dateLabel':'Date', 'hijriDateLabel':'Islamic Date', 'hijriYearSuffix':'AH', 'statusEnterName':'Please enter your name.', 'statusShareOptions':'Share options are shown!', 'statusShareError':'Share option failed/cancelled. Please copy the link.', 'statusNoAutoShare':'Your browser does not support auto-share. Please copy the link.', 'statusLinkCopied':'Link copied successfully!', 'statusLinkCopiedFallback':'Link copied (fallback)!', 'statusCopyError':'Sorry, could not copy the link. Please copy it manually.', 'hijriDateLoading':'Checking Islamic date...', 'hijriDateError':'Error in Islamic date conversion.', 'hijriCalcError':'Error in Hijri month calculation.', 'hijriNotLoaded':'Islamic calendar not loaded.', 'musicPlayError':'Could not play music. Please check your device sound.' }
+            'bn': { 'pageTitle':'ঈদ মোবারক!', 'greetingMessage':'ঈদ মোবারক!', 'greetingMessageFrom':'{name} এর পক্ষ থেকে, ঈদ মোবারক!', 'yourNameLabel':'আপনার নাম লিখুন:', 'namePlaceholder':'এখানে আপনার নাম দিন', 'shareButtonText':'WhatsApp এ শেয়ার করুন', 'shareLinkManualText':'এই লিঙ্কটি বন্ধুদের সাথে শেয়ার করুন (যদি অটো-শেয়ার কাজ না করে):', 'copyButtonText':'কপি করুন', 'eidWishesFooter':'সবাইকে ঈদের আন্তরিক শুভেচ্ছা!', 'timeLabel':'সময়', 'dateLabel':'তারিখ', 'hijriDateLabel':'ইসলামী তারিখ', 'hijriYearSuffix':'হিজরি', 'statusEnterName':'অনুগ্রহ করে আপনার নাম লিখুন।', 'statusShareOptions':'শুভেচ্ছা শেয়ার করার জন্য অপশন দেখানো হয়েছে!', 'statusShareError':'শেয়ার অপশন কাজ করেনি/বাতিল হয়েছে। লিঙ্ক কপি করুন।', 'statusNoAutoShare':'আপনার ব্রাউজার অটো-শেয়ার সাপোর্ট করে না। লিঙ্ক কপি করুন।', 'statusLinkCopied':'লিঙ্ক সফলভাবে কপি করা হয়েছে!', 'statusLinkCopiedFallback':'লিঙ্ক কপি করা হয়েছে (ফলব্যাক)!', 'statusCopyError':'দুঃখিত, লিঙ্ক কপি করা যায়নি। নিজে কপি করে নিন।', 'hijriDateLoading':'ইসলামী তারিখ পরীক্ষা করা হচ্ছে...', 'hijriDateError':'ইসলামী তারিখ রূপান্তরে ত্রুটি।', 'hijriCalcError':'হিজরি মাস গণনায় ত্রুটি।', 'hijriNotLoaded':'ইসলামী ক্যালকুলেটর লোড হয়নি.', 'musicPlayError':'মিউজিক প্লে করা যায়নি। ডিভাইস সাউন্ড চেক করুন।' },
+            'en': { 'pageTitle':'Eid Mubarak!', 'greetingMessage':'Eid Mubarak!', 'greetingMessageFrom':'Eid Mubarak from {name}!', 'yourNameLabel':'Enter your name:', 'namePlaceholder':'Enter your name here', 'shareButtonText':'Share on WhatsApp', 'shareLinkManualText':'Share this link with friends (if auto-share doesn\'t work):', 'copyButtonText':'Copy', 'eidWishesFooter':'Eid greetings to everyone!', 'timeLabel':'Time', 'dateLabel':'Date', 'hijriDateLabel':'Islamic Date', 'hijriYearSuffix':'AH', 'statusEnterName':'Please enter your name.', 'statusShareOptions':'Share options are shown!', 'statusShareError':'Share option failed/cancelled. Please copy the link.', 'statusNoAutoShare':'Your browser does not support auto-share. Please copy the link.', 'statusLinkCopied':'Link copied successfully!', 'statusLinkCopiedFallback':'Link copied (fallback)!', 'statusCopyError':'Sorry, could not copy the link. Please copy it manually.', 'hijriDateLoading':'Checking Islamic date...', 'hijriDateError':'Error in Islamic date conversion.', 'hijriCalcError':'Error in Hijri month calculation.', 'hijriNotLoaded':'Islamic calendar not loaded.', 'musicPlayError':'Could not play music. Check device sound.' }
         };
         let currentLang = 'bn';
-        let userTimeZone = 'Etc/UTC';
-        let userLocale = 'bn-BD';
+        let userTimeZone = 'Etc/UTC'; // Default timezone
+        let userLocale = 'bn-BD'; // Default locale
         
         const backgroundMusic = document.getElementById('backgroundMusic');
         const userNameInput = document.getElementById('userNameInput');
@@ -139,18 +139,108 @@
 
         let timeOffset = 0;
         let initialTimeSynced = false;
+        let musicPlayAttemptedOnLoad = false;
+        let musicPlayAttemptedOnInteraction = false;
+
         const bengaliHijriMonths = ["মহররম","সফর","রবিউল আউয়াল","রবিউস সানি","জমাদিউল আউয়াল","জমাদিউস সানি","রজব","শাবান","রমজান","শাওয়াল","জ্বিলকদ","জ্বিলহজ্জ"];
         const englishHijriMonths = ["Muharram","Safar","Rabi' al-awwal","Rabi' al-thani","Jumada al-awwal","Jumada al-thani","Rajab","Sha'ban","Ramadan","Shawwal","Dhu al-Qi'dah","Dhu al-Hijjah"];
 
         function getTranslation(key, params = {}) { let text=translations[currentLang]?.[key]||translations['en']?.[key]||key;for(const param in params){text=text.replace(`{${param}}`,params[param]);}return text; }
         function applyTranslations() { document.querySelectorAll('[data-lang-key]').forEach(element=>{const key=element.getAttribute('data-lang-key');if(element.tagName==='INPUT'&&element.hasAttribute('placeholder')){element.placeholder=getTranslation(key);}else{element.textContent=getTranslation(key);}});document.title=getTranslation('pageTitle');}
         function toNativeNumeral(numStr, lang) { if(lang.startsWith('bn')){const bengaliDigits=['০','১','২','৩','৪','৫','৬','৭','৮','৯'];return String(numStr).split('').map(digit=>/\d/.test(digit)?bengaliDigits[parseInt(digit)]:digit).join('');}return String(numStr); }
-        async function fetchUserLocationAndSetLanguage() { let browserLang=(navigator.languages&&navigator.languages[0])||navigator.language||'bn';if(browserLang.toLowerCase().startsWith('en')){currentLang='en';userLocale='en-US';}else if(browserLang.toLowerCase().startsWith('bn')){currentLang='bn';userLocale='bn-BD';}else{currentLang='en';userLocale='en-US';}document.body.lang=currentLang;console.log(`Browser language detected: ${browserLang}, Using app language: ${currentLang}`);applyTranslations();try{const response=await fetch('https://ip-api.com/json/?fields=status,message,timezone,countryCode');if(!response.ok)throw new Error(`IP API HTTP error! status: ${response.status}`);const data=await response.json();if(data.status==='success'&&data.timezone){userTimeZone=data.timezone;console.log('User timezone from IP API:',userTimeZone);}else{console.warn('Failed to get timezone from IP API, using default UTC. Message:',data.message);userTimeZone='Etc/UTC';}}catch(error){console.error("Error fetching user location/timezone from IP API:",error);userTimeZone='Etc/UTC';}await fetchCorrectTime();}
-        async function fetchCorrectTime() { try{const response=await fetch(`https://worldtimeapi.org/api/timezone/${userTimeZone}`);if(!response.ok){if(userTimeZone!=='Etc/UTC'){console.warn(`Timezone ${userTimeZone} not found on worldtimeapi, falling back to UTC.`);userTimeZone='Etc/UTC';return await fetchCorrectTime();}throw new Error(`WorldTimeAPI HTTP error! status: ${response.status}`);}const data=await response.json();const serverTime=new Date(data.utc_datetime);const clientTimeAtFetch=new Date();timeOffset=serverTime.getTime()-clientTimeAtFetch.getTime();initialTimeSynced=true;console.log(`Successfully synced time with server for timezone ${data.timezone}. Offset: ${timeOffset} ms`);}catch(error){console.error("Failed to fetch correct time from WorldTimeAPI:",error);timeOffset=0;initialTimeSynced=false;}updateTimeDate(); }
-        function initializeDateTimeDisplay() { if(!currentTimeEl||!currentDateEl||!currentHijriDateEl){return;}updateTimeDate();setInterval(updateTimeDate,1000); }
-        function updateTimeDate() { const clientNow=new Date();const correctedNow=new Date(clientNow.getTime()+timeOffset);const timeOptions={hour:'numeric',minute:'2-digit',second:'2-digit',hour12:true,timeZone:userTimeZone};let timeString=correctedNow.toLocaleTimeString(userLocale,timeOptions);if(currentTimeEl)currentTimeEl.textContent=`${getTranslation('timeLabel')}: ${timeString}`;const dateOptions={day:'numeric',month:'long',year:'numeric',timeZone:userTimeZone};let dateString=correctedNow.toLocaleDateString(userLocale,dateOptions);if(currentDateEl)currentDateEl.textContent=`${getTranslation('dateLabel')}: ${dateString}`;if(currentHijriDateEl){if(typeof HijriDate!=='undefined'&&HijriDate.JS&&typeof HijriDate.JS.convert==='function'){try{const hijriInstance=HijriDate.JS.convert(correctedNow);if(hijriInstance&&typeof hijriInstance.getDate==='function'){const hijriDay=toNativeNumeral(hijriInstance.getDate(),currentLang);const hijriMonthIndex=hijriInstance.getMonth()-1;const hijriMonths=currentLang==='bn'?bengaliHijriMonths:englishHijriMonths;if(hijriMonthIndex>=0&&hijriMonthIndex<hijriMonths.length){const hijriMonthName=hijriMonths[hijriMonthIndex];const hijriYear=toNativeNumeral(hijriInstance.getFullYear(),currentLang);currentHijriDateEl.textContent=`${getTranslation('hijriDateLabel')}: ${hijriDay} ${hijriMonthName}, ${hijriYear} ${getTranslation('hijriYearSuffix')}`;}}else{throw new Error("HijriDate conversion invalid object.");}}catch(e){currentHijriDateEl.textContent=getTranslation('hijriDateError');console.error("Error updating Hijri date:", e);}}else{currentHijriDateEl.textContent=getTranslation('hijriNotLoaded');}}}
         
+        async function fetchUserLocationAndSetLanguage() { 
+            let browserLang=(navigator.languages&&navigator.languages[0])||navigator.language||'bn-BD';
+            if(browserLang.toLowerCase().startsWith('en')){currentLang='en';userLocale='en-US';}
+            else if(browserLang.toLowerCase().startsWith('bn')){currentLang='bn';userLocale='bn-BD';}
+            else{currentLang='en';userLocale='en-US';} // Default to English if no match
+            document.body.lang=currentLang;
+            console.log(`Browser language: ${browserLang}, App language: ${currentLang}, Locale: ${userLocale}`);
+            applyTranslations();
+
+            try{
+                const response=await fetch('https://ip-api.com/json/?fields=status,message,timezone,countryCode');
+                if(!response.ok) throw new Error(`IP API HTTP error! status: ${response.status}`);
+                const data=await response.json();
+                if(data.status==='success'&&data.timezone){
+                    userTimeZone=data.timezone;
+                    console.log('User timezone from IP API:',userTimeZone);
+                } else {
+                    console.warn('Failed to get timezone from IP API, using default UTC. Message:',data.message);
+                    userTimeZone='Etc/UTC';
+                }
+            } catch(error){
+                console.error("Error fetching user timezone from IP API:",error.message);
+                userTimeZone='Etc/UTC'; // Fallback
+            }
+            await fetchCorrectTime();
+        }
+
+        async function fetchCorrectTime() {
+            let finalTimeZone = userTimeZone;
+            try {
+                console.log(`Attempting to fetch time for timezone: ${finalTimeZone}`);
+                const response = await fetch(`https://worldtimeapi.org/api/timezone/${finalTimeZone}`);
+                if (!response.ok) {
+                    console.error(`WorldTimeAPI HTTP error! Status: ${response.status} for timezone: ${finalTimeZone}`);
+                    if (finalTimeZone !== 'Etc/UTC') { // If specific timezone failed, try UTC as fallback
+                        console.warn(`Falling back to Etc/UTC due to error with timezone: ${finalTimeZone}`);
+                        finalTimeZone = 'Etc/UTC'; // Set to UTC for retry
+                        // Recursive call for fallback, ensure it doesn't loop indefinitely if UTC also fails
+                        return await fetchCorrectTime(); // This could lead to multiple calls if Etc/UTC also fails.
+                                                        // A better approach might be to limit retries or handle UTC failure differently.
+                    }
+                    // If 'Etc/UTC' also fails, throw error to be caught by outer catch
+                    throw new Error(`WorldTimeAPI HTTP error! status: ${response.status} even for Etc/UTC`); 
+                }
+                const data = await response.json();
+                const serverTime = new Date(data.utc_datetime);
+                const clientTimeAtFetch = new Date();
+                timeOffset = serverTime.getTime() - clientTimeAtFetch.getTime();
+                initialTimeSynced = true;
+                console.log(`Time synced with server for timezone ${data.timezone}. Offset: ${timeOffset} ms`);
+            } catch (error) {
+                console.error("Failed to fetch correct time from WorldTimeAPI:", error.name, error.message);
+                console.warn("Using local device time as fallback due to API failure.");
+                timeOffset = 0; // Use local time
+                initialTimeSynced = false;
+            }
+            updateTimeDate(); // Call regardless of success to display time (either synced or local)
+        }
+        
+        function initializeDateTimeDisplay() { if(!currentTimeEl||!currentDateEl||!currentHijriDateEl){console.error("Date/Time elements not found"); return;}updateTimeDate();setInterval(updateTimeDate,1000); }
+        function updateTimeDate() { const clientNow=new Date();const correctedNow=new Date(clientNow.getTime()+timeOffset);const timeOptions={hour:'numeric',minute:'2-digit',second:'2-digit',hour12:true,timeZone:userTimeZone};let timeString;try{timeString=correctedNow.toLocaleTimeString(userLocale,timeOptions);}catch(e){console.warn("Error formatting time with timezone, using default locale:",e);timeString=correctedNow.toLocaleTimeString(undefined,timeOptions); }if(currentTimeEl)currentTimeEl.textContent=`${getTranslation('timeLabel')}: ${timeString}`;const dateOptions={day:'numeric',month:'long',year:'numeric',timeZone:userTimeZone};let dateString;try{dateString=correctedNow.toLocaleDateString(userLocale,dateOptions);}catch(e){console.warn("Error formatting date with timezone, using default locale:",e);dateString=correctedNow.toLocaleDateString(undefined,dateOptions);}if(currentDateEl)currentDateEl.textContent=`${getTranslation('dateLabel')}: ${dateString}`;if(currentHijriDateEl){if(typeof HijriDate!=='undefined'&&HijriDate.JS&&typeof HijriDate.JS.convert==='function'){try{const hijriInstance=HijriDate.JS.convert(correctedNow);if(hijriInstance&&typeof hijriInstance.getDate==='function'){const hijriDay=toNativeNumeral(hijriInstance.getDate(),currentLang);const hijriMonthIndex=hijriInstance.getMonth()-1;const hijriMonths=currentLang==='bn'?bengaliHijriMonths:englishHijriMonths;if(hijriMonthIndex>=0&&hijriMonthIndex<hijriMonths.length){const hijriMonthName=hijriMonths[hijriMonthIndex];const hijriYear=toNativeNumeral(hijriInstance.getFullYear(),currentLang);currentHijriDateEl.textContent=`${getTranslation('hijriDateLabel')}: ${hijriDay} ${hijriMonthName}, ${hijriYear} ${getTranslation('hijriYearSuffix')}`;}}else{throw new Error("HijriDate conversion returned invalid object.");}}catch(e){currentHijriDateEl.textContent=getTranslation('hijriDateError');console.error("Error updating Hijri date:", e);}}else{currentHijriDateEl.textContent=getTranslation('hijriNotLoaded');}}}
+        
+        function attemptMusicPlay(interactionType = "unknown") {
+            if (backgroundMusic && backgroundMusic.paused) {
+                console.log(`Attempting music play due to ${interactionType} interaction...`);
+                backgroundMusic.play()
+                    .then(() => {
+                        console.log(`Music started successfully via ${interactionType} interaction.`);
+                        // Remove the general click listener if music starts, to avoid multiple triggers
+                        document.body.removeEventListener('click', handleFirstUserInteraction);
+                        document.body.removeEventListener('touchstart', handleFirstUserInteraction);
+                    })
+                    .catch(error => {
+                        console.warn(`Music play failed via ${interactionType} interaction:`, error.name, error.message);
+                    });
+            }
+        }
+
+        function handleFirstUserInteraction() {
+            console.log("First user interaction (click/touch) detected on body.");
+            if (!musicPlayAttemptedOnInteraction) {
+                attemptMusicPlay("general click/touch");
+                musicPlayAttemptedOnInteraction = true; // Mark that we've tried on general interaction
+            }
+            // Remove listeners after first interaction to avoid repeated calls
+            document.body.removeEventListener('click', handleFirstUserInteraction);
+            document.body.removeEventListener('touchstart', handleFirstUserInteraction);
+        }
+
+
         window.onload = async function() {
+            console.log("Window onload started.");
             await fetchUserLocationAndSetLanguage(); 
             
             const urlParams = new URLSearchParams(window.location.search);
@@ -166,14 +256,20 @@
             greetingMessageEl.style.animation = null;
 
             if (backgroundMusic) {
-                console.log("Page loaded. Attempting initial background music play...");
+                console.log("Page loaded. Attempting initial background music play (muted attribute is not set)...");
+                // Browsers are very strict about unmuted autoplay. This will likely fail without prior interaction.
                 backgroundMusic.play()
                     .then(() => {
-                        console.log("Background music autoplay initiated successfully.");
+                        console.log("Background music autoplay (unmuted) initiated successfully on load. This is rare.");
+                        musicPlayAttemptedOnLoad = true;
                     })
-                    .catch(error => {
-                        console.warn("Background music autoplay was prevented on page load:", error.name, error.message);
-                        // Music will attempt to play again on first user interaction.
+                    .catch(error => { 
+                        console.warn("Background music autoplay (unmuted) was prevented on page load:", error.name, error.message);
+                        musicPlayAttemptedOnLoad = true; // Mark as attempted
+                        // Add event listeners for first general user interaction to play music
+                        console.log("Adding general click/touch listeners to body for music play.");
+                        document.body.addEventListener('click', handleFirstUserInteraction, { once: true });
+                        document.body.addEventListener('touchstart', handleFirstUserInteraction, { once: true });
                     });
             } else {
                 console.error("backgroundMusic element not found!");
@@ -181,7 +277,7 @@
             
             if (eidVideoEl) {
                 eidVideoEl.play().catch(error => {
-                    console.warn("Video autoplay was prevented:", error);
+                    console.warn("Video autoplay was prevented:", error.name, error.message);
                 });
                 eidVideoEl.onerror = function() {
                     console.error("Error loading video. Check video path and format.");
@@ -192,6 +288,7 @@
             startFireworks();
             animateFireworks();
             initializeDateTimeDisplay(); 
+            console.log("Window onload finished.");
         };
 
         userNameInput.addEventListener('input', function() { 
@@ -218,21 +315,7 @@
                 return; 
             } 
             
-            if (backgroundMusic && backgroundMusic.paused) {
-                console.log("User interaction (button click). Attempting to play background music...");
-                backgroundMusic.play()
-                    .then(() => {
-                        console.log("Background music started successfully after user interaction.");
-                    })
-                    .catch(error => {
-                        console.error("Failed to play background music after user interaction:", error.name, error.message);
-                        // Optionally, inform the user if music still doesn't play.
-                        // showStatusMessage('musicPlayError', 'error', 5000); 
-                    });
-            } else if (backgroundMusic && !backgroundMusic.paused) {
-                console.log("Background music is already playing.");
-            }
-
+            attemptMusicPlay("share button click"); // Attempt to play music on this specific interaction
 
             const currentUrl = new URL(window.location.href); 
             currentUrl.searchParams.set('name', userName); 
@@ -243,7 +326,7 @@
             if (navigator.share) { 
                 try { 
                     await navigator.share({ title: getTranslation('pageTitle'), text: shareText, url: newLink }); 
-                    showStatusMessage('statusShareOptions', 'success', 1000); // ডিউরেশন 1 সেকেন্ড 
+                    showStatusMessage('statusShareOptions', 'success', 1000); 
                     document.getElementById('generatedLinkContainer').style.display = 'none'; 
                 } catch (error) { 
                     console.error("Error during navigator.share:", error);
