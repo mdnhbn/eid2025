@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ঈদ মোবারক!</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;700&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/hijri-date/hijri-date.js"></script>
+    <!-- Hijri Date Library from jsDelivr -->
+    <script src="https://cdn.jsdelivr.net/npm/hijri-date@0.2.2/dist/hijri-date.js"></script>
     <style>
         body {
             font-family: 'Noto Sans Bengali', 'Arial', sans-serif;
@@ -231,12 +232,14 @@
                 <span id="currentTime"></span> | <span id="currentDate"></span>
             </div>
             <div class="dateTimeEntry">
-                <span id="currentHijriDate"></span>
+                <span id="currentHijriDate">ইসলামী তারিখ লোড হচ্ছে...</span>
             </div>
         </div>
     </footer>
 
     <script>
+        // (বাকি JavaScript কোড আগের মতোই থাকবে, শুধু HijriDate ব্যবহারের অংশটুকু ശ്രദ്ധা করে দেখো)
+
         const backgroundMusic = document.getElementById('backgroundMusic');
         const userNameInput = document.getElementById('userNameInput');
         const generateButton = document.getElementById('generateButton');
@@ -247,8 +250,10 @@
         const currentDateEl = document.getElementById('currentDate');
         const currentHijriDateEl = document.getElementById('currentHijriDate');
 
-        let timeOffset = 0; // Store the difference between server time and client time
+        let timeOffset = 0;
         let initialTimeSynced = false;
+        let hijriLoadAttempt = 0;
+        const MAX_HIJRI_LOAD_ATTEMPTS = 10; // Increased attempts
 
         const bengaliHijriMonths = [
             "মহররম", "সফর", "রবিউল আউয়াল", "রবিউস সানি",
@@ -259,81 +264,87 @@
         function toBengaliNumeral(num) {
             const bengaliDigits = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
             return String(num).split('').map(digit => {
-                if (/\d/.test(digit)) {
-                    return bengaliDigits[parseInt(digit)];
-                }
+                if (/\d/.test(digit)) { return bengaliDigits[parseInt(digit)]; }
                 return digit;
             }).join('');
         }
 
         async function fetchCorrectTime() {
             try {
-                // Fetching time for 'Asia/Dhaka' timezone as an example.
-                // You can use /api/ip to get time based on user's IP, 
-                // or /api/timezone/Etc/UTC for pure UTC.
                 const response = await fetch('https://worldtimeapi.org/api/timezone/Etc/UTC');
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
+                if (!response.ok) { throw new Error(`HTTP error! status: ${response.status}`); }
                 const data = await response.json();
-                const serverTime = new Date(data.utc_datetime); // Using utc_datetime for precise UTC
+                const serverTime = new Date(data.utc_datetime);
                 const clientTimeAtFetch = new Date();
                 timeOffset = serverTime.getTime() - clientTimeAtFetch.getTime();
                 initialTimeSynced = true;
                 console.log('Successfully synced time with server. Offset:', timeOffset, 'ms');
-                updateTimeDate(); // Update time immediately after fetching
+                updateTimeDate();
             } catch (error) {
                 console.error("Failed to fetch correct time from API:", error);
-                // If API fails, timeOffset remains 0, and client's time will be used.
-                initialTimeSynced = false; 
+                initialTimeSynced = false;
             }
         }
 
-
         function initializeDateTimeDisplay() {
-            if (!currentTimeEl || !currentDateEl || !currentHijriDateEl) {
-                return;
-            }
-            updateTimeDate(); // Initial call
-            setInterval(updateTimeDate, 1000); 
+            if (!currentTimeEl || !currentDateEl || !currentHijriDateEl) { return; }
+            updateTimeDate();
+            setInterval(updateTimeDate, 1000);
         }
         
         function updateTimeDate() {
             const clientNow = new Date();
-            const correctedNow = new Date(clientNow.getTime() + timeOffset); // Apply offset
+            const correctedNow = new Date(clientNow.getTime() + timeOffset);
 
-            // Gregorian Time
-            const timeOptions = { hour: 'numeric', minute: '2-digit', second: '2-digit', hour12: true, timeZone: 'UTC' };
-            // To display in local time but based on corrected UTC, we would typically convert correctedNow to local timezone
-            // For simplicity with Bengali formatting and direct display, using correctedNow directly with bn-BD locale
-            // This means it will show the corrected time in the user's local representation of that corrected UTC.
-            // If we want to force a specific timezone like 'Asia/Dhaka' from corrected UTC:
-            // let timeString = correctedNow.toLocaleTimeString('bn-BD', {...timeOptions, timeZone: 'Asia/Dhaka'});
-            // For now, let's show the corrected time in user's local format.
-             const localTimeOptions = { hour: 'numeric', minute: '2-digit', second: '2-digit', hour12: true };
+            const localTimeOptions = { hour: 'numeric', minute: '2-digit', second: '2-digit', hour12: true };
             let timeString = correctedNow.toLocaleTimeString('bn-BD', localTimeOptions);
-            currentTimeEl.textContent = `সময়: ${timeString}`;
+            if (currentTimeEl) currentTimeEl.textContent = `সময়: ${timeString}`;
 
-            // Gregorian Date
             const localDateOptions = { day: 'numeric', month: 'long', year: 'numeric' };
             let dateString = correctedNow.toLocaleDateString('bn-BD', localDateOptions);
-            currentDateEl.textContent = `তারিখ: ${dateString}`;
+            if (currentDateEl) currentDateEl.textContent = `তারিখ: ${dateString}`;
 
-            // Hijri Date (uses the correctedNow Date object)
-            if (typeof HijriDate !== 'undefined') {
-                const hijri = new HijriDate(correctedNow);
-                const hijriDay = toBengaliNumeral(hijri.getDate());
-                const hijriMonthName = bengaliHijriMonths[hijri.getMonth() - 1];
-                const hijriYear = toBengaliNumeral(hijri.getFullYear());
-                currentHijriDateEl.textContent = `ইসলামী তারিখ: ${hijriDay} ${hijriMonthName}, ${hijriYear} হিজরি`;
-            } else if (currentHijriDateEl) { // Check if element exists
-                currentHijriDateEl.textContent = "ইসলামী তারিখ লোড হচ্ছে...";
+            if (currentHijriDateEl) {
+                if (typeof HijriDate !== 'undefined' && HijriDate.JS) { // Check if HijriDate and HijriDate.JS are available
+                    try {
+                        const hijri = HijriDate.JS.convert(correctedNow); // Use the library's conversion method
+                        if (hijri && typeof hijri.day === 'number') { // Check for a valid hijri object property
+                            const hijriDay = toBengaliNumeral(hijri.day);
+                            const hijriMonthIndex = hijri.month -1; // Month is 1-indexed in library
+                            if (hijriMonthIndex >= 0 && hijriMonthIndex < bengaliHijriMonths.length) {
+                                const hijriMonthName = bengaliHijriMonths[hijriMonthIndex];
+                                const hijriYear = toBengaliNumeral(hijri.year);
+                                currentHijriDateEl.textContent = `ইসলামী তারিখ: ${hijriDay} ${hijriMonthName}, ${hijriYear} হিজরি`;
+                                hijriLoadAttempt = MAX_HIJRI_LOAD_ATTEMPTS + 1;
+                            } else {
+                                console.error("Invalid Hijri month index from library:", hijri.month);
+                                currentHijriDateEl.textContent = "হিজরি মাস গণনায় সমস্যা।";
+                                hijriLoadAttempt = MAX_HIJRI_LOAD_ATTEMPTS + 1;
+                            }
+                        } else {
+                            throw new Error("HijriDate conversion returned invalid object.");
+                        }
+                    } catch (e) {
+                        console.error("Error during Hijri Date conversion:", e);
+                        currentHijriDateEl.textContent = "ইসলামী তারিখ রূপান্তরে ত্রুটি।";
+                        hijriLoadAttempt = MAX_HIJRI_LOAD_ATTEMPTS + 1;
+                    }
+                } else {
+                    hijriLoadAttempt++;
+                    if (hijriLoadAttempt <= MAX_HIJRI_LOAD_ATTEMPTS) {
+                        console.log(`HijriDate library not yet available (attempt ${hijriLoadAttempt}/${MAX_HIJRI_LOAD_ATTEMPTS}).`);
+                    } else {
+                        console.warn("HijriDate library failed to load after several attempts.");
+                        if (currentHijriDateEl.textContent.includes("লোড হচ্ছে")) { // Update only if still showing loading
+                           currentHijriDateEl.textContent = "ইসলামী তারিখ লোড করা যায়নি।";
+                        }
+                    }
+                }
             }
         }
 
-
-        window.onload = async function() { // Make onload async to await fetchCorrectTime
-            await fetchCorrectTime(); // Fetch correct time and calculate offset
+        window.onload = async function() {
+            await fetchCorrectTime();
 
             const urlParams = new URLSearchParams(window.location.search);
             const sharerName = urlParams.get('name');
@@ -357,15 +368,14 @@
             generateButton.disabled = true;
             startFireworks();
             animateFireworks();
-            initializeDateTimeDisplay(); // This will now use the offset if available
+            initializeDateTimeDisplay();
         };
 
+        // ... (বাকি JavaScript কোড আগের মতোই থাকবে) ...
+
         userNameInput.addEventListener('input', function() {
-            if (userNameInput.value.trim() !== "") {
-                generateButton.disabled = false;
-            } else {
-                generateButton.disabled = true;
-            }
+            if (userNameInput.value.trim() !== "") { generateButton.disabled = false; }
+            else { generateButton.disabled = true; }
         });
 
         function showStatusMessage(message, type = 'info', duration = 3000) {
@@ -373,10 +383,8 @@
             statusMessageDiv.textContent = message;
             statusMessageDiv.className = '';
             statusMessageDiv.classList.add(type);
-            
             statusMessageDiv.style.display = 'block';
             setTimeout(() => { statusMessageDiv.style.opacity = '1'; }, 10);
-
             statusTimeout = setTimeout(() => {
                 statusMessageDiv.style.opacity = '0';
                 setTimeout(() => { statusMessageDiv.style.display = 'none'; }, 500);
@@ -389,18 +397,13 @@
                 showStatusMessage("অনুগ্রহ করে আপনার নাম লিখুন।", "error");
                 return;
             }
-
             if (backgroundMusic && backgroundMusic.paused) {
-                backgroundMusic.play().catch(error => {
-                    console.warn("Music play on interaction failed: ", error);
-                });
+                backgroundMusic.play().catch(error => { console.warn("Music play on interaction failed: ", error); });
             }
-
             const currentUrl = new URL(window.location.href);
             currentUrl.searchParams.set('name', userName);
             const newLink = currentUrl.toString();
             const sharerNameForMessage = decodeURIComponent(userName);
-
             if (navigator.share) {
                 try {
                     await navigator.share({
@@ -432,23 +435,16 @@
             const sharableLinkInput = document.getElementById('sharableLink');
             sharableLinkInput.select();
             sharableLinkInput.setSelectionRange(0, 99999);
-
             try {
                 navigator.clipboard.writeText(sharableLinkInput.value)
                     .then(() => { showStatusMessage("লিঙ্ক সফলভাবে কপি করা হয়েছে!", "success"); })
                     .catch(err => {
-                        if(document.execCommand('copy')) {
-                            showStatusMessage("লিঙ্ক কপি করা হয়েছে (ফলব্যাক)!", "success");
-                        } else {
-                            showStatusMessage("দুঃখিত, লিঙ্ক কপি করা যায়নি। নিজে কপি করে নিন।", "error", 4000);
-                        }
+                        if(document.execCommand('copy')) { showStatusMessage("লিঙ্ক কপি করা হয়েছে (ফলব্যাক)!", "success"); }
+                        else { showStatusMessage("দুঃখিত, লিঙ্ক কপি করা যায়নি। নিজে কপি করে নিন।", "error", 4000); }
                     });
             } catch (err) {
-                if(document.execCommand('copy')) {
-                    showStatusMessage("লিঙ্ক কপি করা হয়েছে (ফলব্যাক)!", "success");
-                } else {
-                    showStatusMessage("দুঃখিত, লিঙ্ক কপি করা যায়নি। নিজে কপি করে নিন।", "error", 4000);
-                }
+                if(document.execCommand('copy')) { showStatusMessage("লিঙ্ক কপি করা হয়েছে (ফলব্যাক)!", "success"); }
+                else { showStatusMessage("দুঃখিত, লিঙ্ক কপি করা যায়নি। নিজে কপি করে নিন।", "error", 4000); }
             }
         }
 
