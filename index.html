@@ -70,7 +70,7 @@
 
         .input-group {
             margin-top: 30px;
-            margin-bottom: 15px; /* Reduced margin for status message */
+            margin-bottom: 15px;
         }
 
         label {
@@ -110,9 +110,9 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 100%; /* Make button full width */
-            max-width: 300px; /* Optional: max width for larger screens */
-            margin: 0 auto; /* Center the button */
+            width: 100%;
+            max-width: 300px;
+            margin: 0 auto;
         }
         button#generateButton svg {
             width: 22px;
@@ -121,8 +121,8 @@
             fill: #fff;
         }
         button#generateButton:disabled {
-            background-color: #cccccc; /* Grey background for disabled */
-            color: #666666; /* Darker grey text */
+            background-color: #cccccc;
+            color: #666666;
             cursor: not-allowed;
             opacity: 0.7;
         }
@@ -136,30 +136,28 @@
         }
         button#generateButton:not(:disabled):active { transform: translateY(0px) scale(1); }
 
-        /* Status Message Style */
         #statusMessage {
             padding: 10px;
             margin-top: 10px;
             margin-bottom: 10px;
             border-radius: 8px;
             font-size: 0.95em;
-            display: none; /* Hidden by default */
+            display: none;
             opacity: 0;
             transition: opacity 0.5s ease-in-out;
         }
         #statusMessage.success {
-            background-color: #1DAE54; /* Green for success */
+            background-color: #1DAE54;
             color: white;
         }
         #statusMessage.error {
-            background-color: #d9534f; /* Red for error */
+            background-color: #d9534f;
             color: white;
         }
         #statusMessage.info {
-            background-color: #5bc0de; /* Blue for info */
+            background-color: #5bc0de;
             color: white;
         }
-
 
         #generatedLinkContainer {
             margin-top: 20px;
@@ -203,32 +201,12 @@
             z-index: 1;
             padding-bottom: 20px;
         }
-
-        #musicToggleButton {
-            position: fixed;
-            top: 15px;
-            right: 15px;
-            padding: 10px 15px;
-            background-color: rgba(218, 165, 32, 0.85);
-            color: #001c00;
-            border: 1px solid #FFD700;
-            border-radius: 8px;
-            cursor: pointer;
-            z-index: 100;
-            font-size: 0.85em;
-            font-weight: bold;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            transition: background-color 0.3s ease;
-        }
-        #musicToggleButton:hover {
-            background-color: #FFD700;
-        }
     </style>
 </head>
 <body>
     <canvas id="fireworksCanvas"></canvas>
     <audio id="backgroundMusic" src="eidmubarak.mp3" loop preload="auto"></audio>
-    <button id="musicToggleButton" onclick="toggleMusic()">মিউজিক চালু করুন</button>
+    <!-- মিউজিক টগল বাটন সরিয়ে দেওয়া হয়েছে -->
 
     <div class="container">
         <div id="greetingMessage" class="greeting-message">
@@ -246,7 +224,7 @@
                 </svg>
                 WhatsApp এ শেয়ার করুন
             </button>
-            <div id="statusMessage"></div> <!-- Status message placeholder -->
+            <div id="statusMessage"></div>
         </div>
 
 
@@ -263,11 +241,9 @@
 
     <script>
         const backgroundMusic = document.getElementById('backgroundMusic');
-        const musicToggleButton = document.getElementById('musicToggleButton');
         const userNameInput = document.getElementById('userNameInput');
         const generateButton = document.getElementById('generateButton');
         const statusMessageDiv = document.getElementById('statusMessage');
-        let isMusicPlaying = false;
         let statusTimeout;
 
 
@@ -285,16 +261,18 @@
             greetingElement.offsetHeight;
             greetingElement.style.animation = null;
 
-            if (musicToggleButton) {
-                musicToggleButton.textContent = 'মিউজিক চালু করুন';
+            // Attempt to autoplay music
+            if (backgroundMusic) {
+                backgroundMusic.play().catch(error => {
+                    console.warn("Autoplay was prevented by the browser. Music might start after user interaction.", error);
+                });
             }
-            // Disable button initially (already set in HTML, but good practice)
+
             generateButton.disabled = true;
             startFireworks();
             animateFireworks();
         };
 
-        // Enable/disable share button based on input
         userNameInput.addEventListener('input', function() {
             if (userNameInput.value.trim() !== "") {
                 generateButton.disabled = false;
@@ -304,59 +282,35 @@
         });
 
         function showStatusMessage(message, type = 'info', duration = 3000) {
-            clearTimeout(statusTimeout); // Clear any existing timeout
+            clearTimeout(statusTimeout);
             statusMessageDiv.textContent = message;
-            statusMessageDiv.className = ''; // Clear existing classes
-            statusMessageDiv.classList.add(type); // Add new type class (success, error, info)
+            statusMessageDiv.className = '';
+            statusMessageDiv.classList.add(type);
             
             statusMessageDiv.style.display = 'block';
-            setTimeout(() => { // Timeout to allow display:block to take effect before opacity transition
+            setTimeout(() => {
                 statusMessageDiv.style.opacity = '1';
             }, 10);
 
-
             statusTimeout = setTimeout(() => {
                 statusMessageDiv.style.opacity = '0';
-                setTimeout(() => { // Timeout to allow opacity transition before display:none
+                setTimeout(() => {
                     statusMessageDiv.style.display = 'none';
-                }, 500); // Should match transition duration
+                }, 500);
             }, duration);
         }
 
-
-        function toggleMusic() {
-            if (!backgroundMusic) return;
-            if (isMusicPlaying) {
-                backgroundMusic.pause();
-                musicToggleButton.textContent = 'মিউজিক চালু করুন';
-            } else {
-                backgroundMusic.play().then(() => {
-                    musicToggleButton.textContent = 'মিউজিক বন্ধ করুন';
-                }).catch(error => {
-                    console.error("মিউজিক প্লে করা যায়নি: ", error);
-                    if (!isMusicPlaying) alert("মিউজিক ব্রাউজার দ্বারা ব্লক করা হয়েছে। মিউজিক শুনতে আবার বাটনে ক্লিক করুন অথবা ব্রাউজার সেটিংস চেক করুন।");
-                    isMusicPlaying = false;
-                    musicToggleButton.textContent = 'মিউজিক চালু করুন';
-                    return;
-                });
-            }
-            isMusicPlaying = !isMusicPlaying;
-        }
-
-
         async function generateAndShareLink() {
-            const userName = userNameInput.value.trim(); // Use the constant
+            const userName = userNameInput.value.trim();
             if (userName === "") {
                 showStatusMessage("অনুগ্রহ করে আপনার নাম লিখুন।", "error");
                 return;
             }
 
-            if (!isMusicPlaying && backgroundMusic && backgroundMusic.paused) {
-                backgroundMusic.play().then(() => {
-                    isMusicPlaying = true;
-                    musicToggleButton.textContent = 'মিউজিক বন্ধ করুন';
-                }).catch(error => {
-                    console.warn("মিউজিক প্রথম ক্লিকে শুরু করা যায়নি: ", error);
+            // Attempt to play music on user interaction if it's paused
+            if (backgroundMusic && backgroundMusic.paused) {
+                backgroundMusic.play().catch(error => {
+                    console.warn("Music play on interaction failed: ", error);
                 });
             }
 
@@ -373,7 +327,7 @@
                         url: newLink
                     });
                     showStatusMessage('শুভেচ্ছা শেয়ার করার জন্য অপশন দেখানো হয়েছে!', 'success', 4000);
-                    document.getElementById('generatedLinkContainer').style.display = 'none'; // Hide manual link if share API used
+                    document.getElementById('generatedLinkContainer').style.display = 'none';
                 } catch (error) {
                     console.error('Error sharing:', error);
                     showManualLink(newLink);
@@ -383,8 +337,8 @@
                 showManualLink(newLink);
                 showStatusMessage('আপনার ব্রাউজার অটো-শেয়ার সাপোর্ট করে না। লিঙ্ক কপি করুন।', 'info', 4000);
             }
-            userNameInput.value = ''; // Clear input
-            generateButton.disabled = true; // Disable button again after clearing input
+            userNameInput.value = '';
+            generateButton.disabled = true;
         }
 
         function showManualLink(link) {
@@ -421,7 +375,7 @@
             }
         }
 
-        // --- Fireworks Animation Code (Speed Adjusted - Unchanged from previous version) ---
+        // --- Fireworks Animation Code (Speed Adjusted - Unchanged) ---
         const canvas = document.getElementById('fireworksCanvas');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth;
