@@ -105,6 +105,7 @@
 
     <script>
     // --- HijriDate Library (Standard Version) ---
+    // ... (এই অংশ অপরিবর্তিত থাকবে) ...
     (function(global) {
         var HijriDate = {};
         var floor = Math.floor;
@@ -365,9 +366,8 @@
 
 
         let currentLang = 'bn';
-        let userTimeZone = 'Etc/UTC';
+        let userTimeZone = 'Etc/UTC'; // ডিফল্ট টাইমজোন
         let userLocale = 'bn-BD';
-        // let userCountryCode = null; // determineLanguageAndLocation এ লোকালি ডিক্লেয়ার করা হয়েছে
 
         const backgroundMusic = document.getElementById('backgroundMusic');
         const userNameInput = document.getElementById('userNameInput');
@@ -448,49 +448,76 @@
             const savedLang = localStorage.getItem('preferredLang');
             let detectedLang = null;
             let userCountryCode = null; // লোকাল ভেরিয়েবল
+            let fetchedTimeZoneFromAPI = false; // API থেকে টাইমজোন পাওয়া গেছে কিনা ট্র্যাক করার জন্য
 
+            // Language detection logic (remains mostly the same)
             if (langParam && supportedLanguages.includes(langParam)) {
                 detectedLang = langParam;
             } else if (savedLang && supportedLanguages.includes(savedLang)) {
                 detectedLang = savedLang;
-            } else {
-                try {
-                    console.log("Attempting to fetch geolocation data from ip-api.com...");
-                    const response = await fetchWithTimeout('https://ip-api.com/json/?fields=status,message,timezone,countryCode', { cache: 'no-store' });
-                    if (!response.ok) throw new Error(`IP API HTTP error! status: ${response.status}`);
-                    const data = await response.json();
+            }
+            // --- End of existing language detection part ---
 
-                    if (data.status === 'success') {
-                        if (data.countryCode) {
-                            userCountryCode = data.countryCode;
-                            console.log('User country code from IP API:', userCountryCode);
-                            if (countryToLangMap[userCountryCode] && supportedLanguages.includes(countryToLangMap[userCountryCode])) {
-                                detectedLang = countryToLangMap[userCountryCode];
-                                console.log(`Language set by country (${userCountryCode}): ${detectedLang}`);
-                            }
+            // Timezone detection logic with improved fallback
+            try {
+                console.log("Attempting to fetch geolocation data from ip-api.com...");
+                const response = await fetchWithTimeout('https://ip-api.com/json/?fields=status,message,timezone,countryCode', { cache: 'no-store' });
+                if (!response.ok) throw new Error(`IP API HTTP error! status: ${response.status}`);
+                const data = await response.json();
+
+                if (data.status === 'success') {
+                    if (data.countryCode) {
+                        userCountryCode = data.countryCode;
+                        console.log('User country code from IP API:', userCountryCode);
+                        if (!detectedLang && countryToLangMap[userCountryCode] && supportedLanguages.includes(countryToLangMap[userCountryCode])) {
+                            detectedLang = countryToLangMap[userCountryCode];
+                            console.log(`Language set by country (${userCountryCode}): ${detectedLang}`);
                         }
-                        if (data.timezone) {
-                             userTimeZone = data.timezone; // গ্লোবাল userTimeZone আপডেট করা হচ্ছে
-                             console.log('User timezone from IP API:',userTimeZone);
-                        }
+                    }
+                    if (data.timezone) {
+                         userTimeZone = data.timezone; // গ্লোবাল userTimeZone আপডেট করা হচ্ছে
+                         fetchedTimeZoneFromAPI = true;
+                         console.log('User timezone from IP API:',userTimeZone);
                     } else {
-                        console.warn('Failed to get country/timezone from IP API. Message:', data.message);
+                        console.warn('IP API did not return timezone data.');
                     }
-                } catch (error) {
-                    console.error("Error fetching user geolocation data from IP API:", error.name, error.message);
+                } else {
+                    console.warn('Failed to get country/timezone from IP API. Message:', data.message);
                 }
+            } catch (error) {
+                console.error("Error fetching user geolocation data from IP API:", error.name, error.message);
+            }
 
-                if (!detectedLang) {
-                    let browserLangFull = (navigator.languages && navigator.languages[0]) || navigator.language || 'bn-BD';
-                    let browserLangShort = browserLangFull.split('-')[0].toLowerCase();
-                    if (supportedLanguages.includes(browserLangShort)) {
-                        detectedLang = browserLangShort;
-                        console.log(`Language set by browser: ${detectedLang}`);
+            // If IP API failed to provide a timezone, try using the browser's timezone
+            if (!fetchedTimeZoneFromAPI) {
+                try {
+                    const browserTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+                    if (browserTimezone && typeof browserTimezone === 'string' && browserTimezone.length > 0) {
+                        userTimeZone = browserTimezone;
+                        console.log(`Using browser's timezone as fallback: ${userTimeZone}`);
+                    } else {
+                        console.warn("Could not determine timezone from browser, or invalid timezone returned.");
+                        userTimeZone = 'Etc/UTC'; // Explicitly set to UTC if browser one is invalid
+                        console.log(`Defaulting to ${userTimeZone} due to invalid browser timezone.`);
                     }
+                } catch (e) {
+                    console.error("Error getting timezone from browser Intl API:", e);
+                    userTimeZone = 'Etc/UTC'; // Default on error
+                    console.log(`Defaulting to ${userTimeZone} due to error with Intl API.`);
                 }
             }
 
-            currentLang = detectedLang || 'bn';
+            // Fallback language detection (if not set by IP or params)
+            if (!detectedLang) {
+                let browserLangFull = (navigator.languages && navigator.languages[0]) || navigator.language || 'bn-BD';
+                let browserLangShort = browserLangFull.split('-')[0].toLowerCase();
+                if (supportedLanguages.includes(browserLangShort)) {
+                    detectedLang = browserLangShort;
+                    console.log(`Language set by browser: ${detectedLang}`);
+                }
+            }
+
+            currentLang = detectedLang || 'bn'; // Default to 'bn' if all fails
             userLocale = langToLocaleMap[currentLang] || (currentLang === 'bn' ? 'bn-BD' : 'en-US');
 
             document.documentElement.lang = currentLang;
@@ -501,7 +528,7 @@
 
 
         async function fetchCorrectTime() {
-            let finalTimeZone = userTimeZone;
+            let finalTimeZone = userTimeZone; // এই ফাংশনের শুরুতে userTimeZone এর মান নেওয়া হচ্ছে
             let success = false;
             try {
                 console.log(`Attempting to fetch time for timezone: ${finalTimeZone}`);
@@ -509,30 +536,34 @@
 
                 if (response.ok) {
                     const data = await response.json();
-                    const serverTime = new Date(data.utc_datetime);
+                    const serverTime = new Date(data.utc_datetime); // WorldTimeAPI সবসময় UTC সময় দেয়
                     const clientTimeAtFetch = new Date();
-                    timeOffset = serverTime.getTime() - clientTimeAtFetch.getTime();
+                    timeOffset = serverTime.getTime() - clientTimeAtFetch.getTime(); // ডিভাইসের সময়ের সাথে পার্থক্য
                     initialTimeSynced = true;
-                    userTimeZone = data.timezone;
-                    console.log(`Time synced with ${data.timezone}. Offset: ${timeOffset} ms. Current userTimeZone: ${userTimeZone}`);
+                    // userTimeZone কে এখানে আর data.timezone দিয়ে সেট করার দরকার নেই, কারণ আমরা utc_datetime ব্যবহার করছি
+                    // এবং userTimeZone আগেই (determineLanguageAndLocation এ) সেট করা হয়েছে।
+                    // তবে নিশ্চিত করার জন্য data.timezone প্রিন্ট করতে পারি।
+                    console.log(`Time synced using WorldTimeAPI. Target timezone for display: ${finalTimeZone}, Actual data timezone from API: ${data.timezone}. Offset: ${timeOffset} ms.`);
                     success = true;
                 } else {
                      let errorText = ""; try { errorText = await response.text(); } catch (e) {}
                     console.error(`WorldTimeAPI HTTP error! Status: ${response.status} for timezone: ${finalTimeZone}. Response: ${errorText}`);
-                    if (finalTimeZone !== 'Etc/UTC') {
-                        console.warn(`Falling back to Etc/UTC due to error with timezone: ${finalTimeZone}`);
-                        userTimeZone = 'Etc/UTC';
-                        return await fetchCorrectTime();
-                    }
-                    throw new Error(`WorldTimeAPI HTTP error! Status: ${response.status} even for Etc/UTC. Response: ${errorText}`);
+                    // এখানে আর UTC তে ফলব্যাক করার দরকার নেই, কারণ userTimeZone আগেই সেট করা হয়েছে।
+                    // যদি `finalTimeZone` এর জন্য ব্যর্থ হয়, তাহলে timeOffset 0 থাকবে, এবং ডিভাইসের সময় ব্যবহৃত হবে।
+                    // ফলব্যাক লজিক নিচে handle করা হবে।
+                    // throw new Error(`WorldTimeAPI HTTP error! Status: ${response.status}. Response: ${errorText}`);
                 }
             } catch (error) {
-                console.error("Finally failed to fetch correct time from WorldTimeAPI:", error.name, error.message);
-                console.warn("Using local device time as fallback. Ensure device clock is accurate.");
-                timeOffset = 0;
-                initialTimeSynced = false;
+                console.error("Failed to fetch correct time from WorldTimeAPI:", error.name, error.message);
             }
-            updateTimeDate();
+
+            if (!success) {
+                console.warn("Using local device time as fallback due to WorldTimeAPI failure. Ensure device clock is accurate. Time will be displayed in detected/fallback timezone:", userTimeZone);
+                timeOffset = 0; // নিশ্চিত করা হচ্ছে যে অফসেট ০
+                initialTimeSynced = false; // নিশ্চিত করা হচ্ছে যে সিঙ্ক হয়নি
+            }
+
+            updateTimeDate(); // সময় এবং তারিখ আপডেট করা হচ্ছে
             return success;
         }
 
@@ -542,31 +573,53 @@
             const clientNow = new Date();
             const correctedNow = new Date(clientNow.getTime() + timeOffset);
 
-            const timeOptions = { hour: 'numeric', minute: '2-digit', second: '2-digit', hour12: true, timeZone: userTimeZone };
+            // console.log(`Updating time. ClientNow: ${clientNow}, CorrectedNow: ${correctedNow}, Timezone for display: ${userTimeZone}, Locale: ${userLocale}`);
+
+            const timeOptions = { hour: 'numeric', minute: '2-digit', second: '2-digit', hour12: true };
+            if (userTimeZone && userTimeZone !== 'Etc/Unknown') { // Intl.DateTimeFormat এর জন্য 'Etc/Unknown' একটি অবৈধ টাইমজোন
+                 timeOptions.timeZone = userTimeZone;
+            }
+
             let timeString;
             try {
                 timeString = correctedNow.toLocaleTimeString(userLocale, timeOptions);
             } catch (e) {
-                const fallbackTimeOptions = { hour: 'numeric', minute: '2-digit', second: '2-digit', hour12: true };
-                timeString = correctedNow.toLocaleTimeString(userLocale, fallbackTimeOptions);
-                console.warn(`Error formatting time with TZ ${userTimeZone}, using system TZ. Error: ${e.message}`);
+                // যদি userTimeZone দিয়ে ফরম্যাট করতে সমস্যা হয়, টাইমজোন ছাড়া ফরম্যাট করার চেষ্টা করা হবে
+                console.warn(`Error formatting time with TZ ${userTimeZone}, attempting without TZ. Error: ${e.message}`);
+                delete timeOptions.timeZone; // টাইমজোন অপশন বাদ দেওয়া হলো
+                try {
+                    timeString = correctedNow.toLocaleTimeString(userLocale, timeOptions);
+                } catch (e2) {
+                     console.error(`Fallback time formatting also failed. Error: ${e2.message}`);
+                     timeString = "N/A"; // সময় দেখানো সম্ভব না হলে
+                }
             }
             if (currentTimeEl) currentTimeEl.textContent = `${getTranslation('timeLabel')}: ${timeString}`;
 
-            const dateOptions = { day: 'numeric', month: 'long', year: 'numeric', timeZone: userTimeZone };
+            const dateOptions = { day: 'numeric', month: 'long', year: 'numeric' };
+             if (userTimeZone && userTimeZone !== 'Etc/Unknown') {
+                dateOptions.timeZone = userTimeZone;
+            }
+
             let dateString;
             try {
                 dateString = correctedNow.toLocaleDateString(userLocale, dateOptions);
             } catch (e) {
-                const fallbackDateOptions = { day: 'numeric', month: 'long', year: 'numeric' };
-                dateString = correctedNow.toLocaleDateString(userLocale, fallbackDateOptions);
-                 console.warn(`Error formatting date with TZ ${userTimeZone}, using system TZ. Error: ${e.message}`);
+                 console.warn(`Error formatting date with TZ ${userTimeZone}, attempting without TZ. Error: ${e.message}`);
+                 delete dateOptions.timeZone;
+                 try {
+                    dateString = correctedNow.toLocaleDateString(userLocale, dateOptions);
+                 } catch (e2) {
+                    console.error(`Fallback date formatting also failed. Error: ${e2.message}`);
+                    dateString = "N/A";
+                 }
             }
             if (currentDateEl) currentDateEl.textContent = `${getTranslation('dateLabel')}: ${dateString}`;
 
             if (currentHijriDateEl) {
                 if (typeof HijriDate !== 'undefined' && HijriDate.JS && typeof HijriDate.JS.convert === 'function') {
                     try {
+                        // হিজরি ক্যালকুলেশনের জন্য correctedNow ব্যবহার করা হচ্ছে, যা সিঙ্ক করা সময় (যদি সফল হয়) বা লোকাল সময় (যদি ব্যর্থ হয়)
                         const hijriInstance = HijriDate.JS.convert(correctedNow);
                         if (hijriInstance && typeof hijriInstance.getDate === 'function') {
                             const hijriDay = toNativeNumeral(hijriInstance.getDate(), currentLang);
@@ -601,15 +654,15 @@
                 document.documentElement.lang = currentLang;
                 document.body.lang = currentLang;
                 applyTranslations();
-                updateTimeDate();
+                updateTimeDate(); // ভাষা পরিবর্তনের পর সময় ও তারিখ রি-ফরম্যাট করা
             }
         }
 
 
         window.onload = async function() {
             console.log("Window onload sequence started.");
-            await determineLanguageAndLocation();
-            await fetchCorrectTime();
+            await determineLanguageAndLocation(); // এখানে userTimeZone সেট হবে (API, ব্রাউজার বা UTC থেকে)
+            await fetchCorrectTime(); // এখানে userTimeZone ব্যবহার করে সময় সিঙ্ক করার চেষ্টা হবে
 
             const urlParams = new URLSearchParams(window.location.search);
             const sharerNameParam = urlParams.get('name');
@@ -656,7 +709,7 @@
 
             startFireworks(); // আতশবাজি শুরু
             animateFireworks(); // আতশবাজি অ্যানিমেট
-            initializeDateTimeDisplay();
+            initializeDateTimeDisplay(); // এখানে প্রথমবার updateTimeDate কল হবে
             console.log("Window onload sequence finished.");
         };
 
@@ -669,6 +722,7 @@
     </script>
     <script>
     // --- Fireworks Animation (Standard Version) ---
+    // ... (এই অংশ অপরিবর্তিত থাকবে) ...
     const canvas = document.getElementById('fireworksCanvas');
     const ctx = canvas.getContext('2d');
     canvas.width = window.innerWidth;
