@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap" rel="stylesheet"> <!-- பொதுவான Noto Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap" rel="stylesheet"> <!-- সাধারণ Noto Sans -->
 
     <style>
         /* আপনার আগের CSS কোড এখানে অপরিবর্তিত থাকবে */
@@ -28,9 +28,9 @@
             line-height: 1.6;
         }
         body[lang="bn"] { font-family: 'Noto Sans Bengali', 'Arial', sans-serif; }
-        body[lang="en"] { font-family: 'Roboto', 'Arial', sans-serif; } /* চাইলে Noto Sans ব্যবহার করতে পারেন */
+        body[lang="en"] { font-family: 'Roboto', 'Arial', sans-serif; }
         body[lang="ar"] { font-family: 'Noto Sans Arabic', 'Arial', sans-serif; direction: rtl; }
-        body[lang="es"] { font-family: 'Noto Sans', 'Arial', sans-serif; } /* স্প্যানিশের জন্য Noto Sans */
+        body[lang="es"] { font-family: 'Noto Sans', 'Arial', sans-serif; }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         #fireworksCanvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; }
@@ -40,13 +40,13 @@
         @keyframes fadeInGrow { 0% { opacity: 0; transform: scale(0.7) translateY(25px); } 100% { opacity: 1; transform: scale(1) translateY(0); } }
         .input-group { margin-top: 25px; margin-bottom: 15px; }
         label { display: block; margin-bottom: 8px; color: #f0e68c; font-weight: bold; font-size: 1.05em; }
-        body[lang="ar"] label { text-align: right; } /* RTL এর জন্য লেবেল ডান দিকে */
+        body[lang="ar"] label { text-align: right; }
         input[type="text"] { width: 100%; padding: 12px; margin-bottom: 15px; border: 2px solid #ffd700; border-radius: 10px; font-size: 1em; background-color: #002a00; color: #fff; }
-        body[lang="ar"] input[type="text"] { text-align: right; } /* RTL এর জন্য ইনপুট টেক্সট ডান দিকে */
+        body[lang="ar"] input[type="text"] { text-align: right; }
         input[type="text"]::placeholder { color: #b0a060; }
         button#generateButton { background-color: #25D366; color: #fff; padding: 12px 20px; border: none; border-radius: 10px; cursor: pointer; font-size: 1em; font-weight: bold; transition: background-color 0.2s ease, transform 0.15s ease, opacity 0.2s ease; letter-spacing: 0.5px; box-shadow: 0 3px 7px rgba(0,0,0,0.25); display: flex; align-items: center; justify-content: center; width: 100%; max-width: 280px; margin: 0 auto; }
         button#generateButton svg { width: 20px; height: 20px; margin-right: 8px; fill: #fff; }
-        body[lang="ar"] button#generateButton svg { margin-left: 8px; margin-right: 0; } /* RTL এর জন্য SVG আইকন */
+        body[lang="ar"] button#generateButton svg { margin-left: 8px; margin-right: 0; }
         button#generateButton:disabled { background-color: #cccccc; color: #666666; cursor: not-allowed; opacity: 0.7; }
         button#generateButton:disabled svg { fill: #666666; }
         button#generateButton:not(:disabled):hover { background-color: #1DAE54; transform: translateY(-1px) scale(1.02); box-shadow: 0 5px 10px rgba(0,0,0,0.3); }
@@ -62,16 +62,8 @@
         button#copyButton:hover { background-color: #DAA520; }
         footer { margin-top: 15px; font-size: 0.85em; color: #f0e68c; position: relative; z-index: 1; padding-bottom: 15px; }
         .dateTimeEntry { margin-top: 4px; font-size: 0.9em; } .dateTimeEntry span { margin: 0 3px; }
-        
-        .language-switcher { margin-bottom: 15px; z-index: 2; position: relative; }
-        .language-switcher button {
-            background-color: #DAA520; color: #001c00; border: none; padding: 8px 12px;
-            margin: 0 5px; border-radius: 5px; cursor: pointer; font-weight: bold;
-            transition: background-color 0.2s ease;
-        }
-        .language-switcher button:hover { background-color: #ffd700; }
-        .language-switcher button.active { background-color: #f0e68c; color: #003800; outline: 2px solid #001c00; }
 
+        /* ল্যাঙ্গুয়েজ সুইচারের CSS মুছে ফেলা হয়েছে */
 
         @media (max-width: 480px) { .container { padding: 20px 15px; margin-top: 2vh; margin-bottom: 2vh; } #eidVideo { max-height: 220px; margin-bottom: 15px; } .greeting-message { font-size: 1.7em; margin-bottom: 15px; } label { font-size: 1em; } input[type="text"] { padding: 10px; font-size: 0.95em; } button#generateButton { padding: 10px 15px; font-size: 0.95em; max-width: 250px; } button#generateButton svg { width: 18px; height: 18px; } #statusMessage { font-size: 0.85em; } #sharableLink, button#copyButton { font-size: 0.9em; } footer { font-size: 0.8em; } .dateTimeEntry { font-size: 0.85em; } }
         @media (max-width: 360px) { .greeting-message { font-size: 1.5em; } #eidVideo { max-height: 180px; } }
@@ -81,13 +73,7 @@
     <canvas id="fireworksCanvas"></canvas>
     <audio id="backgroundMusic" src="eidmubarak.mp3" loop preload="metadata"></audio>
 
-    <div class="language-switcher">
-        <button data-lang="bn">বাংলা</button>
-        <button data-lang="en">English</button>
-        <button data-lang="ar">العربية</button>
-        <button data-lang="es">Español</button>
-        <!-- আরও ভাষার বাটন যোগ করুন -->
-    </div>
+    <!-- ল্যাঙ্গুয়েজ সুইচারের HTML অংশ মুছে ফেলা হয়েছে -->
 
     <div class="container">
         <div id="greetingMessage" class="greeting-message"></div>
@@ -154,8 +140,8 @@
                 'hijriDateError': 'ইসলামী তারিখ রূপান্তরে ত্রুটি।',
                 'hijriCalcError': 'হিজরি মাস গণনায় ত্রুটি।',
                 'hijriNotLoaded': 'ইসলামী ক্যালকুলেটর লোড হয়নি.',
-                'musicPlayError': 'মিউজিক প্লে করা যায়নি। ডিভাইস সাউন্ড চেক করুন।',
-                'manualLangChange': 'ভাষা পরিবর্তন করা হয়েছে: {langName}'
+                'musicPlayError': 'মিউজিক প্লে করা যায়নি। ডিভাইস সাউন্ড চেক করুন.',
+                'manualLangChange': 'ভাষা পরিবর্তন করা হয়েছে: {langName}' // এটি এখন আর ব্যবহৃত হবে না যদি setLanguage শুধুমাত্র প্রোগ্রাম্যাটিক্যালি কল হয়
             },
             'en': {
                 'pageTitle': 'Eid Mubarak!',
@@ -185,7 +171,7 @@
                 'musicPlayError': 'Could not play music. Check device sound.',
                 'manualLangChange': 'Language changed to: {langName}'
             },
-            'ar': { // আরবি অনুবাদ (উদাহরণ) - সম্পূর্ণ করুন
+            'ar': {
                 'pageTitle': 'عيد مبارك!',
                 'greetingMessage': 'عيد مبارك!',
                 'greetingMessageFrom': 'عيد مبارك من {name}!',
@@ -202,10 +188,9 @@
                 'statusEnterName': 'الرجاء إدخال اسمك.',
                 'statusLinkCopied': 'تم نسخ الرابط بنجاح!',
                 'hijriDateLoading': 'جاري التحقق من التاريخ الهجري...',
-                // --- বাকি আরবি অনুবাদগুলো এখানে যোগ করুন ---
                 'manualLangChange': 'تم تغيير اللغة إلى: {langName}'
             },
-            'es': { // স্প্যানিশ অনুবাদ (উদাহরণ) - সম্পূর্ণ করুন
+            'es': {
                 'pageTitle': '¡Eid Mubarak!',
                 'greetingMessage': '¡Eid Mubarak!',
                 'greetingMessageFrom': '¡Eid Mubarak de parte de {name}!',
@@ -218,40 +203,31 @@
                 'dateLabel': 'Fecha',
                 'hijriDateLabel': 'Fecha Islámica',
                 'hijriYearSuffix': 'H',
-                // --- বাকি স্প্যানিশ অনুবাদগুলো এখানে যোগ করুন ---
                 'manualLangChange': 'Idioma cambiado a: {langName}'
             }
-            // --- আরও ভাষার অনুবাদ এখানে যোগ করুন ---
         };
 
-        // --- দেশ ও ভাষার ম্যাপিং ---
         const countryToLangMap = {
-            'SA': 'ar', 'AE': 'ar', 'EG': 'ar', 'KW': 'ar', 'QA': 'ar', 'OM': 'ar', 'BH': 'ar', // আরবি দেশ
-            'BD': 'bn', // বাংলাদেশ
-            'IN': 'en', // ভারত (ইংরেজি ফলব্যাক, হিন্দির জন্য 'hi' এবং অনুবাদ যোগ করতে পারেন)
-            'PK': 'en', // পাকিস্তান (ইংরেজি ফলব্যাক, উর্দুর জন্য 'ur' এবং অনুবাদ যোগ করতে পারেন)
-            'US': 'en', 'GB': 'en', 'CA': 'en', 'AU': 'en', // ইংরেজিভাষী দেশ
-            'ES': 'es', 'MX': 'es', 'AR': 'es', 'CO': 'es', // স্প্যানিশভাষী দেশ
-            // 'CN': 'zh', // চীন - চীনা ভাষার জন্য 'zh' এবং অনুবাদ যোগ করুন
-            // 'RU': 'ru', // রাশিয়া - রুশ ভাষার জন্য 'ru' এবং অনুবাদ যোগ করুন
-            // --- আরও দেশের ম্যাপিং যোগ করুন ---
+            'SA': 'ar', 'AE': 'ar', 'EG': 'ar', 'KW': 'ar', 'QA': 'ar', 'OM': 'ar', 'BH': 'ar',
+            'BD': 'bn',
+            'IN': 'en',
+            'PK': 'en',
+            'US': 'en', 'GB': 'en', 'CA': 'en', 'AU': 'en',
+            'ES': 'es', 'MX': 'es', 'AR': 'es', 'CO': 'es',
         };
 
         const langToLocaleMap = {
             'bn': 'bn-BD',
             'en': 'en-US',
-            'ar': 'ar-SA', // আরবি তারিখ ও সংখ্যার জন্য
-            'es': 'es-ES', // স্প্যানিশ তারিখ ও সংখ্যার জন্য
-            // 'zh': 'zh-CN',
-            // 'ru': 'ru-RU',
-            // --- আরও লোকাল যোগ করুন ---
+            'ar': 'ar-SA',
+            'es': 'es-ES',
         };
         const supportedLanguages = Object.keys(translations);
 
 
-        let currentLang = 'bn'; // ডিফল্ট
+        let currentLang = 'bn';
         let userTimeZone = 'Etc/UTC';
-        let userLocale = 'bn-BD'; // ডিফল্ট
+        let userLocale = 'bn-BD';
         let userCountryCode = null;
 
         const backgroundMusic = document.getElementById('backgroundMusic');
@@ -270,7 +246,6 @@
         let initialTimeSynced = false;
         let musicPlayAttemptedOnInteraction = false;
 
-        // বিভিন্ন ভাষার হিজরি মাস (উদাহরণ)
         const hijriMonthsData = {
             'bn': ["মহররম", "সফর", "রবিউল আউয়াল", "রবিউস সানি", "জমাদিউল আউয়াল", "জমাদিউস সানি", "রজব", "শাবান", "রমজান", "শাওয়াল", "জ্বিলকদ", "জ্বিলহজ্জ"],
             'en': ["Muharram", "Safar", "Rabi' al-awwal", "Rabi' al-thani", "Jumada al-awwal", "Jumada al-thani", "Rajab", "Sha'ban", "Ramadan", "Shawwal", "Dhu al-Qi'dah", "Dhu al-Hijjah"],
@@ -281,9 +256,8 @@
 
         function getTranslation(key, params = {}) {
             let text = (translations[currentLang] && translations[currentLang][key]) ||
-                       (translations['en'] && translations['en'][key]) || // ফলব্যাক ইংরেজি
-                       key; // একদম না পেলে কী-টাই দেখাবে
-
+                       (translations['en'] && translations['en'][key]) ||
+                       key;
             for (const param in params) {
                 text = text.replace(`{${param}}`, params[param]);
             }
@@ -300,13 +274,13 @@
                 }
             });
             document.title = getTranslation('pageTitle');
-            // অ্যাক্টিভ ল্যাঙ্গুয়েজ বাটন হাইলাইট
-            document.querySelectorAll('.language-switcher button').forEach(btn => {
-                btn.classList.remove('active');
-                if (btn.getAttribute('data-lang') === currentLang) {
-                    btn.classList.add('active');
-                }
-            });
+            // অ্যাক্টিভ ল্যাঙ্গুয়েজ বাটন হাইলাইট করার কোড কমেন্ট আউট/মুছে ফেলা হয়েছে
+            // document.querySelectorAll('.language-switcher button').forEach(btn => {
+            //     btn.classList.remove('active');
+            //     if (btn.getAttribute('data-lang') === currentLang) {
+            //         btn.classList.add('active');
+            //     }
+            // });
         }
 
         function toNativeNumeral(numStr, lang) {
@@ -314,11 +288,9 @@
                 const bengaliDigits = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
                 return String(numStr).split('').map(digit => /\d/.test(digit) ? bengaliDigits[parseInt(digit)] : digit).join('');
             } else if (lang === 'ar') {
-                // আরবির জন্য Eastern Arabic Numerals (٠١٢٣٤٥٦٧٨٩)
                 const arabicDigits = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
                 return String(numStr).split('').map(digit => /\d/.test(digit) ? arabicDigits[parseInt(digit)] : digit).join('');
             }
-            // অন্যান্য ভাষার জন্য স্ট্যান্ডার্ড সংখ্যা
             return String(numStr);
         }
 
@@ -339,7 +311,6 @@
         }
 
         async function determineLanguageAndLocation() {
-            // অগ্রাধিকার: URL -> localStorage -> IP Geolocation -> Browser Lang -> Default
             const urlParams = new URLSearchParams(window.location.search);
             const langParam = urlParams.get('lang');
             const savedLang = localStorage.getItem('preferredLang');
@@ -350,7 +321,6 @@
             } else if (savedLang && supportedLanguages.includes(savedLang)) {
                 detectedLang = savedLang;
             } else {
-                // IP Geolocation চেষ্টা
                 try {
                     console.log("Attempting to fetch geolocation data from ip-api.com...");
                     const response = await fetchWithTimeout('https://ip-api.com/json/?fields=status,message,timezone,countryCode', { cache: 'no-store' });
@@ -377,7 +347,6 @@
                     console.error("Error fetching user geolocation data from IP API:", error.name, error.message);
                 }
 
-                // যদি IP থেকে ভাষা না পাওয়া যায়, ব্রাউজার ভাষা দেখুন
                 if (!detectedLang) {
                     let browserLangFull = (navigator.languages && navigator.languages[0]) || navigator.language || 'bn-BD';
                     let browserLangShort = browserLangFull.split('-')[0].toLowerCase();
@@ -388,7 +357,7 @@
                 }
             }
 
-            currentLang = detectedLang || 'bn'; // যদি কিছুই না পাওয়া যায়, বাংলা ডিফল্ট
+            currentLang = detectedLang || 'bn';
             userLocale = langToLocaleMap[currentLang] || (currentLang === 'bn' ? 'bn-BD' : 'en-US');
 
             document.documentElement.lang = currentLang;
@@ -399,7 +368,6 @@
 
 
         async function fetchCorrectTime() {
-            // userTimeZone ইতিমধ্যে determineLanguageAndLocation ফাংশনে সেট হতে পারে
             let finalTimeZone = userTimeZone;
             let success = false;
             try {
@@ -412,7 +380,7 @@
                     const clientTimeAtFetch = new Date();
                     timeOffset = serverTime.getTime() - clientTimeAtFetch.getTime();
                     initialTimeSynced = true;
-                    userTimeZone = data.timezone; // API থেকে ক্যানোনিকাল টাইমজোন আপডেট
+                    userTimeZone = data.timezone;
                     console.log(`Time synced with ${data.timezone}. Offset: ${timeOffset} ms. Current userTimeZone: ${userTimeZone}`);
                     success = true;
                 } else {
@@ -421,7 +389,7 @@
                     if (finalTimeZone !== 'Etc/UTC') {
                         console.warn(`Falling back to Etc/UTC due to error with timezone: ${finalTimeZone}`);
                         userTimeZone = 'Etc/UTC';
-                        return await fetchCorrectTime(); // Etc/UTC দিয়ে আবার চেষ্টা
+                        return await fetchCorrectTime();
                     }
                     throw new Error(`WorldTimeAPI HTTP error! Status: ${response.status} even for Etc/UTC. Response: ${errorText}`);
                 }
@@ -470,7 +438,7 @@
                         if (hijriInstance && typeof hijriInstance.getDate === 'function') {
                             const hijriDay = toNativeNumeral(hijriInstance.getDate(), currentLang);
                             const hijriMonthIndex = hijriInstance.getMonth() - 1;
-                            const currentHijriMonths = hijriMonthsData[currentLang] || hijriMonthsData['en']; // ফলব্যাক ইংরেজি মাস
+                            const currentHijriMonths = hijriMonthsData[currentLang] || hijriMonthsData['en'];
 
                             if (hijriMonthIndex >= 0 && hijriMonthIndex < currentHijriMonths.length) {
                                 const hijriMonthName = currentHijriMonths[hijriMonthIndex];
@@ -489,10 +457,10 @@
         }
 
 
-        function attemptMusicPlay(interactionType = "unknown") { /* আগের মতোই */ if (backgroundMusic && backgroundMusic.paused) { console.log(`Attempting music play due to ${interactionType} interaction...`); const playPromise = backgroundMusic.play(); if (playPromise !== undefined) { playPromise.then(() => { console.log(`Music started successfully via ${interactionType} interaction.`); document.body.removeEventListener('click', handleFirstUserInteractionForMedia); document.body.removeEventListener('touchstart', handleFirstUserInteractionForMedia); }).catch(error => { console.warn(`Music play failed via ${interactionType} interaction:`, error.name, error.message); }); } } else if (backgroundMusic && !backgroundMusic.paused) { console.log(`Music already playing (interaction: ${interactionType}).`); } else if (!backgroundMusic) { console.error("backgroundMusic element not found during attemptMusicPlay."); } }
-        function handleFirstUserInteractionForMedia(event) { /* আগের মতোই, তবে ভিডিওর জন্যও ব্যবহার করা যেতে পারে */ console.log(`First user media interaction (type: ${event.type}) on body detected.`); if (!musicPlayAttemptedOnInteraction) { attemptMusicPlay(`general body ${event.type}`); musicPlayAttemptedOnInteraction = true; } if (eidVideoEl && eidVideoEl.paused) { eidVideoEl.play().catch(e => console.warn("Video play failed on interaction:", e)); } }
+        function attemptMusicPlay(interactionType = "unknown") { if (backgroundMusic && backgroundMusic.paused) { console.log(`Attempting music play due to ${interactionType} interaction...`); const playPromise = backgroundMusic.play(); if (playPromise !== undefined) { playPromise.then(() => { console.log(`Music started successfully via ${interactionType} interaction.`); document.body.removeEventListener('click', handleFirstUserInteractionForMedia); document.body.removeEventListener('touchstart', handleFirstUserInteractionForMedia); }).catch(error => { console.warn(`Music play failed via ${interactionType} interaction:`, error.name, error.message); }); } } else if (backgroundMusic && !backgroundMusic.paused) { console.log(`Music already playing (interaction: ${interactionType}).`); } else if (!backgroundMusic) { console.error("backgroundMusic element not found during attemptMusicPlay."); } }
+        function handleFirstUserInteractionForMedia(event) { console.log(`First user media interaction (type: ${event.type}) on body detected.`); if (!musicPlayAttemptedOnInteraction) { attemptMusicPlay(`general body ${event.type}`); musicPlayAttemptedOnInteraction = true; } if (eidVideoEl && eidVideoEl.paused) { eidVideoEl.play().catch(e => console.warn("Video play failed on interaction:", e)); } }
 
-        function setLanguage(langCode) {
+        function setLanguage(langCode) { // এই ফাংশনটি এখনও URL প্যারামিটার বা ভবিষ্যতে অন্য কোনো উপায়ে ভাষা সেট করার জন্য ব্যবহার করা যেতে পারে
             if (supportedLanguages.includes(langCode) && currentLang !== langCode) {
                 currentLang = langCode;
                 userLocale = langToLocaleMap[currentLang] || (currentLang === 'bn' ? 'bn-BD' : 'en-US');
@@ -500,12 +468,9 @@
                 document.documentElement.lang = currentLang;
                 document.body.lang = currentLang;
                 applyTranslations();
-                updateTimeDate(); // তারিখ ও সময় নতুন ভাষায় আপডেট করুন
-                showStatusMessage('manualLangChange', 'info', 2000, { langName: document.querySelector(`.language-switcher button[data-lang="${currentLang}"]`).textContent });
-                // URL এ lang প্যারামিটার যোগ করতে পারেন (ঐচ্ছিক)
-                // const url = new URL(window.location);
-                // url.searchParams.set('lang', currentLang);
-                // window.history.pushState({}, '', url);
+                updateTimeDate();
+                // নিচের লাইনটি কমেন্ট আউট করা হয়েছে কারণ ম্যানুয়াল সুইচার নেই
+                // showStatusMessage('manualLangChange', 'info', 2000, { langName: document.querySelector(`.language-switcher button[data-lang="${currentLang}"]`).textContent });
             }
         }
 
@@ -513,15 +478,16 @@
         window.onload = async function() {
             console.log("Window onload sequence started.");
 
-            document.querySelectorAll('.language-switcher button').forEach(button => {
-                button.addEventListener('click', (event) => {
-                    const lang = event.target.getAttribute('data-lang');
-                    setLanguage(lang);
-                });
-            });
+            // ল্যাঙ্গুয়েজ সুইচারের বাটনগুলোর ইভেন্ট লিসেনার মুছে ফেলা হয়েছে
+            // document.querySelectorAll('.language-switcher button').forEach(button => {
+            //     button.addEventListener('click', (event) => {
+            //         const lang = event.target.getAttribute('data-lang');
+            //         setLanguage(lang);
+            //     });
+            // });
 
-            await determineLanguageAndLocation(); // ভাষা ও অবস্থান নির্ধারণ
-            await fetchCorrectTime(); // সঠিক সময় সিঙ্ক
+            await determineLanguageAndLocation();
+            await fetchCorrectTime();
 
             const urlParams = new URLSearchParams(window.location.search);
             const sharerNameParam = urlParams.get('name');
@@ -531,7 +497,7 @@
             } else {
                 greetingMessageEl.textContent = getTranslation('greetingMessage');
             }
-            greetingMessageEl.style.animation = 'none'; // অ্যানিমেশন রিসেট
+            greetingMessageEl.style.animation = 'none';
             greetingMessageEl.offsetHeight;
             greetingMessageEl.style.animation = null;
 
@@ -556,8 +522,7 @@
                  if (videoPlayPromise !== undefined) {
                     videoPlayPromise.catch(error => {
                         console.warn("Video autoplay was prevented:", error.name, error.message);
-                        // ভিডিওর জন্যও ইন্টারঅ্যাকশন লিসেনার যুক্ত করা যেতে পারে যদি অটো প্লে না হয়
-                        if (!musicPlayAttemptedOnInteraction && error.name === 'NotAllowedError') { // যদি মিউজিকের জন্য আগে থেকেই লিসেনার না থাকে
+                        if (!musicPlayAttemptedOnInteraction && error.name === 'NotAllowedError') {
                              document.body.addEventListener('click', handleFirstUserInteractionForMedia, { once: true });
                              document.body.addEventListener('touchstart', handleFirstUserInteractionForMedia, { once: true });
                         }
@@ -566,7 +531,7 @@
                 eidVideoEl.onerror = function() { console.error("Error loading video."); };
             }
 
-            generateButton.disabled = true; // শুরুতে ডিজেবল
+            generateButton.disabled = true;
             userNameInput.addEventListener('input', function() { generateButton.disabled = userNameInput.value.trim() === ""; });
 
             startFireworks();
@@ -577,7 +542,7 @@
 
 
         function showStatusMessage(messageKey, type = 'info', duration = 3000, params = {}) { clearTimeout(statusTimeout); statusMessageDiv.textContent = getTranslation(messageKey, params); statusMessageDiv.className = ''; statusMessageDiv.classList.add(type); statusMessageDiv.style.display = 'block'; setTimeout(() => { statusMessageDiv.style.opacity = '1'; }, 10); statusTimeout = setTimeout(() => { statusMessageDiv.style.opacity = '0'; setTimeout(() => { statusMessageDiv.style.display = 'none'; }, 500); }, duration); }
-        async function generateAndShareLink() { const userName = userNameInput.value.trim(); if (userName === "") { showStatusMessage("statusEnterName", "error"); return; } attemptMusicPlay("share button click"); const currentUrl = new URL(window.location.href); currentUrl.searchParams.set('name', userName); /* currentUrl.searchParams.set('lang', currentLang); // শেয়ার করা লিঙ্কে বর্তমান ভাষাও যোগ করতে পারেন */ const newLink = currentUrl.toString(); const sharerNameForMessage = decodeURIComponent(userName); const shareText = getTranslation('greetingMessageFrom', {name: sharerNameForMessage}) + ` ${getTranslation('pageTitle')}! ${newLink}`; if (navigator.share) { try { await navigator.share({ title: getTranslation('pageTitle'), text: shareText, url: newLink }); showStatusMessage('statusShareOptions', 'success', 1000); document.getElementById('generatedLinkContainer').style.display = 'none'; } catch (error) { console.error("Error during navigator.share:", error); showManualLink(newLink); showStatusMessage('statusShareError', 'info', 4000); } } else { showManualLink(newLink); showStatusMessage('statusNoAutoShare', 'info', 4000); } userNameInput.value = ''; generateButton.disabled = true; }
+        async function generateAndShareLink() { const userName = userNameInput.value.trim(); if (userName === "") { showStatusMessage("statusEnterName", "error"); return; } attemptMusicPlay("share button click"); const currentUrl = new URL(window.location.href); currentUrl.searchParams.set('name', userName); const newLink = currentUrl.toString(); const sharerNameForMessage = decodeURIComponent(userName); const shareText = getTranslation('greetingMessageFrom', {name: sharerNameForMessage}) + ` ${getTranslation('pageTitle')}! ${newLink}`; if (navigator.share) { try { await navigator.share({ title: getTranslation('pageTitle'), text: shareText, url: newLink }); showStatusMessage('statusShareOptions', 'success', 1000); document.getElementById('generatedLinkContainer').style.display = 'none'; } catch (error) { console.error("Error during navigator.share:", error); showManualLink(newLink); showStatusMessage('statusShareError', 'info', 4000); } } else { showManualLink(newLink); showStatusMessage('statusNoAutoShare', 'info', 4000); } userNameInput.value = ''; generateButton.disabled = true; }
         function showManualLink(link) { const sharableLinkInput = document.getElementById('sharableLink'); sharableLinkInput.value = link; document.getElementById('generatedLinkContainer').style.display = 'block'; }
         function copyLink() { const sharableLinkInput = document.getElementById('sharableLink'); sharableLinkInput.select(); sharableLinkInput.setSelectionRange(0, 99999); try { navigator.clipboard.writeText(sharableLinkInput.value) .then(() => { showStatusMessage("statusLinkCopied", "success"); }) .catch(err => { console.error("Clipboard API copy failed:", err); if(document.execCommand('copy')) { showStatusMessage("statusLinkCopiedFallback", "success"); } else { showStatusMessage("statusCopyError", "error", 4000); } }); } catch (err) { console.error("Clipboard API not available or other error:", err); if(document.execCommand('copy')) { showStatusMessage("statusLinkCopiedFallback", "success"); } else { showStatusMessage("statusCopyError", "error", 4000); } } }
 
