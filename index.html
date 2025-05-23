@@ -59,7 +59,17 @@
         body[lang="ar"] #sharableLink { margin-left: 8px; margin-right: 0; text-align: right; }
         button#copyButton { padding: 10px 15px; background-color: #B8860B; color: #fff; font-size: 0.95em; border: none; border-radius: 8px; cursor: pointer; transition: background-color 0.2s ease; }
         button#copyButton:hover { background-color: #DAA520; }
-        footer { margin-top: 15px; font-size: 0.85em; color: #f0e68c; position: relative; z-index: 1; padding-bottom: 15px; }
+
+        footer { /* পরিবর্তিত */
+            margin-top: 15px;
+            font-size: 0.85em;
+            color: #f0e68c;
+            position: relative;
+            z-index: 1;
+            padding-bottom: 75px; /* বিজ্ঞাপনের জন্য অতিরিক্ত স্পেস */
+            width: 100%;
+            box-sizing: border-box;
+        }
         .dateTimeEntry { margin-top: 4px; font-size: 0.9em; } .dateTimeEntry span { margin: 0 3px; }
 
         /* --- বিজ্ঞাপনের Placeholder গুলোর জন্য CSS --- */
@@ -67,45 +77,30 @@
             position: fixed;
             z-index: 5;
             overflow: hidden;
-            /* নিচের স্টাইলগুলো বিজ্ঞাপনের কোড দ্বারা ওভাররাইড হতে পারে */
             display: flex;
             align-items: center;
             justify-content: center;
-            /* background-color: rgba(255, 0, 0, 0.1);  ডেভেলপমেন্টের সময় স্থান দেখতে সাহায্য করবে */
-            /* border: 1px dashed red; */
         }
+        #ad-left-top { top: 20px; left: 20px; width: 120px; height: 240px; }
+        #ad-left-middle { top: 50%; left: 20px; transform: translateY(-50%); width: 160px; height: 600px; }
+        #ad-bottom-left { bottom: 20px; left: 20px; width: 320px; height: 50px; }
+        #ad-right-top { top: 20px; right: 20px; width: 120px; height: 240px; }
+        #ad-right-middle { top: 50%; right: 20px; transform: translateY(-50%); width: 160px; height: 600px; }
+        #ad-bottom-right { bottom: 20px; right: 20px; width: 300px; height: 50px; }
 
-        #ad-left-top {
-            top: 20px; left: 20px; width: 120px; height: 240px;
-        }
-        #ad-left-middle {
-            top: 50%; left: 20px; transform: translateY(-50%); width: 160px; height: 600px;
-        }
-        #ad-bottom-left { /* এই প্লেসহোল্ডারে আপনার দেওয়া অ্যাড কোড বসানো হবে */
-            bottom: 20px; left: 20px; width: 320px; height: 50px; /* অ্যাডের আকার অনুযায়ী */
-        }
-        #ad-right-top {
-            top: 20px; right: 20px; width: 120px; height: 240px;
-        }
-        #ad-right-middle {
-            top: 50%; right: 20px; transform: translateY(-50%); width: 160px; height: 600px;
-        }
-        #ad-bottom-right {
-            bottom: 20px; right: 20px; width: 300px; height: 50px; /* উদাহরণ */
-        }
-
-        /* মিডিয়া কোয়েরি: ছোট স্ক্রিনের জন্য বিজ্ঞাপন লুকাতে বা পজিশন পরিবর্তন করতে */
         @media (max-width: 1200px) { #ad-left-middle, #ad-right-middle { width: 120px; height: 400px; } }
         @media (max-width: 992px) { #ad-left-top, #ad-right-top { width: 100px; height: 100px; } #ad-bottom-left, #ad-bottom-right { width: 200px; height: 50px; } }
+        
         @media (max-width: 767px) {
-            .ad-placeholder { /* সব ফিক্সড পজিশনের অ্যাড মোবাইল ভিউতে না দেখানোই ভালো */
+            .ad-placeholder {
                 display: none !important;
             }
-            /* আপনি চাইলে মোবাইলের জন্য .container এর ভেতরে আলাদা অ্যাড প্লেসমেন্ট তৈরি করতে পারেন */
-            /* .mobile-ad-inline { display: block; width: 100%; max-width: 320px; height: 50px; margin: 15px auto; background-color: #333; } */
+            footer { /* পরিবর্তিত */
+                padding-bottom: 20px; /* ছোট স্ক্রিনের জন্য কম প্যাডিং */
+            }
         }
 
-        @media (max-width: 480px) { .container { padding: 20px 15px; margin-top: 2vh; margin-bottom: 2vh; } #eidVideo { max-height: 220px; margin-bottom: 15px; } .greeting-message { font-size: 1.7em; margin-bottom: 15px; } label { font-size: 1em; } input[type="text"] { padding: 10px; font-size: 0.95em; } button#generateButton { padding: 10px 15px; font-size: 0.95em; max-width: 250px; } button#generateButton svg { width: 18px; height: 18px; } #statusMessage { font-size: 0.85em; } #sharableLink, button#copyButton { font-size: 0.9em; } footer { font-size: 0.8em; } .dateTimeEntry { font-size: 0.85em; } }
+        @media (max-width: 480px) { .container { padding: 20px 15px; margin-top: 2vh; margin-bottom: 2vh; } #eidVideo { max-height: 220px; margin-bottom: 15px; } .greeting-message { font-size: 1.7em; margin-bottom: 15px; } label { font-size: 1em; } input[type="text"] { padding: 10px; font-size: 0.95em; } button#generateButton { padding: 10px 15px; font-size: 0.95em; max-width: 250px; } button#generateButton svg { width: 18px; height: 18px; } #statusMessage { font-size: 0.85em; } #sharableLink, button#copyButton { font-size: 0.9em; } /* footer এর font-size এবং .dateTimeEntry এর font-size এখানেও প্রভাবিত হতে পারে */ footer {font-size: 0.8em;} .dateTimeEntry {font-size: 0.85em;} }
         @media (max-width: 360px) { .greeting-message { font-size: 1.5em; } #eidVideo { max-height: 180px; } }
     </style>
 
@@ -114,64 +109,23 @@
     <canvas id="fireworksCanvas"></canvas>
     <audio id="backgroundMusic" src="eidmubarak.mp3" loop preload="metadata"></audio>
 
-    <!-- বিজ্ঞাপনের Placeholder গুলো -->
-    <div id="ad-left-top" class="ad-placeholder">
-        <!-- Ad Left Top: এখানে আপনার অন্য অ্যাড নেটওয়ার্কের কোড বসবে -->
-        (Ad LT)
-    </div>
-    <div id="ad-left-middle" class="ad-placeholder">
-        <!-- Ad Left Middle: এখানে আপনার অন্য অ্যাড নেটওয়ার্কের কোড বসবে -->
-        (Ad LM)
-    </div>
+    <div id="ad-left-top" class="ad-placeholder"> (Ad LT) </div>
+    <div id="ad-left-middle" class="ad-placeholder"> (Ad LM) </div>
     <div id="ad-bottom-left" class="ad-placeholder">
-        <!-- আপনার দেওয়া ব্যানার অ্যাড কোড এখানে বসানো হয়েছে -->
         <ins style="width: 320px;height:50px" data-width="320" data-height="50" class="ve09126e54a" data-domain="//oirlh.click" data-affquery="/9b3c02d7effaa721dcdd/e09126e54a/?placementName=default"><script src="//oirlh.click/js/responsive.js" async></script></ins>
     </div>
-
-    <div id="ad-right-top" class="ad-placeholder">
-        <!-- Ad Right Top: এখানে আপনার অন্য অ্যাড নেটওয়ার্কের কোড বসবে -->
-        (Ad RT)
-    </div>
-    <div id="ad-right-middle" class="ad-placeholder">
-        <!-- Ad Right Middle: এখানে আপনার অন্য অ্যাড নেটওয়ার্কের কোড বসবে -->
-        (Ad RM)
-    </div>
-    <div id="ad-bottom-right" class="ad-placeholder">
-        <!-- Ad Bottom Right: এখানে আপনার অন্য অ্যাড নেটওয়ার্কের কোড বসবে -->
-        (Ad BR)
-    </div>
-
+    <div id="ad-right-top" class="ad-placeholder"> (Ad RT) </div>
+    <div id="ad-right-middle" class="ad-placeholder"> (Ad RM) </div>
+    <div id="ad-bottom-right" class="ad-placeholder"> (Ad BR) </div>
 
     <div class="container">
-        <div id="greetingMessage" class="greeting-message"></div>
-        <video id="eidVideo" src="eidmubarak.mp4" autoplay loop muted playsinline preload="metadata">
-            Your browser does not support the video tag.
-        </video>
-        <div class="input-group">
-            <label for="userNameInput" data-lang-key="yourNameLabel">আপনার নাম লিখুন:</label>
-            <input type="text" id="userNameInput" data-lang-key="namePlaceholder" placeholder="এখানে আপনার নাম দিন">
-            <button id="generateButton" onclick="generateAndShareLink()" disabled>
-                <svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.61 15.31 3.4 16.78L2 22L7.31 20.62C8.72 21.37 10.33 21.82 12.04 21.82C17.5 21.82 21.95 17.37 21.95 11.91C21.95 6.45 17.5 2 12.04 2M12.04 19.96C10.6 19.96 9.22 19.57 8.03 18.89L7.62 18.65L4.32 19.53L5.22 16.32L4.96 15.89C4.14 14.57 3.74 13.07 3.74 11.91C3.74 7.36 7.48 3.62 12.04 3.62C16.6 3.62 20.34 7.36 20.34 11.91C20.34 16.47 16.6 19.96 12.04 19.96M17.01 14.34C16.76 14.22 15.56 13.64 15.34 13.56C15.13 13.48 14.97 13.44 14.82 13.67C14.67 13.91 14.17 14.51 14.03 14.67C13.88 14.82 13.73 14.84 13.48 14.72C13.24 14.6 12.26 14.27 11.11 13.24C10.21 12.43 9.62 11.47 9.44 11.18C9.27 10.89 9.41 10.76 9.53 10.64C9.64 10.53 9.78 10.34 9.91 10.19C10.03 10.04 10.07 9.93 10.15 9.76C10.23 9.59 10.19 9.45 10.11 9.33C10.04 9.22 9.46 7.78 9.22 7.23C8.99 6.68 8.76 6.72 8.59 6.72H8.24C8.06 6.72 7.78 6.8 7.54 7.04C7.3 7.28 6.67 7.85 6.67 8.99C6.67 10.13 7.58 11.21 7.7 11.37C7.82 11.53 9.32 13.83 11.59 14.73C12.14 14.96 12.58 15.09 12.95 15.19C13.48 15.32 14.25 15.25 14.58 14.94C14.96 14.58 15.34 14.04 15.49 13.81C15.65 13.59 15.57 13.48 15.5 13.38C15.42 13.28 15.2 13.2 14.95 13.08C14.7 12.96 17.25 14.46 17.01 14.34Z"/></svg>
-                <span data-lang-key="shareButtonText">WhatsApp এ শেয়ার করুন</span>
-            </button>
-            <div id="statusMessage"></div>
-        </div>
-        <div id="generatedLinkContainer">
-            <p data-lang-key="shareLinkManualText">এই লিঙ্কটি বন্ধুদের সাথে শেয়ার করুন (যদি অটো-শেয়ার কাজ না করে):</p>
-            <input type="text" id="sharableLink" readonly>
-            <button id="copyButton" onclick="copyLink()" data-lang-key="copyButtonText">কপি করুন</button>
-        </div>
+        <!-- ... (কন্টেইনারের কন্টেন্ট অপরিবর্তিত) ... -->
+        <div id="greetingMessage" class="greeting-message"></div> <video id="eidVideo" src="eidmubarak.mp4" autoplay loop muted playsinline preload="metadata"> Your browser does not support the video tag. </video> <div class="input-group"> <label for="userNameInput" data-lang-key="yourNameLabel">আপনার নাম লিখুন:</label> <input type="text" id="userNameInput" data-lang-key="namePlaceholder" placeholder="এখানে আপনার নাম দিন"> <button id="generateButton" onclick="generateAndShareLink()" disabled> <svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.61 15.31 3.4 16.78L2 22L7.31 20.62C8.72 21.37 10.33 21.82 12.04 21.82C17.5 21.82 21.95 17.37 21.95 11.91C21.95 6.45 17.5 2 12.04 2M12.04 19.96C10.6 19.96 9.22 19.57 8.03 18.89L7.62 18.65L4.32 19.53L5.22 16.32L4.96 15.89C4.14 14.57 3.74 13.07 3.74 11.91C3.74 7.36 7.48 3.62 12.04 3.62C16.6 3.62 20.34 7.36 20.34 11.91C20.34 16.47 16.6 19.96 12.04 19.96M17.01 14.34C16.76 14.22 15.56 13.64 15.34 13.56C15.13 13.48 14.97 13.44 14.82 13.67C14.67 13.91 14.17 14.51 14.03 14.67C13.88 14.82 13.73 14.84 13.48 14.72C13.24 14.6 12.26 14.27 11.11 13.24C10.21 12.43 9.62 11.47 9.44 11.18C9.27 10.89 9.41 10.76 9.53 10.64C9.64 10.53 9.78 10.34 9.91 10.19C10.03 10.04 10.07 9.93 10.15 9.76C10.23 9.59 10.19 9.45 10.11 9.33C10.04 9.22 9.46 7.78 9.22 7.23C8.99 6.68 8.76 6.72 8.59 6.72H8.24C8.06 6.72 7.78 6.8 7.54 7.04C7.3 7.28 6.67 7.85 6.67 8.99C6.67 10.13 7.58 11.21 7.7 11.37C7.82 11.53 9.32 13.83 11.59 14.73C12.14 14.96 12.58 15.09 12.95 15.19C13.48 15.32 14.25 15.25 14.58 14.94C14.96 14.58 15.34 14.04 15.49 13.81C15.65 13.59 15.57 13.48 15.5 13.38C15.42 13.28 15.2 13.2 14.95 13.08C14.7 12.96 17.25 14.46 17.01 14.34Z"/></svg> <span data-lang-key="shareButtonText">WhatsApp এ শেয়ার করুন</span> </button> <div id="statusMessage"></div> </div> <div id="generatedLinkContainer"> <p data-lang-key="shareLinkManualText">এই লিঙ্কটি বন্ধুদের সাথে শেয়ার করুন (যদি অটো-শেয়ার কাজ না করে):</p> <input type="text" id="sharableLink" readonly> <button id="copyButton" onclick="copyLink()" data-lang-key="copyButtonText">কপি করুন</button> </div>
     </div>
+
     <footer>
-        <p data-lang-key="eidWishesFooter">সবাইকে ঈদের আন্তরিক শুভেচ্ছা!</p>
-        <div id="dateTimeDisplay">
-            <div class="dateTimeEntry">
-                <span id="currentTime"></span> | <span id="currentDate"></span>
-            </div>
-            <div class="dateTimeEntry">
-                <span id="currentHijriDate" data-lang-key="hijriDateLoading">ইসলামী তারিখ পরীক্ষা করা হচ্ছে...</span>
-            </div>
-        </div>
+        <!-- ... (ফুটারের কন্টেন্ট অপরিবর্তিত) ... -->
+        <p data-lang-key="eidWishesFooter">সবাইকে ঈদের আন্তরিক শুভেচ্ছা!</p> <div id="dateTimeDisplay"> <div class="dateTimeEntry"> <span id="currentTime"></span> | <span id="currentDate"></span> </div> <div class="dateTimeEntry"> <span id="currentHijriDate" data-lang-key="hijriDateLoading">ইসলামী তারিখ পরীক্ষা করা হচ্ছে...</span> </div> </div>
     </footer>
 
     <script>
