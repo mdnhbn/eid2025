@@ -66,7 +66,7 @@
             color: #f0e68c;
             position: relative;
             z-index: 1;
-            padding-bottom: 20px; /* ডিফল্ট (মোবাইল) প্যাডিং */
+            padding-bottom: 20px; /* স্বাভাবিক প্যাডিং, কারণ নিচে কোনো ফিক্সড অ্যাড নেই */
             width: 100%;
             box-sizing: border-box;
         }
@@ -86,12 +86,20 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            /* background-color: rgba(255,0,0,0.1); */ /* ডেভেলপমেন্টের জন্য */
-            /* border: 1px dashed red; */ /* ডেভেলপমেন্টের জন্য */
+            /* background-color: rgba(255,0,0,0.1); */
+            /* border: 1px dashed red; */
         }
         #ad-left-top { top: 20px; left: 20px; width: 120px; height: 240px; }
-        #ad-left-middle { top: 50%; left: 20px; transform: translateY(-50%); width: 160px; height: 600px; }
-        #ad-bottom-left { bottom: 20px; left: 20px; width: 320px; height: 50px; } /* আপনার বিজ্ঞাপনের আকার */
+        #ad-left-middle { /* এই প্লেসহোল্ডারে বিজ্ঞাপন বসানো হবে */
+            top: 50%; left: 20px; transform: translateY(-50%);
+            width: 320px; /* বিজ্ঞাপনের প্রস্থ */
+            height: 50px; /* বিজ্ঞাপনের উচ্চতা */
+        }
+        #ad-bottom-left { /* এই স্থানটি এখন খালি বা অন্য অ্যাডের জন্য */
+            bottom: 20px; left: 20px;
+            width: 300px; /* উদাহরণ আকার */
+            height: 50px;  /* উদাহরণ আকার */
+        }
         #ad-right-top { top: 20px; right: 20px; width: 120px; height: 240px; }
         #ad-right-middle { top: 50%; right: 20px; transform: translateY(-50%); width: 160px; height: 600px; }
         #ad-bottom-right { bottom: 20px; right: 20px; width: 300px; height: 50px; }
@@ -99,27 +107,28 @@
 
         /* মিডিয়া কোয়েরি: ডেস্কটপ এবং ট্যাবলেটের জন্য */
         @media (min-width: 768px) {
-            footer {
-                padding-bottom: 80px; /* বিজ্ঞাপনের উচ্চতা (50px) + বিজ্ঞাপনের bottom (20px) + বাফার (10px) */
-            }
+            /* ফুটারের জন্য আর অতিরিক্ত প্যাডিং দরকার নেই যদি নিচে কোনো ফিক্সড অ্যাড না থাকে */
+            /* footer { padding-bottom: 80px; } */
         }
 
         /* মিডিয়া কোয়েরি: ছোট স্ক্রিনের জন্য (মোবাইল) */
         @media (max-width: 767px) {
-            .ad-placeholder { /* সব ফিক্সড পজিশনের বিজ্ঞাপন মোবাইলে না দেখানো */
+            .ad-placeholder {
                 display: none !important;
             }
             footer {
-                padding-bottom: 20px; /* বিজ্ঞাপন না থাকলে স্বাভাবিক প্যাডিং */
+                padding-bottom: 20px;
             }
         }
 
-        /* অন্যান্য মিডিয়া কোয়েরি আগের মতোই */
-        @media (max-width: 1200px) { #ad-left-middle, #ad-right-middle { width: 120px; height: 400px; } }
+        @media (max-width: 1200px) {
+            #ad-left-middle { /* বিজ্ঞাপন বামে মাঝে */
+                /* width: 120px; height: 400px; */ /* যদি অন্য লম্বা বিজ্ঞাপন হয় */
+            }
+             #ad-right-middle { width: 120px; height: 400px; }
+        }
         @media (max-width: 992px) {
-             /* যদি এই ব্রেকপয়েন্টেও বিজ্ঞাপন দেখাতে চান, তাহলে ফুটারের প্যাডিং এখানেও অ্যাডজাস্ট করতে হতে পারে */
             #ad-left-top, #ad-right-top { width: 100px; height: 100px; }
-            /* #ad-bottom-left, #ad-bottom-right { width: 200px; height: 50px; } */ /* এটি 767px এর নিচে হাইড হয়ে যাবে */
         }
 
         @media (max-width: 480px) { .container { padding: 20px 15px; margin-top: 2vh; margin-bottom: 2vh; } #eidVideo { max-height: 220px; margin-bottom: 15px; } .greeting-message { font-size: 1.7em; margin-bottom: 15px; } label { font-size: 1em; } input[type="text"] { padding: 10px; font-size: 0.95em; } button#generateButton { padding: 10px 15px; font-size: 0.95em; max-width: 250px; } button#generateButton svg { width: 18px; height: 18px; } #statusMessage { font-size: 0.85em; } #sharableLink, button#copyButton { font-size: 0.9em; } footer {font-size: 0.8em;} .dateTimeEntry {font-size: 0.85em;} }
@@ -132,9 +141,13 @@
     <audio id="backgroundMusic" src="eidmubarak.mp3" loop preload="metadata"></audio>
 
     <div id="ad-left-top" class="ad-placeholder"> (Ad LT) </div>
-    <div id="ad-left-middle" class="ad-placeholder"> (Ad LM) </div>
-    <div id="ad-bottom-left" class="ad-placeholder">
+    <div id="ad-left-middle" class="ad-placeholder">
+        <!-- বিজ্ঞাপনটি এখানে সরানো হয়েছে -->
         <ins style="width: 320px;height:50px" data-width="320" data-height="50" class="ve09126e54a" data-domain="//oirlh.click" data-affquery="/9b3c02d7effaa721dcdd/e09126e54a/?placementName=default"><script src="//oirlh.click/js/responsive.js" async></script></ins>
+    </div>
+    <div id="ad-bottom-left" class="ad-placeholder">
+        <!-- এই স্থানটি এখন খালি বা অন্য অ্যাডের জন্য ব্যবহার করা যেতে পারে -->
+        (Ad BL - Empty)
     </div>
     <div id="ad-right-top" class="ad-placeholder"> (Ad RT) </div>
     <div id="ad-right-middle" class="ad-placeholder"> (Ad RM) </div>
